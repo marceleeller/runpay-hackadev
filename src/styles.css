@@ -1,1 +1,86 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Raleway', sans-serif;
+}
+
+:root {
+  --cor-azul-escuro: #12163A;
+  --cor-azul-medio: #171C4B;
+  --cor-azul-claro: #313551;
+  --cor-branco: #FFFFFF;
+  --cor-cinza: #989898;
+  --cor-cinza-claro: #DEE2E6;
+  --cor-verde: #C3F587;
+}
+
+/* Estilização base botões */
+.btn {
+  border-radius: 90px;
+  font-weight: 600;
+}
+
+.btn-primary, .btn-primary:hover {
+  background-color: var(--cor-verde);
+  border: 2px solid var(--cor-verde);
+  color: var(--cor-azul-escuro);
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  box-shadow: 0px 0px 10px var(--cor-verde);
+}
+
+.btn-primary:active, .btn-outline-primary:active {
+  background-color: #a9d375 !important;
+  color: var(--cor-azul-escuro) !important;
+  border: 2px solid #a9d375 !important;
+}
+
+.btn-outline-primary {
+  border: 2px solid var(--cor-verde);
+  color: var(--cor-verde);
+  font-weight: 600;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--cor-verde);
+  color: var(--cor-azul-escuro);
+  border: 2px solid var(--cor-verde);
+  box-shadow: 0px 0px 10px var(--cor-verde);
+}
+
+.btn-secondary, .btn-secondary:hover {
+  background-color: var(--cor-azul-escuro);
+  border: 2px solid var(--cor-azul-escuro);
+  color: var(--cor-verde);
+}
+
+.btn-secondary:hover {
+  box-shadow: 0px 0px 10px var(--cor-azul-escuro);
+}
+
+.btn-secondary:active {
+  background-color: #0f1230 !important;
+  border: 2px solid #0f1230 !important;
+  color: var(--cor-verde) !important;
+}
+
+/* Estilização base forms */
+.form-control, .form-control:focus {
+  background-color: transparent;
+  border-color: var(--cor-cinza);
+}
+
+.form-control:focus {
+  border-color: var(--cor-verde) !important;
+  box-shadow: 0 0 0 0.2rem rgba(195, 245, 135, 0.2) !important;
+}
+
+.form-label {
+  font-weight: 400;
+  color: var(--cor-cinza);
+}
