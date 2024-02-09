@@ -1,6 +1,11 @@
-# RunTime - HackaDev
+# RunTime - HackaDev 
 
-O RunTime foi criado para simular um ambiente empresarial, onde a equipe desenvolverá um projeto seguindo a metodologia SCRUM. Esse projeto faz parte do Bootcamp SharpCoders, oferecido pela ÍmaTech e MXM Sistemas.
+ O RunTime foi criado para simular um ambiente empresarial, onde a equipe desenvolverá um projeto seguindo a metodologia SCRUM. Esse projeto faz parte do Bootcamp SharpCoders, oferecido pela ÍmaTech e MXM Sistemas.
+
+<p align="center">
+  <img src="/Documentacao/img/runtime_logo.png" width="300" />
+</p>
+
 
 ### Objetivos
 Refinar habilidades de trabalho em equipe e interpessoais, impulsionar o crescimento técnico, possibilitar avaliação de alunos com assistência de monitores e criar um ambiente simulado empresarial.
