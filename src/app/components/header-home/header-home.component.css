@@ -1,0 +1,140 @@
+#logo-runpay {
+  height: 30px;
+}
+
+.navbar {
+  height: 80px;
+}
+
+.container-fluid {
+  height: 35px;
+  max-width: 770px;
+}
+
+.items-links {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-link, .nav-link.active {
+  font-weight: 700;
+  color: white;
+  padding: 5px 20px 5px 20px;
+}
+
+.nav-link:hover {
+  color: var(--cor-verde);
+}
+
+.navbar-nav {
+  gap: 30px;
+}
+
+.active {
+  color: white;
+  background-color: var(--cor-azul-claro);
+  border-radius: 100px;
+}
+
+/* Offcanvas */
+.offcanvas {
+  background-color: var(--cor-verde);
+  width: 100vw;
+}
+
+.offcanvas-main {
+  width: 100%;
+  max-width: 770px;
+  padding: 0px 12px;
+}
+
+.offcanvas-header {
+  height: 80px;
+}
+
+.icone-azul {
+  height: 40px;
+}
+
+.item-mobile {
+  display: none;
+}
+
+@media (max-width: 991px) {
+
+  .container-fluid {
+    padding: 0 28px;
+  }
+
+  .nav-item > a {
+    color: var(--cor-azul-escuro);
+    font-size: 24px;
+    padding: 0;
+  }
+
+  .nav-item.active > a {
+    background-color: var(--cor-verde);
+    border-bottom: 2px solid var(--cor-azul-escuro);
+  }
+
+  .items-links {
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .btns-entrar-criarconta {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+
+  }
+
+  .btn-secondary, .btn-outline-secondary {
+    width: 100%;
+    font-size: 20px;
+  }
+
+  .item-mobile {
+    display: block;
+  }
+
+  .navbar-nav {
+    height: 85vh;
+    justify-content: space-between !important;
+  }
+
+  .navbar-toggler {
+    background-color: var(--cor-azul-medio);
+    border-radius: 90px;
+    height: 36px;
+    width: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .bi-list {
+    color: var(--cor-verde);
+  }
+
+  .bi-x-lg {
+    color: var(--cor-azul-escuro);
+    font-weight: 600;
+  }
+
+  .btn-closing {
+    border: 2px solid var(--cor-azul-escuro);
+    background-color: var(--cor-verde);
+    border-radius: 90px;
+    height: 36px;
+    width: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+}
+
