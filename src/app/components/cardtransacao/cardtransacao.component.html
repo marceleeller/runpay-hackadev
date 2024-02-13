@@ -1,1 +1,15 @@
-<p>cardtransacao works!</p>
+<div class="card">
+  <div class="card-body">
+    <h3>Transações Recentes</h3>
+    <ng-container *ngFor="let transacao of transacoes">
+      <div class="transacao">
+        <h5 class="card-title">{{ transacao.nome }}</h5>
+        <p class="card-text">{{ transacao.tipo }}</p>
+        <p class="card-text">{{ transacao.dataFormatada }}</p>
+        <p class="card-text">{{ transacao.valor }}</p>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
