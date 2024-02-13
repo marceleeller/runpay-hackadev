@@ -1,1 +1,16 @@
-<p>historico works!</p>
+<div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <div class="historico-transacoes">
+          <h1>Histórico de Transações</h1>
+          <div class="lista-transacoes">
+              <ng-container *ngFor="let transacao of transacoes.slice(0, 6)">
+                  <app-cardtransacao [transacoes]="transacoes">
+                  </app-cardtransacao>
+              </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

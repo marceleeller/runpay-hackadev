@@ -1,12 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Transacao } from './../../../models/transacao.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cardtransacao',
   standalone: true,
-  imports: [],
   templateUrl: './cardtransacao.component.html',
-  styleUrl: './cardtransacao.component.css'
+  styleUrls: ['./cardtransacao.component.css'],
+  imports: [CommonModule]
 })
 export class CardtransacaoComponent {
-
+  @Input() transacoes: Transacao[] = [];
+  transacoesExibidas: Transacao[] = [];
+  @Output() carregarMais = new EventEmitter<void>();
 }
