@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Transacao } from './../../../models/transacao.model';
 import { CommonModule } from '@angular/common';
 
@@ -12,4 +12,5 @@ import { CommonModule } from '@angular/common';
 export class CardtransacaoComponent {
   @Input() transacoes: Transacao[] = [];
   transacoesExibidas: Transacao[] = [];
+  @Output() carregarMais = new EventEmitter<void>();
 }

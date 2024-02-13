@@ -1,14 +1,22 @@
-<div class="card">
+<div class="card custom-card">
   <div class="card-body">
-    <h3>Transações Recentes</h3>
-    <ng-container *ngFor="let transacao of transacoes">
-      <div class="transacao">
-        <h5 class="card-title">{{ transacao.nome }}</h5>
-        <p class="card-text">{{ transacao.tipo }}</p>
-        <p class="card-text">{{ transacao.dataFormatada }}</p>
-        <p class="card-text">{{ transacao.valor }}</p>
+    <h3 class="card-title text-center mb-4">Transações Recentes</h3>
+    <ng-container *ngFor="let transacao of transacoes" class="transacao">
+      <div class="row">
+        <div class="col">
+          <h5 class="font-weight-bold text-white">{{ transacao.nome }}</h5>
+          <p class="text-white">{{ transacao.tipo }}</p>
+          <p class="text-white">{{ transacao.dataFormatada }}</p>
+        </div>
+        <div class="col text-right">
+          <p class="valor text-right" [ngClass]="{'text-light': transacao.tipo === 'Pagamento', 'text-success': transacao.tipo === 'Transferência'}">{{ transacao.valor }}</p>
+        </div>
       </div>
+      <hr class="bg-light">
     </ng-container>
+  </div>
+  <div class="card-footer text-center">
+    <button class="btn btn-primary btn-lg btn-block" (click)="carregarMais.emit()">Carregar Mais</button>
   </div>
 </div>
 

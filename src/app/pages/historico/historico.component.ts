@@ -39,6 +39,12 @@ export class HistoricoComponent implements OnInit {
       { id: 12, nome: 'Vinícius', data: new Date('2023-11-05'), tipo: 'Pagamento', valor: -380.0},
     ];
 
+    if (this.transacoes.length > 6) {
+      this.totalTransacoesExibidas = 6;
+    } else {
+      this.totalTransacoesExibidas = this.transacoes.length;
+    }
+
     this.transacoesExibidas = this.transacoes.slice(0, this.totalTransacoesExibidas);
     
     this.transacoes.forEach(transacao => {

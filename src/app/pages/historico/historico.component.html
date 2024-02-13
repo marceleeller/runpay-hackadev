@@ -4,11 +4,11 @@
         <div class="historico-transacoes">
           <h1>Histórico de Transações</h1>
           <div class="lista-transacoes">
-              <ng-container *ngFor="let transacao of transacoes">
-                  <app-cardtransacao [transacoes]="transacoes"></app-cardtransacao>
+              <ng-container *ngFor="let transacao of transacoes.slice(0, 6)">
+                  <app-cardtransacao [transacoes]="transacoes">
+                  </app-cardtransacao>
               </ng-container>
           </div>
-          <button *ngIf="mostrarBotaoCarregarMais" (click)="carregarMaisTransacoes()">Carregar Mais</button>
         </div>
       </div>
     </div>
