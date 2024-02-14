@@ -1,1 +1,27 @@
-<p>cadastro works!</p>
+<div class="formulario">
+    <form class="justify-content-center">
+    <h2 class="text-center">Criar a sua conta da runpay</h2>
+    <p class="text-center">Já possui uma conta? <a href="/src/app/pages/login/login.component.html" id="link_entrar">Entrar</a></p>
+    
+    <div id="formulario-preenchido">
+    <label class="form-label">CPF</label>
+    <input type="string" class="form-control" placeholder="Insira seu CPF" formControlName="cpf">
+
+    <label class="form-label">Nome</label>
+    <input type="text" class="form-control" placeholder="Insira seu nome completo" formControlName="nome">
+
+    <label class="form-label">E-mail</label>
+    <input type="email" class="form-control" placeholder="Insira seu E-mail" formControlName="email">
+
+    <label class="form-label">Confirme seu E-mail</label>
+    <input type="email" class="form-control" placeholder="Confirme seu E-mail" formControlName="confirmacao_email">
+
+    <label class="form-label">Senha</label>
+    <input type="password" class="form-control" placeholder="Insira sua senha" formControlName="senha">
+
+    <label class="form-label">Confirme sua senha</label>
+    <input type="password" class="form-control" placeholder="Confirme sua senha" formControlName="confirmacao_senha">
+    </div>
+    <input type="button" id="botao_criar_conta" class="btn btn-primary" value="Criar">
+</form>
+</div>

@@ -1,0 +1,34 @@
+::placeholder {
+    color: #adb5bd;
+}
+
+form {
+    padding: 4em 6em 1em;
+    background-image: linear-gradient(135deg, #181f4d, #2f3865);
+    border-radius: 50px;
+    margin: 25%;
+}
+
+#botao_criar_conta {
+    margin-top: 2.5em;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 152px;
+    height: 50px;
+    justify-content: center;
+    background-color: #c3f587;
+}
+
+input {
+    margin-bottom: 15px;
+}
+
+#link_entrar {
+    color: #c3f587;
+}
+
+h2 {
+    margin-bottom: 0.8em;
+}
