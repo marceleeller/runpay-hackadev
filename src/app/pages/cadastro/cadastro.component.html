@@ -1,5 +1,10 @@
+<header>
+    
+</header>
+
+<main>
 <div class="formulario">
-    <form class="justify-content-center">
+    <form class="justify-content-center" [formGroup]="cadastro">
     <h2 class="text-center">Criar a sua conta da runpay</h2>
     <p class="text-center">Já possui uma conta? <a href="/src/app/pages/login/login.component.html" id="link_entrar">Entrar</a></p>
     
@@ -22,6 +27,11 @@
     <label class="form-label">Confirme sua senha</label>
     <input type="password" class="form-control" placeholder="Confirme sua senha" formControlName="confirmacao_senha">
     </div>
-    <input type="button" id="botao_criar_conta" class="btn btn-primary" value="Criar">
+    <input type="submit" id="botao_criar_conta" class="btn btn-primary" value="Criar" [disabled]="cadastro.invalid">
 </form>
 </div>
+</main>
+
+<footer>
+
+</footer>
