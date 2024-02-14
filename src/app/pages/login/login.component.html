@@ -1,1 +1,14 @@
-<p>login works!</p>
+<app-header-voltar></app-header-voltar>
+<form (ngSubmit)="login()">
+    <h1 class="titulo-login">Olá de novo!</h1>
+    <p>Ainda não tem uma conta na Runpay? Cadastre-se</p>
+    <div class="form-login">
+        <label>O seu e-mail</label>
+        <input type="email" placeholder="Digite aqui" [(ngModel)]="email" required> 
+    </div>
+    
+    <label>A sua senha</label>
+    <input type="password" placeholder="Digite aqui a senha" [(ngModel)]="senha" required>
+    <br>
+    <button class="btn-login"type="submit">Entrar</button>
+  </form>
