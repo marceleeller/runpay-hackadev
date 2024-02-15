@@ -1,12 +1,19 @@
 .footer {
+  font-family: Raleway;
+  font-size: 15px;
+  font-weight: 700;
+  position: absolute;
+  bottom: 0;
   background-color: var(--cor-azul-escuro);
-  padding: 50px 0;
-  width: 1366px;
   height: 160px;
-  top: 1022px;
+  width: 100%;
+  padding: 0% 22% 0% 22%;
+  display: flex;
   justify-content: center;
+  justify-items: center;
   align-items: center;
 }
+
 .icon-logo {
   width: 42px;
   height: 48px;
@@ -19,21 +26,28 @@
   flex-direction: column;
   justify-content: center;
 }
+
+.col-center {
+  align-items: center;
+}
+
 .footer-titleCenter1 {
-  font-family: Raleway;
-  font-size: 15px;
   font-weight: 700;
   line-height: 18px;
   letter-spacing: 0em;
   text-align: left;
 }
 .footer-titleCenter2 {
-  width: 202px;
-  height: 36px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.col-right {
+  align-items: flex-end;
 }
 
 .text-right {
-  text-align: right;
+  font-weight: 700;
 }
 
 .phone-number {
@@ -57,8 +71,7 @@
 .copyright {
   width: 170px;
   height: 42px;
-  font-family: Raleway;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   line-height: 14px;
   letter-spacing: 0em;
@@ -67,25 +80,38 @@
   margin-top: 15px;
 }
 @media (max-width: 991px) {
-  .container {
-    padding: 0, 28px;
+  .col-left {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
   }
-  .footer-titleCenter1 {
+
+  .icon-logo {
+    margin-left: 95px;
+  }
+
+  .copyright {
+    flex-grow: 1;
+    text-align: center;
+    margin-top: 45px;
+  }
+
+  .copyright br {
     display: none;
   }
-  .footer-titleCenter2 {
-    display: none;
-  }
-  .footer-title-rigth {
-    display: none;
-  }
+
+  .footer-titleCenter1,
+  .footer-titleCenter2,
+  .footer-title-rigth,
   .social-icons {
     display: none;
   }
-  .copyright {
-    text-align: center;
-  }
+}
+@media (max-width: 650px) {
   .icon-logo {
-    margin-right: 0;
+    display: none;
   }
 }
