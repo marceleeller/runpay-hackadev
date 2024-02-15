@@ -1,4 +1,6 @@
-
+::ng-deep .icone-runpay {
+  height: 30px !important;
+}
 
 ::placeholder {
     color: #adb5bd;
@@ -40,4 +42,11 @@ h2 {
 
 div input {
     color: #ffffff;
+}
+
+
+@media (max-width: 991px) {
+  ::ng-deep .icone-runpay {
+    display: block !important;
+  }
 }
