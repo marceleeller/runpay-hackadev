@@ -1,6 +1,7 @@
 .app-header-voltar {
     width: 100vw;
     left: 100px;
+    right: 100px;
 }
 .container {
     max-width: 770px;
@@ -11,8 +12,8 @@
     height: 100%;
 }
 .icone-runpay {
-    display: inline-block;
-    height: 40px;
+    display: block;
+    height: 60px;
     width: 170px;
 }
 
