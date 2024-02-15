@@ -1,0 +1,11 @@
+.container .titulo{
+    display: flex;
+    width: 358px;
+    height: 320px;
+    margin-left: 185px;
+    margin-top: 150px;
+}
+.btn-outline-primary{
+   align-items: center;
+   justify-content: end;
+}
