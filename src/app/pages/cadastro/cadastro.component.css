@@ -1,12 +1,16 @@
+
+
 ::placeholder {
     color: #adb5bd;
 }
 
 form {
     padding: 4em 6em 1em;
-    background-image: linear-gradient(135deg, #181f4d, #2f3865);
     border-radius: 50px;
     margin: 25%;
+    background-image: url("../../../assets/bg-card.png");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 #botao_criar_conta {
@@ -23,6 +27,7 @@ form {
 
 input {
     margin-bottom: 15px;
+    color: white;
 }
 
 #link_entrar {
@@ -31,4 +36,8 @@ input {
 
 h2 {
     margin-bottom: 0.8em;
+}
+
+div input {
+    color: #ffffff;
 }

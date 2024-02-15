@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HeaderVoltarComponent } from "../../components/header-voltar/header-voltar.component";
+import { HeaderCadastroComponent } from '../../components/header-cadastro/header-cadastro.component';
 
 @Component({
-  selector: 'app-cadastro',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './cadastro.component.html',
-  styleUrl: './cadastro.component.css'
+    selector: 'app-cadastro',
+    standalone: true,
+    templateUrl: './cadastro.component.html',
+    styleUrl: './cadastro.component.css',
+    imports: [ReactiveFormsModule, CommonModule, HeaderVoltarComponent, HeaderCadastroComponent]
 })
 export class CadastroComponent {
   cadastro = new FormGroup ({
