@@ -19,8 +19,6 @@ export class LoginComponent {
         console.log("Senha:", this.senha);
         console.log("Email:", this.email);       
 
-    
-
     }
 
 
