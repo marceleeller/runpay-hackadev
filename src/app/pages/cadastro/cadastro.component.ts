@@ -4,7 +4,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { HeaderVoltarComponent } from "../../components/header-voltar/header-voltar.component";
 import { HeaderCadastroComponent } from '../../components/header-cadastro/header-cadastro.component';
 import { FooterComponent } from "../../components/footer/footer.component";
-
 @Component({
     selector: 'app-cadastro',
     standalone: true,
