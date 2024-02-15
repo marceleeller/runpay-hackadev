@@ -40,3 +40,16 @@ h2 {
 div input {
     color: #ffffff;
 }
+
+
+@media (max-width: 768px) {
+    form {
+        padding: 2em 3em 0.5em;
+    }
+}
+
+@media (max-width: 576px) {
+    form {
+        padding: 1em 1.5em 0.25em;
+    }
+}
