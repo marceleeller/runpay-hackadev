@@ -10,4 +10,6 @@ import { Component, Input } from '@angular/core';
 export class HeaderVoltarComponent {
  @Input()
   nomeDaPagina!: string;
+  @Input()
+  logo:string = '';
 }
