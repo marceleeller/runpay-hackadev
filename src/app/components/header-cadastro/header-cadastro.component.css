@@ -1,0 +1,41 @@
+.app-header-voltar {
+    width: 100vw;
+    left: 100px;
+}
+.container {
+    max-width: 770px;
+    height: 100%;
+    padding: 15px;
+}
+.col, .row {
+    height: 100%;
+}
+.icone-runpay {
+    display: inline-block;
+    height: 40px;
+    width: 170px;
+}
+
+.btn-voltar {
+    width: 24px;
+    height: 24px;
+    background-color: var(--cor-verde);
+    border-radius: 5px;
+    border: none;
+}
+.bi-arrow-left {
+    color: var(--cor-azul-escuro);
+    -webkit-text-stroke: 1px;
+}
+
+@media (max-width: 991px) {
+    .container {
+        padding: 0, 28px;
+    }
+    .icone-runpay {
+        display: none;
+    }
+    .titulo {
+        font-size: 20px;
+    }
+}
