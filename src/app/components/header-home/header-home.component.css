@@ -24,6 +24,7 @@
 
 .nav-link:hover {
   color: var(--cor-verde);
+  transition: ease-in-out 0.4s;
 }
 
 .navbar-nav {
