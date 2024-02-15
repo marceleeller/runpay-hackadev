@@ -13,6 +13,7 @@ import { FooterComponent } from "../../components/footer/footer.component";
     imports: [ReactiveFormsModule, CommonModule, HeaderVoltarComponent, HeaderCadastroComponent, FooterComponent]
 })
 export class CadastroComponent {
+
   cadastro = new FormGroup ({
     cpf: new FormControl('', Validators.required),
     nome: new FormControl('', Validators.required),
@@ -21,6 +22,5 @@ export class CadastroComponent {
     confirmacao_email: new FormControl('', Validators.required),
     confirmacao_senha: new FormControl('', Validators.required)
   });
-
 
 }
