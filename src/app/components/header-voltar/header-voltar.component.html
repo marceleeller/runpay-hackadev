@@ -1,1 +1,16 @@
-<p>header-voltar works!</p>
+<header class="app-header-voltar">
+    <div class="container align-middle">
+        <div class="row">
+          <div class="col-10 d-flex justify-content-baseline align-items-center gap-4">
+            <img src="{{ logo }}" alt="icone-runpay" class="icone-runpay">
+            <span class="titulo">{{ nomeDaPagina }}</span>
+          </div>
+          <div class="col-2 d-flex justify-content-end align-items-center">
+            <button class="btn-primary d-flex align-items-center justify-content-center" (click)="redirecionarParaHome()">
+              <i class="bi bi-arrow-left"></i>
+            </button>
+          </div>
+        </div>
+    </div>
+</header>
+
