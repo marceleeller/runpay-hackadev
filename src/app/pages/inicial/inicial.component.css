@@ -1,29 +1,56 @@
 .informacoes-da-conta {
-    background-color: #12163a; 
+    background-color: #171C4B; 
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
-  .informacoes-da-conta h1 {
-    color: #ffffff; 
+  .informacoes-da-conta h1 { 
     font-size: 24px; 
+    margin-bottom: 10px;
   }
   
   .informacoes-da-conta p {
     font-size: 18px; 
   }
   
-  .resumo-transacoes {
-    margin-top: 30px; 
-  }
-  
   .botao-acao {
     margin-top: 20px;
-  }  
-  
-  
-  .botao-acao button {
-    margin-right: 10px; 
-  }
-  
+}
+
+.botao-acao button {
+    margin-right: 10px;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 30%;
+    background-color: var(--cor-cinza); 
+    color: #FFFFFF; 
+    border: none;
+    font-size: 20px; /* Tamanho do ícone */
+}
+
+/* Estilos para os botões de ação */
+.botao-acao button {
+    margin-right: 10px;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 30%;
+    background-color: var(--cor-cinza);
+    color: #FFFFFF; 
+    border: none;
+    font-size: 20px; 
+}
+
+.btn-gray {
+    background-color: #E0E0E0; /* Cor de fundo do botão cinza */
+}
+
+/* Estilos para a seção de resumo de transações */
+.resumo-transacoes {
+    margin-top: 30px;
+}

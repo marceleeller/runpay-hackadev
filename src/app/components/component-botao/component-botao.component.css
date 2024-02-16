@@ -13,14 +13,14 @@
 }
 
 .botao:hover {
-    background-color: #0056b3; 
+    background-color: #12163A; 
   }
   
   .circulo {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: var(--cor-cinza-escuro); 
+    background-color: var(--cor-cinza-claro); 
     margin-right: 10px;
   }
   

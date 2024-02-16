@@ -1,3 +1,9 @@
+<!-- Cabeçalho -->
+<app-header-home></app-header-home>
+
+<!-- Rodapé -->
+<app-footer></app-footer>
+
 <button class="btn btn-primary">
     <a routerLink="/transacoes" class="text-white">
       Histórico de Transações
@@ -6,69 +12,43 @@
   </button>
   
   <!-- Informações da Conta -->
- <div class="informacoes-da-conta" style="background-image: url('runpay-hackadev/src/assets/bg-inicial.png');">
-  <h1>Informações da Conta</h1>
-  <p>Saldo da Conta: {{ saldo }}</p>
-</div>
-
-
-<!-- Barra de Navegação -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container">
-    <a class="navbar-brand" href="#">Logo</a>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link 1</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link 2</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link 3</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<!-- Banner Principal -->
-<div class="jumbotron">
-  <div class="container">
-    <h1 class="display-4">Bem-vindo ao RunTime</h1>
-    <p class="lead">Aqui vem uma mensagem de boas-vindas ou uma breve descrição do serviço.</p>
-    <a class="btn btn-primary btn-lg" href="#" role="button">Saiba mais</a>
-  </div>
-</div>
-
-<!-- Informações da Conta -->
-<div class="container">
-  <div class="row">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Informações da Conta</h5>
-          <p class="card-text">Saldo da Conta: R$ {{ saldo }}</p>
+  <div class="informacoes-da-conta" style="background-image: url('../../assets/bg-inicial.png');">
+    <h1 class="text-center text-white">R$ 32.000,00</h1>
+    <p class="text-center text-white">Saldo Atual</p>
+    <div class="row">
+      <div class="col-md-6 d-flex align-items-center justify-content-center">
+        <div class="text-center">
         </div>
       </div>
+      
+<!-- Botões de Ação -->
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 d-flex justify-content-around">
+      <div class="text-center">
+        <button class="btn btn-circle btn-gray">
+          <i class="fas fa-exchange-alt"></i>
+        </button>
+        <p>Transferência</p>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-circle btn-gray">
+          <i class="fas fa-money-bill-alt"></i>
+        </button>
+        <p>Pagamentos</p>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-circle btn-gray">
+          <i class="fas fa-history"></i>
+        </button>
+        <p>Histórico de Transações</p>
+      </div>
     </div>
+    <div class="col-md-4"></div>
   </div>
 </div>
 
-<!-- Botões de Ação -->
-<div class="container">
-  <div class="row">
-    <div class="col-md-4">
-      <button class="btn btn-primary btn-block">Transferência</button>
-    </div>
-    <div class="col-md-4">
-      <button class="btn btn-primary btn-block">Pagamentos</button>
-    </div>
-    <div class="col-md-4">
-      <button class="btn btn-primary btn-block">Histórico de Transações</button>
-    </div>
-  </div>
-</div>
 
 <!-- Transações Recentes -->
 <div class="container mt-4">
