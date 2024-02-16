@@ -1,0 +1,65 @@
+.bi-search {
+  color: var(--cor-verde);
+  top: 40%;
+  right: 50px;
+  left: 30px;
+  font-size: 20px;
+  border: none;
+}
+.form-select {
+  background-color: var(--cor-azul-medio);
+  color: #adb5bd;
+  width: 200px;
+  height: 38px;
+  border-radius: 6px;
+  border: none;
+  margin: 30px;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.input-pesquisa {
+  background-color: var(--cor-azul-medio);
+  color: #adb5bd;
+  width: 200px;
+  height: 38px;
+  border-radius: 6px;
+  border: none;
+  margin: 30px;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding: 9px, 16px, 9px, 16px;
+}
+
+.filtro-pesquisa {
+  padding: 30px;
+  margin-top: 50px;
+  margin-bottom: 5px;
+}
+.col,
+.row {
+  height: 100%;
+}
+.bi-chevron-down {
+  position: absolute;
+  top: 64px;
+  right: 11rem;
+  left: 20rem;
+  outline: none;
+  font-size: 20px;
+}
+
+@media (max-width: 768px) {
+  .bi-search,
+  .bi-chevron-down {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
