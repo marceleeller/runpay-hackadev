@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ComponentBotaoComponent } from '../../components/component-botao/component-botao.component';}
 
 @Component({
   selector: 'app-inicial',
