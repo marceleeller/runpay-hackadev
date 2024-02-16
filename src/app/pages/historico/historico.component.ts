@@ -17,6 +17,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
     HeaderVoltarComponent,
     FooterComponent,
   ],
+})
 
 export class HistoricoComponent implements OnInit {
   @HostBinding('class')
@@ -38,10 +39,6 @@ export class HistoricoComponent implements OnInit {
     this.verificarTodasTransacoesExibidas();
 
     this.transacoesExibidas = this.transacoes.slice(0, this.totalTransacoesExibidas);
-
-    this.transacoes.forEach(transacao => {
-      transacao.dataFormatada = this.formatarData(transacao.data);
-    });
   }
 
   carregarMaisTransacoes() {
@@ -64,3 +61,4 @@ export class HistoricoComponent implements OnInit {
     }
   }
 }
+
