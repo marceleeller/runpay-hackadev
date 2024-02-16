@@ -1,23 +1,33 @@
 <div class="card custom-card">
   <div class="card-body">
-    <h3 class="card-title text-center mb-4">Transações Recentes</h3>
-    <ng-container *ngFor="let transacao of transacoes" class="transacao">
+    <h3 class="card-title mb-4">Transações Recentes</h3>
       <div class="row">
-        <div class="col">
-          <h5 class="font-weight-bold text-white">{{ transacao.nome }}</h5>
-          <p class="text-white">{{ transacao.tipo }}</p>
-          <p class="text-white">{{ transacao.dataFormatada }}</p>
+      <div class="col-md-2">
+        <div class="icon-pg" *ngIf="transacao?.tipo === 'Pagamento'">
+            <i class="bi bi-arrow-up"></i>
+          </div>
+          <div class="icon-trans" *ngIf="transacao?.tipo === 'Transferência'">
+            <i class="bi bi-arrow-left-right"></i>
+          </div>
+      </div>
+        <div class="col-md-4">
+          <h5 class="font-weight-bold card-nome">{{ transacao?.nome }}</h5>
+          <p class="card-tipo-tr">{{ transacao?.tipo }}</p>
+          <p class="card-data">{{ transacao?.dataFormatada }}</p>
         </div>
-        <div class="col text-right">
-          <p class="valor text-right" [ngClass]="{'text-light': transacao.tipo === 'Pagamento', 'text-success': transacao.tipo === 'Transferência'}">{{ transacao.valor }}</p>
+        <div class="col-md-5">
+          <p
+            class="valor"
+            [ngClass]="{
+              'text-pg': transacao?.tipo === 'Pagamento',
+              'text-trans': transacao?.tipo === 'Transferência'
+            }"
+          >
+          {{ transacao?.valor !== undefined ? formatarValor(transacao?.valor) : '' }}
+          </p>
         </div>
       </div>
-      <hr class="bg-light">
-    </ng-container>
-  </div>
-  <div class="card-footer text-center">
-    <button class="btn btn-primary btn-lg btn-block" (click)="carregarMais.emit()">Carregar Mais</button>
+      <hr class="hr" />
   </div>
 </div>
-
 
