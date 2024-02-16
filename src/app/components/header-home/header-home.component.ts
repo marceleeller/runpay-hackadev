@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgClass } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header-home',
@@ -16,7 +17,7 @@ export class HeaderHomeComponent {
   className:string = '';
 
     constructor(
-      private breakpointObserver: BreakpointObserver,
+      private breakpointObserver: BreakpointObserver, private router: Router
     ) {
       this.breakpointObserver.observe([
         "(max-width: 991px)"
@@ -30,5 +31,14 @@ export class HeaderHomeComponent {
         }
       });
     }
+
+    redirecionarParaLogin() {
+      this.router.navigate(['login']);
+    }
+
+    redirecionarParaCadastro() {
+      this.router.navigate(['cadastro']);
+    }
+
 
 }

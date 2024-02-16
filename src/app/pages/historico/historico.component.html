@@ -1,16 +1,32 @@
+<app-header-voltar logo="../../../assets/icone-degrade.svg" nomeDaPagina="Histórico de transações"></app-header-voltar>
 <div class="container">
-    <div class="row">
-      <div class="col-lg-8 mx-auto">
-        <div class="historico-transacoes">
-          <h1>Histórico de Transações</h1>
-          <div class="lista-transacoes">
-              <ng-container *ngFor="let transacao of transacoes.slice(0, 6)">
-                  <app-cardtransacao [transacoes]="transacoes">
-                  </app-cardtransacao>
-              </ng-container>
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <div class="historico-transacoes">
+        <div class="filtro-pesquisa input-group justify-content-center">
+          <div class="select-pesquisa">
+            <select class="form-select select-arrow">
+              <option value="30dias" selected>Últimos 30 dias</option>
+              <option value="60dias">Últimos 60 dias</option>
+              <option value="90dias">Últimos 90 dias</option>
+            </select>
           </div>
+          <input type="text" class="input-pesquisa" placeholder="Pesquisar">
+          <i class="bi bi-search"></i>
+        </div>
+
+        <div *ngFor="let transacao of transacoesExibidas">
+          <app-cardtransacao [transacao]="transacao"></app-cardtransacao>
+        </div>
+
+        <div *ngIf="todasTransacoesExibidas">
+          <p>Todas as transações foram exibidas.</p>
+        </div>
+        <div class="text-center mt-3"></div>
+          <button class="btn btn-primary btn-lg btn-block" *ngIf="!todasTransacoesExibidas" (click)="carregarMaisTransacoes()">Carregar Mais</button>
         </div>
       </div>
     </div>
   </div>
-  
+<app-footer></app-footer>
+
