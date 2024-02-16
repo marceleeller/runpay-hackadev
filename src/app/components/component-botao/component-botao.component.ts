@@ -10,5 +10,6 @@ import { Component, Input } from '@angular/core';
 export class ComponentBotaoComponent {
   @Input() icone: string | undefined; //icone do botao
   @Input() texto: string | undefined; // texto do botão
+saldo: any;
 
 }
