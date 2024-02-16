@@ -1,5 +1,29 @@
-card {
-    background-color: blue;
-    width: 1366px;
-    height: 280px;
-}
+.informacoes-da-conta {
+    background-color: #12163a; 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .informacoes-da-conta h1 {
+    color: #ffffff; 
+    font-size: 24px; 
+  }
+  
+  .informacoes-da-conta p {
+    font-size: 18px; 
+  }
+  
+  .resumo-transacoes {
+    margin-top: 30px; 
+  }
+  
+  .botao-acao {
+    margin-top: 20px;
+  }  
+  
+  
+  .botao-acao button {
+    margin-right: 10px; 
+  }
+  
