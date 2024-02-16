@@ -8,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './inicial.component.css'
 })
 export class InicialComponent {
+[x: string]: any;
+saldo: number | null = null;
 
 }
