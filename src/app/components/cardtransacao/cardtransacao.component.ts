@@ -7,10 +7,17 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   templateUrl: './cardtransacao.component.html',
   styleUrls: ['./cardtransacao.component.css'],
-  imports: [CommonModule]
+  imports: [CommonModule],
 })
 export class CardtransacaoComponent {
-  @Input() transacoes: Transacao[] = [];
+  @Input() transacao: Transacao | undefined;
   transacoesExibidas: Transacao[] = [];
   @Output() carregarMais = new EventEmitter<void>();
+
+  formatarValor(valor: number | undefined): string {
+    if (valor === undefined) {
+      return '';
+    }
+    return valor.toFixed(2).replace('.', ',');
+  }
 }
