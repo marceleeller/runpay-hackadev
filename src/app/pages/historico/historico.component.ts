@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Transacao } from '../../../models/transacao.model';
 import { CommonModule, formatDate } from '@angular/common';
 import { CardtransacaoComponent } from '../../components/cardtransacao/cardtransacao.component';
+import { HeaderVoltarComponent } from "../../components/header-voltar/header-voltar.component";
 
 @Component({
-  selector: 'app-historico',
-  standalone: true,
-  templateUrl: './historico.component.html',
-  styleUrls: ['./historico.component.css'],
-  imports: [CommonModule, CardtransacaoComponent],
+    selector: 'app-historico',
+    standalone: true,
+    templateUrl: './historico.component.html',
+    styleUrls: ['./historico.component.css'],
+    imports: [CommonModule, CardtransacaoComponent, HeaderVoltarComponent]
 })
 
 export class HistoricoComponent implements OnInit {
@@ -46,7 +47,7 @@ export class HistoricoComponent implements OnInit {
     }
 
     this.transacoesExibidas = this.transacoes.slice(0, this.totalTransacoesExibidas);
-    
+
     this.transacoes.forEach(transacao => {
       transacao.dataFormatada = this.formatarData(transacao.data);
     });

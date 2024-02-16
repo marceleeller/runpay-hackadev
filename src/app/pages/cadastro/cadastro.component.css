@@ -1,0 +1,52 @@
+::ng-deep .icone-runpay {
+  height: 30px !important;
+}
+
+::placeholder {
+    color: #adb5bd;
+}
+
+form {
+    padding: 4em 6em 1em;
+    border-radius: 50px;
+    margin: 25%;
+    background-image: url("../../../assets/bg-card.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#botao_criar_conta {
+    margin-top: 2.5em;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 152px;
+    height: 50px;
+    justify-content: center;
+    background-color: #c3f587;
+}
+
+input {
+    margin-bottom: 15px;
+    color: white;
+}
+
+#link_entrar {
+    color: #c3f587;
+}
+
+h2 {
+    margin-bottom: 0.8em;
+}
+
+div input {
+    color: #ffffff;
+}
+
+
+@media (max-width: 991px) {
+  ::ng-deep .icone-runpay {
+    display: block !important;
+  }
+}
