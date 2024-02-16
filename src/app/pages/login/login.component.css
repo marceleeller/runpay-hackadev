@@ -2,9 +2,48 @@
   width:152px;
   height:50px;
 }
-form{
-  width:770px;
-  text-align: center;
-  margin:0 auto;
-
+.principal{
+  max-width: 770px;
+  margin: 40px 20px 0 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  background: url(./assets/Background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 40px 20px;
+  height: 461px;
+  justify-self: center;
+  align-self: center;
+  justify-content: center;
+  align-content: center;
+}
+.form-login{
+  display: flex;
+  flex-direction: column;
+  max-width: 498px;
+  width: 100%;
+  justify-items: center;
+  text-align: left;
+  color: gray;
+}
+.component-login{
+  display: flex;
+  justify-items: center;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.form-input{
+  padding: 4px;
+  color: gray;  
+  background-color: transparent;
+  border: 2px solid gray;
+  border-radius: 4px; 
+}
+.form-label{
+  color: gray;
 }

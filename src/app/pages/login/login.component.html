@@ -1,14 +1,18 @@
 <app-header-voltar></app-header-voltar>
-<form (ngSubmit)="login()">
-    <h1 class="titulo-login">Olá de novo!</h1>
-    <p>Ainda não tem uma conta na Runpay? Cadastre-se</p>
-    <div class="form-login">
-        <label>O seu e-mail</label>
-        <input type="email" placeholder="Digite aqui" [(ngModel)]="email" required> 
+<form class="component-login" (ngSubmit)="login()">
+    <div class="principal">
+        <h1 class="titulo-login">Olá de novo!</h1>
+        <p>Ainda não tem uma conta na Runpay? Cadastre-se</p>
+        <div class="form-login">
+            <label class="form-label">O seu e-mail</label>
+            <input class="form-input" type="text" placeholder="Digite aqui" [(ngModel)]="email" required> 
+        </div>
+        <div class="form-login">
+            <label class="form-label">A sua senha</label>
+            <input class="form-input" type="password" placeholder="Digite aqui a senha" [(ngModel)]="senha" required>
+        </div>
+        
+        <br>
+        <button class="btn-login btn btn-primary"type="submit">Entrar</button>  
     </div>
-    
-    <label>A sua senha</label>
-    <input type="password" placeholder="Digite aqui a senha" [(ngModel)]="senha" required>
-    <br>
-    <button class="btn-login btn btn-primary"type="submit">Entrar</button>
   </form>
