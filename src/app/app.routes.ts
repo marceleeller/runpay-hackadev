@@ -8,9 +8,9 @@ import { autenticarGuard } from './seguranca/autenticar.guard';
 
 export const routes: Routes = [
     { path: 'home', title:'Home Page', component: HomeComponent },
-    { path:'home/cadastro', title:'Cadastro', component: CadastroComponent},
-    { path:'home/login', title:'Login', component: LoginComponent},
-    { path: 'home/inicial', title:'Página Inicial',component: InicialComponent, canActivate:[autenticarGuard]},
-    { path: 'home/transacoes', title:'Histórico de Transações', component: HistoricoComponent, canActivate:[autenticarGuard] },
+    { path:' cadastro', title:'Cadastro', component: CadastroComponent},
+    { path:' login', title:'Login', component: LoginComponent},
+    { path: 'inicial', title:'Página Inicial',component: InicialComponent, canActivate:[autenticarGuard]},
+    { path: 'transacoes', title:'Histórico de Transações', component: HistoricoComponent, canActivate:[autenticarGuard] },
     { path: '**', title:'Home Page', component: HomeComponent}
 ];
