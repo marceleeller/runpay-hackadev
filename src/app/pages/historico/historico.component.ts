@@ -1,6 +1,6 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { Transacao } from '../../../models/transacao.model';
-import { CommonModule, formatDate } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { CardtransacaoComponent } from '../../components/cardtransacao/cardtransacao.component';
 import { TransacaoService } from '../../services/transacao.service';
 import { HeaderVoltarComponent } from '../../components/header-voltar/header-voltar.component';
@@ -41,10 +41,6 @@ export class HistoricoComponent implements OnInit {
       0,
       this.totalTransacoesExibidas
     );
-
-    this.transacoesExibidas.forEach((transacao) => {
-      transacao.dataFormatada = this.formatarData(transacao.data);
-    });
   }
 
   carregarMaisTransacoes() {
@@ -65,28 +61,5 @@ export class HistoricoComponent implements OnInit {
       this.todasTransacoesExibidas = true;
       this.mostrarBotaoCarregarMais = false;
     }
-  }
-  
-
-  formatarData(data: Date): string {
-    const hoje = new Date();
-    const ontem = new Date(hoje);
-    ontem.setDate(hoje.getDate() - 1);
-
-    if (this.isMesmoDia(data, hoje)) {
-      return 'Hoje';
-    } else if (this.isMesmoDia(data, ontem)) {
-      return 'Ontem';
-    } else {
-      return formatDate(data, 'dd MMM', 'en-US').toLowerCase();
-    }
-  }
-
-  isMesmoDia(data1: Date, data2: Date): boolean {
-    return (
-      data1.getDate() === data2.getDate() &&
-      data1.getMonth() === data2.getMonth() &&
-      data1.getFullYear() === data2.getFullYear()
-    );
   }
 }

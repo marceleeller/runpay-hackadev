@@ -23,10 +23,11 @@
         <div *ngIf="todasTransacoesExibidas">
           <p>Todas as transações foram exibidas.</p>
         </div>
-        <button class="btn btn-primary btn-lg btn-block" *ngIf="!todasTransacoesExibidas" (click)="carregarMaisTransacoes()">Carregar Mais</button>
+        <div class="text-center mt-3"></div>
+          <button class="btn btn-primary btn-lg btn-block" *ngIf="!todasTransacoesExibidas" (click)="carregarMaisTransacoes()">Carregar Mais</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 <app-footer></app-footer>

@@ -1,10 +1,12 @@
 .bi-search {
   color: var(--cor-verde);
-  top: 40%;
-  right: 50px;
+  top: 50%;
+  right: 10px;
   left: 30px;
   font-size: 20px;
   border: none;
+  position: absolute;
+  transform: translateY(-50%);
 }
 .form-select {
   background-color: var(--cor-azul-medio);
@@ -29,7 +31,7 @@
   border-radius: 6px;
   border: none;
   margin: 30px;
-  gap: 8px;
+  gap: 6px;
   font-size: 16px;
   font-weight: 400;
   line-height: 20px;
@@ -40,8 +42,7 @@
 
 .filtro-pesquisa {
   padding: 30px;
-  margin-top: 50px;
-  margin-bottom: 5px;
+  margin-top: 30px;
 }
 .col,
 .row {
@@ -50,10 +51,9 @@
 .bi-chevron-down {
   position: absolute;
   top: 64px;
-  right: 11rem;
-  left: 20rem;
   outline: none;
   font-size: 20px;
+  margin-right: 50px;
 }
 
 @media (max-width: 768px) {
