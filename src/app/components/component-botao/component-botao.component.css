@@ -1,0 +1,34 @@
+/* Componente Botão*/
+.botao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border: none;
+    border-radius: 25px;
+    background-color: var(--cor-cinza-claro); /* cor de fundo botao */
+    color: white; /* cor do texto */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.botao:hover {
+    background-color: #12163A; 
+  }
+  
+  .circulo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--cor-cinza-claro); 
+    margin-right: 10px;
+  }
+  
+  .circulo i {
+    font-size: 20px; /* Tamanho do ícone */
+    color: white /* Cor do ícone */
+  }
+  
+  .texto {
+    font-size: 16px; /* Tamanho do texto */
+  }
