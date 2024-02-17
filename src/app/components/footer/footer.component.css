@@ -1,6 +1,5 @@
 .footer {
-  height: 160px;
-
+  height: 15vh;
   font-family: Raleway;
   font-size: 15px;
   font-weight: 700;
@@ -81,10 +80,16 @@ p {
   justify-content: baseline;
 }
 
+
+footer {
+  margin-top: auto !important;
+}
+
 @media (max-width: 768px) {
 
   .footer {
     height: 400px;
+
   }
 
 

@@ -12,6 +12,7 @@
 
 body {
   background-color: var(--cor-azul-escuro);
+  min-height: 100vh;
 }
 
 /* Estilização base botões */
