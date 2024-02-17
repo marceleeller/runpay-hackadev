@@ -7,13 +7,14 @@ import { TransacaoService } from '../../services/transacao.service';
 import { Transacao } from '../../../models/transacao.model';
 import { CardtransacaoComponent } from "../../components/cardtransacao/cardtransacao.component";
 import { CommonModule } from '@angular/common';
+import { ModalSairComponent } from "../../components/modal-sair/modal-sair.component";
 
 @Component({
     selector: 'app-inicial',
     standalone: true,
     templateUrl: './inicial.component.html',
     styleUrl: './inicial.component.css',
-    imports: [ComponentBotaoComponent, HeaderHomeComponent, FooterComponent, HeaderInicialComponent, CardtransacaoComponent, CommonModule]
+    imports: [ComponentBotaoComponent, HeaderHomeComponent, FooterComponent, HeaderInicialComponent, CardtransacaoComponent, CommonModule, ModalSairComponent]
 })
 export class InicialComponent {
   saldo: number = 32000;

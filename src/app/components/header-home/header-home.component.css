@@ -1,14 +1,17 @@
 #logo-runpay {
   height: 30px;
+  padding-left: 9px;
 }
 
 .navbar {
   height: 10vh;
+  width: 100%;
 }
 
 .container-fluid {
   height: 35px;
   max-width: 770px;
+  padding: 0;
 }
 
 .items-links {
@@ -62,6 +65,10 @@
 }
 
 @media (max-width: 991px) {
+
+  #logo-runpay {
+    padding-left: 0;
+  }
 
   .container-fluid {
     padding: 0 28px;
