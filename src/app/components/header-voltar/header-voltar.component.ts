@@ -16,7 +16,16 @@ export class HeaderVoltarComponent {
 
   constructor(private routes: Router) { }
 
-  redirecionarParaHome() {
-    this.routes.navigate(['home']);
+  redirecionarPara() {
+    switch (this.logo) {
+      case '../../../assets/icone-degrade.svg':
+        this.routes.navigate(['inicial']);
+        break;
+      case '../../../assets/logo.svg':
+        this.routes.navigate(['home']);
+        break;
+    }
   }
+
+
 }

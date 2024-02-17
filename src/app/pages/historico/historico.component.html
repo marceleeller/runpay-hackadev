@@ -20,7 +20,6 @@
     </div>
   </section>
 
-
   <section class="section_transacoes">
     <div class="transacoes_content">
       <h3 class="card-title mb-4">Transações recentes</h3>
@@ -43,36 +42,5 @@
     </div>
   </section>
 </main>
-
-<!--
-<div class="container">
-  <div class="row">
-    <div class="col-lg-8 mx-auto">
-      <div class="historico-transacoes">
-        <div class="filtro-pesquisa input-group justify-content-center">
-          <div class="select-pesquisa">
-            <select class="form-select select-arrow">
-              <option value="30dias" selected>Últimos 30 dias</option>
-              <option value="60dias">Últimos 60 dias</option>
-              <option value="90dias">Últimos 90 dias</option>
-            </select>
-          </div>
-          <input type="text" class="input-pesquisa" placeholder="Pesquisar">
-          <i class="bi bi-search"></i>
-        </div>
-
-        <div *ngFor="let transacao of transacoesExibidas">
-          <app-cardtransacao [transacao]="transacao"></app-cardtransacao>
-        </div>
-
-        <div *ngIf="todasTransacoesExibidas">
-          <p>Todas as transações foram exibidas.</p>
-        </div>
-        <div class="text-center mt-3"></div>
-          <button class="btn btn-primary btn-lg btn-block" *ngIf="!todasTransacoesExibidas" (click)="carregarMaisTransacoes()">Carregar Mais</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
 
 <app-footer></app-footer>

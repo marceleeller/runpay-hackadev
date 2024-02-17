@@ -1,56 +1,122 @@
-.informacoes-da-conta {
-    background-color: #171C4B; 
-    padding: 20px;
-    border-radius: 10px;
+.inicial-content {
+  background-image: url('../../../assets/bg-inicial.png');
+  background-size: 100vw 70vh;
+  background-repeat: no-repeat;
+}
+
+.section_saldo {
+  background-image: url('../../../assets/bg-saldo.png');
+  background-size: 300px;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.saldo_textos {
+  margin-top: 2rem;
+}
+
+.section_saldo h1 {
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.section_saldo p {
+  font-size: 14px;
+}
+
+  .section_transacoes {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0 2rem 0;
   }
-  
-  .informacoes-da-conta h1 { 
-    font-size: 24px; 
-    margin-bottom: 10px;
+
+  .transacoes_content {
+    width: 100%;
+    max-width: 770px;
+    background-image: url('../../../assets/bg-card.png');
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 3rem;
+    border-radius: 60px;
   }
-  
-  .informacoes-da-conta p {
-    font-size: 18px; 
+
+  .card-title {
+    width: 100%;
+    padding: 0 3rem;
+    font-size: 24px;
   }
-  
-  .botao-acao {
-    margin-top: 20px;
-}
 
-.botao-acao button {
-    margin-right: 10px;
-}
+  .transacoes {
+    width: 100%;
+    max-width: 650px;
+  }
 
-.btn-circle {
-    width: 30px;
-    height: 30px;
-    border-radius: 30%;
-    background-color: var(--cor-cinza); 
-    color: #FFFFFF; 
-    border: none;
-    font-size: 20px; /* Tamanho do ícone */
-}
+  @media (max-width: 768px) {
 
-/* Estilos para os botões de ação */
-.botao-acao button {
-    margin-right: 10px;
-}
+    .gap-4 {
+      gap: 0.6rem !important;
+    }
 
-.btn-circle {
-    width: 30px;
-    height: 30px;
-    border-radius: 30%;
-    background-color: var(--cor-cinza);
-    color: #FFFFFF; 
-    border: none;
-    font-size: 20px; 
-}
+    .section_saldo {
+      background-image: none;
+      height: 150px;
+      justify-content: flex-start;
+    }
 
-.btn-gray {
-    background-color: #E0E0E0; /* Cor de fundo do botão cinza */
-}
+    .saldo_textos {
+      margin: 0;
+      padding-top: 20px;
+    }
 
-/* Estilos para a seção de resumo de transações */
-.resumo-transacoes {
-    margin-top: 30px;
-}
+    .transacoes_content {
+      background-image: none;
+      padding: 2rem 1.5rem 0 1.5rem;
+    }
+
+    .card-title {
+      font-size: 16px;
+      padding: 0;
+    }
+
+    .form-select, .input-group {
+      width: 160px;
+    }
+
+    ::ng-deep .footer {
+      height: 15vh !important;
+    }
+
+    ::ng-deep .secao-contato,::ng-deep .secao-siga {
+      display: none !important;
+    }
+
+    ::ng-deep .copyright {
+      flex-direction: row;
+      justify-content: flex-start !important;
+    }
+
+    ::ng-deep .secao-direitos {
+      width: 100% !important;
+      flex-direction: row !important;
+      gap: 1rem;
+    }
+
+    ::ng-deep .col-md-4 {
+      width: 300px !important;
+    }
+
+    ::ng-deep .row {
+      justify-content: center;
+      align-items: center;
+    }
+
+    }
+
