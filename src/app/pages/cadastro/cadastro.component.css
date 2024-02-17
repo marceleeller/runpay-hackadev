@@ -75,7 +75,7 @@ div input {
   }
 
   ::ng-deep .footer {
-    height: 160px !important;
+    height: 10vh !important;
   }
 
   ::ng-deep .secao-contato {

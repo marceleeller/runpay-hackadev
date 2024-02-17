@@ -29,29 +29,10 @@
   background: var(--cor-verde);
 }
 
-.btn-sair {
-  background: none;
-  border: none;
-  width: 40px;
-  height: 40px;
-}
-
-.btn-sair:hover {
-  width: 40px;
-  height: 40px;
-  transform: scale(1.1);
-  transition: ease 0.1s;
-}
-
 .bi-person {
   color: var(--cor-azul-escuro);
   font-size: 24px;
   -webkit-text-stroke: 0.5px;
-}
-
-.bi-box-arrow-right {
-  font-size: 24px;
-  color: var(--cor-verde);
 }
 
 @media (max-width: 991px) {
