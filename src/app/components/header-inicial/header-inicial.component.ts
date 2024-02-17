@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header-inicial',
@@ -9,4 +10,10 @@ import { Component, Input } from '@angular/core';
 })
 export class HeaderInicialComponent {
   @Input() nomeUsuario: string = 'Fabiana Souza';
+
+  constructor(private routes: Router) { }
+
+  redirecionarParaHome() {
+    this.routes.navigate(['home']);
+  }
 }

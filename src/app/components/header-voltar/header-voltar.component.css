@@ -4,6 +4,7 @@
 .container {
     max-width: 770px;
     height: 100%;
+    padding: 0;
 }
 
 .col, .row {

@@ -89,9 +89,7 @@ footer {
 
   .footer {
     height: 400px;
-
   }
-
 
   .secao-siga, .secao-direitos, .secao-contato {
     width: 100%;
@@ -110,37 +108,3 @@ footer {
   }
 
 }
-
-
-/* @media (max-width: 991px) {
-  .col-left {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-  }
-
-  .icon-logo {
-    margin-left: 95px;
-  }
-
-  .copyright {
-    flex-grow: 1;
-    text-align: center;
-    margin-top: 45px;
-  }
-
-  .copyright br {
-    display: none;
-  }
-
-  .footer-titleCenter1,
-  .footer-titleCenter2,
-  .footer-title-rigth,
-  .social-icons {
-    display: none;
-  }
-}
- */

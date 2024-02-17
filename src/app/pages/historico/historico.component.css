@@ -88,12 +88,6 @@
 }
 
 @media (max-width: 768px) {
-  /* .bi-search,
-  .bi-chevron-down {
-    width: 1.5rem;
-    height: 1.5rem;
-  } */
-
   .transacoes_content {
     background-image: none;
     padding: 1rem 1.5rem;
