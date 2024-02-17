@@ -1,18 +1,45 @@
-<app-header-voltar></app-header-voltar>
-<form class="component-login" (ngSubmit)="login()">
-    <div class="principal">
-        <h1 class="titulo-login">Olá de novo!</h1>
-        <p>Ainda não tem uma conta na Runpay? Cadastre-se</p>
-        <div class="form-login">
-            <label class="form-label">O seu e-mail</label>
-            <input class="form-input" type="text" placeholder="Digite aqui" [(ngModel)]="email" required> 
-        </div>
-        <div class="form-login">
-            <label class="form-label">A sua senha</label>
-            <input class="form-input" type="password" placeholder="Digite aqui a senha" [(ngModel)]="senha" required>
-        </div>
-        
-        <br>
-        <button class="btn-login btn btn-primary"type="submit">Entrar</button>  
-    </div>
-  </form>
+<app-header-voltar logo="../../../assets/logo.svg"></app-header-voltar>
+
+<main class="main_container d-flex flex-column align-items-center px-4 pt-5">
+  <div class="formulario">
+    <form class="justify-content-center" [formGroup]="formularioLogin">
+      <h2 class="text-center">Olá de novo!</h2>
+      <p class="text-center">
+        Ainda não tem uma conta na Runpay?
+        <a (click)="redirecionarParaCadastro()" id="link_entrar" style="text-decoration: underline; font-weight: 700;"
+          >Cadastre-se</a
+        >
+      </p>
+
+      <div id="formulario-preenchido">
+        <label class="form-label" for="email">E-mail</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          placeholder="Insira seu E-mail"
+          formControlName="email"
+        />
+
+        <label class="form-label" for="senha">Senha</label>
+        <input
+          type="password"
+          class="form-control"
+          id="senha"
+          placeholder="Insira sua senha"
+          formControlName="senha"
+        />
+      </div>
+      <input
+        type="submit"
+        id="botao_criar_conta"
+        class="btn btn-primary"
+        value="Criar"
+      />
+    </form>
+  </div>
+
+</main>
+
+
+<app-footer></app-footer>
