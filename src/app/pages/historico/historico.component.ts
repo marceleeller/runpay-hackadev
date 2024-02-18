@@ -24,7 +24,7 @@ export class HistoricoComponent implements OnInit {
   scrollClass = 'disable-scroll';
   transacoes: Transacao[] = [];
   transacoesExibidas: Transacao[] = [];
-  totalTransacoesExibidas: number = 6;
+  totalTransacoesExibidas: number = 12;
   todasTransacoesExibidas: boolean = false;
   mostrarBotaoCarregarMais = true;
 
@@ -35,30 +35,24 @@ export class HistoricoComponent implements OnInit {
   }
 
   carregarTransacoes() {
-    this.transacoes = this.transacaoService.carregarTransacoes(6);
+    this.transacoes = this.transacaoService.carregarTransacoes();
+    this.transacoesExibidas = this.transacoes.slice(0, 6);
     this.verificarTodasTransacoesExibidas();
-
-    this.transacoesExibidas = this.transacoes.slice(0, this.totalTransacoesExibidas);
   }
 
   carregarMaisTransacoes() {
-    this.scrollClass = 'enable-scroll';
     const proximasTransacoes = this.transacoes.slice(
       this.transacoesExibidas.length,
-      this.transacoesExibidas.length + this.totalTransacoesExibidas
+      this.transacoesExibidas.length + 6
     );
-    this.transacoesExibidas = [
-      ...this.transacoesExibidas,
-      ...proximasTransacoes,
-    ];
+    this.transacoesExibidas.push(...proximasTransacoes);
     this.verificarTodasTransacoesExibidas();
   }
 
   verificarTodasTransacoesExibidas() {
     if (this.transacoes.length <= this.transacoesExibidas.length) {
       this.todasTransacoesExibidas = true;
-      this.mostrarBotaoCarregarMais = false;
+      this.mostrarBotaoCarregarMais = this.transacoesExibidas.length < this.transacoes.length;
     }
   }
 }
-

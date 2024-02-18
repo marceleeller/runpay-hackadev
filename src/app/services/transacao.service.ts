@@ -7,7 +7,7 @@ import { Transacao } from '../../models/transacao.model';
 export class TransacaoService {
 
 
-  carregarTransacoes(limit: number): Transacao[] {
+  carregarTransacoes(): Transacao[] {
     const transacoes: Transacao[] = [
       { id: 1, nome: 'Para João', data: new Date(), tipo: 'Transferência', valor: 100.00 },
       { id: 2, nome: 'Farmácia', data: new Date('2024-02-16'), tipo: 'Pagamento', valor: -150.0 },
@@ -22,6 +22,6 @@ export class TransacaoService {
       { id: 11, nome: 'De Ana', data: new Date('2023-12-28'), tipo: 'Transferência', valor: 500.0},
       { id: 12, nome: 'Vinícius', data: new Date('2023-12-25'), tipo: 'Pagamento', valor: -380.0},
     ];
-    return transacoes.slice(0, limit);
+    return transacoes;
   }
 }
