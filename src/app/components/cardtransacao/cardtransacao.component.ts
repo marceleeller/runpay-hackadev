@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Transacao } from './../../../models/transacao.model';
 import { CommonModule, formatDate } from '@angular/common';
 
@@ -11,8 +11,6 @@ import { CommonModule, formatDate } from '@angular/common';
 })
 export class CardtransacaoComponent {
   @Input() transacao: Transacao | undefined;
-  transacoesExibidas: Transacao[] = [];
-  @Output() carregarMais = new EventEmitter<void>();
 
   ngOnInit(): void {
     if (this.transacao) {
@@ -37,8 +35,12 @@ export class CardtransacaoComponent {
     } else if (this.isMesmoDia(data, ontem)) {
       return 'Ontem';
     } else {
-      return formatDate(data, 'dd MMM', 'en-US').toLowerCase();
+      return this.formatarDataFormatada(data);
     }
+  }
+
+  private formatarDataFormatada(data: Date): string {
+    return formatDate(data, 'dd MMM', 'en-US').toLowerCase();
   }
 
   isMesmoDia(data1: Date, data2: Date): boolean {

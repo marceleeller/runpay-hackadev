@@ -30,8 +30,8 @@ export class InicialComponent {
   }
 
   carregarTransacoes() {
-    this.transacoes = this.transacaoService.carregarTransacoes(4);
-    this.transacoesExibidas = this.transacoes.slice(0, this.totalTransacoesExibidas);
+    this.transacoes = this.transacaoService.carregarTransacoes();
+    this.transacoesExibidas = this.transacoes.slice(0, 4);
   }
 
 }
