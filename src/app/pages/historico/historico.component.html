@@ -6,7 +6,7 @@
 <main class="main_container">
   <section class="section_filtro d-flex justify-content-center gap-3">
     <div class="select-pesquisa">
-      <select class="form-select select-arrow">
+      <select class="form-select select-arrow" (change)="onFiltroAlterado($event)">
         <option value="30dias" selected>Últimos 30 dias</option>
         <option value="60dias">Últimos 60 dias</option>
         <option value="90dias">Últimos 90 dias</option>
@@ -14,9 +14,9 @@
     </div>
 
     <div class="input-group mb-3">
-      <input type="text" class="input-pesquisa form-control" placeholder="Pesquisar" />
-      <span class="input-group-text bi bi-search" id="basic-addon2">
-      </span>
+      <input type="text" #tipoTransacaoInput class="input-pesquisa form-control" placeholder="Pesquisar" />
+      <button (click)="pesquisar(tipoTransacaoInput.value)" class="input-group-text bi bi-search" id="basic-addon2">
+      </button>
     </div>
   </section>
 
