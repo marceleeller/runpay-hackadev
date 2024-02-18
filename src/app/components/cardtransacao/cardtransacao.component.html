@@ -18,8 +18,8 @@
         <p
           class="valor"
           [ngClass]="{
-            'text-pg': transacao?.tipo === 'Pagamento',
-            'text-trans': transacao?.tipo === 'Transferência'}">
+            'text-pg': transacao?.tipo === 'Pagamento' && transacao?.nome?.startsWith('Para'),
+            'text-trans': transacao?.tipo === 'Transferência' && !transacao?.nome?.startsWith('Para')}">
           {{ transacao?.valor !== undefined ? formatarValor(transacao?.valor) : "" }}
         </p>
       </div>
