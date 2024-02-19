@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-modal-sair',
   standalone: true,
@@ -12,7 +12,14 @@ export class ModalSairComponent {
 
   constructor(private routes: Router) { }
 
-  redirecionarParaHome() {
-    this.routes.navigate(['home']);
+  activeModal = inject(NgbActiveModal);
+
+  @Input() titulo:string = '';
+  @Input() botaoFechar:string = 'Fechar';
+  @Input() botaoSair:string = 'Sair';
+  @Input() rota:string = 'home';
+
+  redirecionarPara() {
+    this.routes.navigate([this.rota]);
   }
 }

@@ -53,11 +53,7 @@
 }
 
 .offcanvas-header {
-  height: 80px;
-}
-
-.offcanvas-backdrop {
-  opacity: 0;
+  height: 10vh;
 }
 
 .icone-azul {
