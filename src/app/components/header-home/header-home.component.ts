@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgClass } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-header-home',
   standalone: true,
-  imports: [ NgbModule, NgClass ],
+  imports: [ NgbModule, NgClass, RouterLink, RouterOutlet, RouterModule ],
   templateUrl: './header-home.component.html',
   styleUrl: './header-home.component.css'
 })
