@@ -3,12 +3,12 @@ import { HeaderHomeComponent } from "../../components/header-home/header-home.co
 import { FooterComponent } from "../../components/footer/footer.component";
 
 @Component({
-    selector: 'app-contato',
+    selector: 'app-sobre',
     standalone: true,
-    templateUrl: './contato.component.html',
-    styleUrl: './contato.component.css',
+    templateUrl: './sobre.component.html',
+    styleUrl: './sobre.component.css',
     imports: [HeaderHomeComponent, FooterComponent]
 })
-export class ContatoComponent {
+export class SobreComponent {
 
 }

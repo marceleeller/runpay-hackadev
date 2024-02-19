@@ -34,8 +34,8 @@
   gap: 30px;
 }
 
-.active {
-  color: white;
+.active, .active-link {
+  color: red;
   background-color: var(--cor-azul-claro);
   border-radius: 100px;
 }
