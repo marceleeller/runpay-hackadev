@@ -93,3 +93,18 @@ body {
   font-weight: 400;
   color: var(--cor-cinza);
 }
+
+.ng-invalid.ng-dirty:not(form)  {
+  border: 1px solid red;
+}
+
+.ng-invalid.ng-dirty:not(form):focus {
+  border: 1px solid red !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 51, 51, 0.356) !important;
+}
+
+.texto-invalido {
+  color: red;
+  font-size: 12px;
+  margin: -15px 0 0 5px;
+}

@@ -80,9 +80,10 @@
     padding: 0;
   }
 
-  .nav-item.active > a {
+  .active {
     background-color: var(--cor-verde);
     border-bottom: 2px solid var(--cor-azul-escuro);
+    border-radius: 0;
   }
 
   .items-links {

@@ -1,0 +1,151 @@
+main {
+  min-height: 75vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ng-invalid.ng-dirty:not(form) {
+  border: 1px solid red;
+}
+
+.container {
+  height: 100%;
+  max-width: 1170px;
+  max-height: 600px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-contato {
+  max-width: 510px;
+  height: 100%;
+}
+
+.img-megafone-web, .img-megafone-mobile {
+  max-width: 600px;
+  max-height: 600px;
+  border-radius: 4rem;
+}
+
+.form-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.form-inputs{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-item {
+  width: 100%;
+  max-width: 250px;
+}
+
+.form-text {
+  width: 100%;
+}
+
+.form-label {
+  margin: 0;
+}
+
+.btn {
+  width: 170px;
+}
+
+.titulo {
+  font-size: 64px;
+  font-weight: 700;
+}
+
+.subtitulo {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.form-control {
+  color: white;
+}
+
+.img-megafone-mobile {
+  display: none;
+}
+
+@media (max-width: 1170px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    max-height: inherit;
+    padding: 3rem 1.5rem;
+  }
+
+  .form-container {
+    align-items: center;
+  }
+
+  .main-contato {
+    max-width: 600px;
+  }
+
+  .form-item {
+    max-width: 290px;
+  }
+
+  .subtitulo {
+    max-width: 500px;
+    text-align: center;
+    padding-bottom: 1rem;
+  }
+
+  .titulo-contato {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .img-megafone-web {
+    display: none;
+  }
+
+  .img-megafone-mobile {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+
+
+  .titulo-contato {
+    gap: 1rem;
+  }
+
+  .titulo {
+    font-size: 32px;
+    max-width: 300px;
+  }
+
+  .subtitulo {
+    font-size: 16px;
+    max-width: 275px;
+  }
+
+  .form-item {
+    max-width: 100%;
+  }
+
+  .img-megafone-mobile {
+    width: 100%;
+  }
+
+
+}
