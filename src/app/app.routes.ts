@@ -10,6 +10,7 @@ export const routes: Routes = [
     { path: 'home', title:'Home Page', component: HomeComponent },
     { path: 'cadastro', title:'Cadastro', component: CadastroComponent},
     { path: 'login', title:'Login', component: LoginComponent},
+    { path: 'contato', title:'Contato', component: HomeComponent },
     { path: 'inicial', title:'Página Inicial',component: InicialComponent, canActivate:[autenticarGuard]},
     { path: 'transacoes', title:'Histórico de Transações', component: HistoricoComponent, canActivate:[autenticarGuard] },
     { path: '**', title:'Home Page', component: HomeComponent}
