@@ -1,10 +1,10 @@
 .app-header-voltar {
-    width: 100vw;
-    height: 100px;
+    height: 10vh;
 }
 .container {
     max-width: 770px;
     height: 100%;
+    padding: 0;
 }
 
 .col, .row {

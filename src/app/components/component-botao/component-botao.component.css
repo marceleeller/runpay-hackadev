@@ -1,0 +1,30 @@
+p {
+  font-weight: 600;
+  margin: 0;
+  font-size: 14px;
+}
+
+.botao {
+  width: 105px;
+  max-height: 115px;
+}
+
+.btn-icone {
+  background-color: var(--cor-azul-claro);
+  border: none;
+  width: 70px;
+  height: 70px;
+  border-radius: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-icone:hover {
+  box-shadow: 0px 0px 10px var(--cor-verde);
+  transition: ease 0.3s;
+}
+
+.bi {
+  font-size: 30px;
+}

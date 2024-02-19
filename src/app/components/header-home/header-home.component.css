@@ -1,14 +1,17 @@
 #logo-runpay {
   height: 30px;
+  padding-left: 9px;
 }
 
 .navbar {
-  height: 80px;
+  height: 10vh;
+  width: 100%;
 }
 
 .container-fluid {
   height: 35px;
   max-width: 770px;
+  padding: 0;
 }
 
 .items-links {
@@ -31,8 +34,8 @@
   gap: 30px;
 }
 
-.active {
-  color: white;
+.active, .active-link {
+  color: red;
   background-color: var(--cor-azul-claro);
   border-radius: 100px;
 }
@@ -50,7 +53,7 @@
 }
 
 .offcanvas-header {
-  height: 80px;
+  height: 10vh;
 }
 
 .icone-azul {
@@ -62,6 +65,10 @@
 }
 
 @media (max-width: 991px) {
+
+  #logo-runpay {
+    padding-left: 0;
+  }
 
   .container-fluid {
     padding: 0 28px;

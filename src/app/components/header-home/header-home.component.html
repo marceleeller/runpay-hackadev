@@ -14,27 +14,28 @@
               <i class="bi bi-x-lg"></i>
             </button>
           </div>
+
           <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-end  align-items-center  flex-grow-1 pe-3">
 
                 <div class="items-links">
-                  <li class="nav-item active">
-                    <a class="nav-link" aria-current="page" href="#">Home</a>
+                  <li class="nav-item">
+                    <a class="nav-link" routerLink="home" routerLinkActive="active">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Sobre nós</a>
+                    <a class="nav-link" routerLink="sobre" routerLinkActive="active">Sobre nós</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Contato</a>
+                    <a class="nav-link" routerLink="contato" routerLinkActive="active">Contato</a>
                   </li>
                 </div>
 
                 <div class="btns-entrar-criarconta">
                   <li class="nav-item">
-                    <button class="btn" [ngClass]="className">Entrar</button>
+                    <button class="btn" [ngClass]="className" (click)="redirecionarParaLogin()">Entrar</button>
                   </li>
                   <li class="nav-item item-mobile">
-                    <button class="btn btn-secondary" href="#">Criar Conta</button>
+                    <button class="btn btn-secondary" href="#" (click)="redirecionarParaCadastro()">Criar Conta</button>
                   </li>
                 </div>
 

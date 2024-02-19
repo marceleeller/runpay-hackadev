@@ -1,0 +1,9 @@
+<div class="modal-background">
+  <div class="modal-header">
+    <h4 class="modal-title fs-5">{{ titulo }}</h4>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">{{ botaoFechar }}</button>
+    <button type="button" class="btn btn-primary" (click)="activeModal.close('Close click')" (click)="redirecionarPara()">{{ botaoSair }}</button>
+  </div>
+</div>

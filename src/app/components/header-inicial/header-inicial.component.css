@@ -1,6 +1,5 @@
 .header-inicial {
-  width: 100vw;
-  height: 100px;
+  height: 10vh;
 }
 
 .container {
@@ -54,7 +53,6 @@
   font-size: 24px;
   color: var(--cor-verde);
 }
-
 @media (max-width: 991px) {
 
   .container {

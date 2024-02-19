@@ -1,16 +1,46 @@
-<app-header-voltar logo="../../../assets/icone-degrade.svg" nomeDaPagina="Histórico de transações"></app-header-voltar>
-<div class="container">
-    <div class="row">
-      <div class="col-lg-8 mx-auto">
-        <div class="historico-transacoes">
-          <h1>Histórico de Transações</h1>
-          <div class="lista-transacoes">
-              <ng-container *ngFor="let transacao of transacoes.slice(0, 6)">
-                  <app-cardtransacao [transacoes]="transacoes">
-                  </app-cardtransacao>
-              </ng-container>
-          </div>
+<app-header-voltar
+  logo="../../../assets/icone-degrade.svg"
+  nomeDaPagina="Histórico de transações"
+></app-header-voltar>
+
+<main class="main_container">
+  <section class="section_filtro d-flex justify-content-center gap-3">
+    <div class="select-pesquisa">
+      <select class="form-select select-arrow" (change)="onFiltroAlterado($event)">
+        <option value="30dias" selected>Últimos 30 dias</option>
+        <option value="60dias">Últimos 60 dias</option>
+        <option value="90dias">Últimos 90 dias</option>
+      </select>
+    </div>
+
+    <div class="input-group mb-3">
+      <input type="text" #tipoTransacaoInput class="input-pesquisa form-control" placeholder="Pesquisar" />
+      <button (click)="pesquisar(tipoTransacaoInput.value)" class="input-group-text bi bi-search" id="basic-addon2">
+      </button>
+    </div>
+  </section>
+
+  <section class="section_transacoes">
+    <div class="transacoes_content">
+      <h3 class="card-title mb-4">Transações recentes</h3>
+      <div class="transacoes">
+        <div *ngFor="let transacao of transacoesExibidas">
+          <app-cardtransacao [transacao]="transacao"></app-cardtransacao>
         </div>
       </div>
+
+      <div *ngIf="todasTransacoesExibidas" class="transacoes-exibidas">
+        <p>Todas as transações foram exibidas.</p>
+      </div>
+      <button
+        class="btn btn-primary btn-block"
+        *ngIf="!todasTransacoesExibidas"
+        (click)="carregarMaisTransacoes()"
+      >
+        Carregar Mais
+      </button>
     </div>
-  </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

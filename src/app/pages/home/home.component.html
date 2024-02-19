@@ -1,25 +1,47 @@
 <app-header-home></app-header-home>
-<div>
-    <div class="container">
-        <div class="titulo">
-        <h1>Velocidade e segurança em cada transação</h1>
-        <button type="button" class="btn btn-outline-primary">Abra sua conta agora</button>
+
+<main class="main-container">
+  <section class="section_principal">
+    <div class="principal_texto">
+      <h1>Velocidade e segurança em cada transação</h1>
+      <button class="btn btn-outline-primary" (click)="redirecionarParaCadastro()">Abra sua conta agora</button>
     </div>
-    </div>
-    <div class="cartao">
-        <img src="./../../../assets/home.png" alt="" style="width: 829px; height: 858px;">
-    </div>
-    <div>
-        <div class="subtitle">
-        <h2>Descomplicamos sua vida financeira</h2>
+
+  </section>
+
+  <section class="section_card">
+    <div class="card_content">
+      <h2><span>Descomplicamos</span> sua vida financeira</h2>
+
+      <div class="card_itens container d-flex flex-column justify-content-center gap-2">
+        <div class="row">
+          <div class="card_item col-5">
+            <i class="bi bi-chevron-double-right"></i>
+            <p>Sem filas e papelada.</p>
+          </div>
+          <div class="card_item col-6">
+            <i class="bi bi-chevron-double-right"></i>
+            <p>Sem anuidade.</p>
+          </div>
         </div>
-        <div class="cards">
-        <p>Sem filas e papeladas</p>
-        <p>Sem anuidade no Cartão de Débito e Crédito</p>
-        <p>tTransferências Pix e TED gratuitas</p>
-        <p>Sem complicação para cobrar e receber</p>
+
+        <div class="row">
+          <div class="card_item col-5">
+            <i class="bi bi-chevron-double-right"></i>
+            <p>Transferências gratuitas.</p>
+          </div>
+          <div class="card_item col-6">
+            <i class="bi bi-chevron-double-right"></i>
+            <p>Sem complicação pra cobrar e receber.</p>
+          </div>
         </div>
+
+      </div>
     </div>
-    </div>
+
+
+  </section>
+</main>
+
 
 <app-footer></app-footer>

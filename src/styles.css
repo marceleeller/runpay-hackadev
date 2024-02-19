@@ -12,6 +12,7 @@
 
 body {
   background-color: var(--cor-azul-escuro);
+  min-height: 100vh;
 }
 
 /* Estilização base botões */
@@ -83,7 +84,7 @@ body {
   border-color: var(--cor-cinza);
 }
 
-.form-control:focus {
+.form-control:focus, .form-select:focus  {
   border-color: var(--cor-verde) !important;
   box-shadow: 0 0 0 0.2rem rgba(195, 245, 135, 0.2) !important;
 }

@@ -1,8 +1,103 @@
-.custom-card {
-    border: 1px solid;
-    max-width: 770px;
-    margin: 20px auto;
-    border-radius: 3%;
-    background-color: #313551;
+p, h5 {
+  margin: 0;
+  padding: 0;
+}
+
+.card-transacao {
+  width: 100%;
+}
+
+.card-container {
+  max-width: 650px;
+  height: 80px;
+  border-bottom: 1px solid var(--cor-azul-claro);
+}
+
+.row {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.col-2 {
+  width: 12.5%;
+}
+
+.col, .col-2, .col-8 {
+  height: 100%;
+  padding: 0;
+}
+
+/* Textos */
+.card-titulo {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+  color: var(--cor-branco);
+}
+
+.card-subtitulo {
+  color: var(--cor-cinza);
+  font-size: 12px;
+}
+
+.valor {
+  font-weight: 600;
+  line-height: 19px;
+  text-align: right;
+}
+
+.text-pg {
+  color: var(--cor-branco);
+}
+
+.text-trans {
+  color: var(--cor-verde);
+}
+
+/* Icones */
+.icon {
+  width: 45px;
+  height: 45px;
+  background-color: var(--cor-azul-claro);
+  border-radius: 50px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.bi-arrow-up,
+.bi-arrow-left-right {
+  color: var(--cor-branco);
+  width: 12px;
+  height: 18px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+@media (max-width: 576px) {
+  .col-8 {
+    padding: 0 0.5rem;
   }
-  
+
+  .col-2 {
+    width: 16.6%;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-nome,
+  .card-tipo-tr,
+  .card-data {
+    margin-left: 0;
+  }
+
+  .card-titulo {
+    font-size: 14px;
+  }
+
+
+}

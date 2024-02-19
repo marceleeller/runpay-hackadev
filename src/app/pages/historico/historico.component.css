@@ -1,0 +1,124 @@
+.main-container {
+  width: 100vw;
+}
+
+/* seção filtros */
+
+.section_filtro {
+  padding: 3rem 0 0;
+}
+
+.form-control, .form-select, .input-group-text {
+  background-color: var(--cor-azul-medio);
+  color: #adb5bd;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding: 9px, 16px, 9px, 16px;
+}
+
+.form-select, .input-group {
+  width: 200px;
+}
+
+.bi-search {
+  color: var(--cor-verde);
+}
+
+.form-control::placeholder, option, .form-select {
+  color: var(--cor-cinza);
+}
+
+.form-select:focus, .form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(195, 245, 135, 0.5) !important;
+}
+
+
+.filtro-pesquisa {
+  padding: 30px;
+  margin-top: 30px;
+}
+
+/* card de transações */
+.section_transacoes {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0 2rem 0;
+}
+
+.transacoes_content {
+  width: 100%;
+  max-width: 770px;
+  background-image: url('../../../assets/bg-card.png');
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 3rem;
+  border-radius: 60px;
+}
+
+.card-title {
+  width: 100%;
+  padding: 0 3rem;
+  font-size: 24px;
+}
+
+.transacoes {
+  width: 100%;
+  max-width: 650px;
+}
+
+.btn-primary {
+  margin: 2rem 0 0 0;
+}
+
+.transacoes-exibidas {
+  margin: 2rem 0 0 0;
+}
+
+.transacoes-exibidas p {
+  font-size: 14px;
+  color: var(--cor-cinza);
+}
+
+@media (max-width: 768px) {
+  .transacoes_content {
+    background-image: none;
+    padding: 1rem 1.5rem;
+  }
+
+  .card-title {
+    font-size: 16px;
+    padding: 0;
+  }
+
+  .form-select, .input-group {
+    width: 160px;
+  }
+
+  .btn-primary {
+    box-shadow: 0px 0px 10px var(--cor-verde);
+  }
+
+
+
+  ::ng-deep .footer {
+    height: 160px !important;
+  }
+
+  ::ng-deep .secao-contato {
+    display: none !important;
+  }
+
+  ::ng-deep .secao-siga {
+    display: none !important;
+  }
+
+  }
