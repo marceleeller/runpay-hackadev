@@ -51,6 +51,7 @@ input {
 
 #link_entrar {
     color: #c3f587;
+    cursor: pointer;
 }
 
 h2 {

@@ -55,6 +55,7 @@
   width: 100%;
   max-width: 770px;
   background-image: url('../../../assets/bg-card.png');
+  background-size: cover;
   display: flex;
   flex-direction: column;
   align-items: center;
