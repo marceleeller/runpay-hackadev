@@ -4,13 +4,15 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { HeaderVoltarComponent } from "../../components/header-voltar/header-voltar.component";
 import { FooterComponent } from "../../components/footer/footer.component";
 import { Router } from '@angular/router';
+import { NgxMaskDirective, provideNgxMask} from 'ngx-mask';
 
 @Component({
     selector: 'app-cadastro',
     standalone: true,
     templateUrl: './cadastro.component.html',
     styleUrl: './cadastro.component.css',
-    imports: [ReactiveFormsModule, CommonModule, HeaderVoltarComponent, FooterComponent]
+    imports: [ReactiveFormsModule, CommonModule, HeaderVoltarComponent, FooterComponent, NgxMaskDirective],
+    providers: [provideNgxMask()]
 })
 export class CadastroComponent {
 
