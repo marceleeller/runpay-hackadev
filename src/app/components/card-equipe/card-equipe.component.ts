@@ -18,15 +18,15 @@ export class CardEquipeComponent {
 
     {
       img:"../../../assets/marcele.png",
-      nome:"Marcele Eller",
+      nome:"Marcele",
       funcao:"Monitora",
       redesSociais: [
         {
-          plataforma: "../../../assets/github_icon.svg",
+          plataforma: "GitHub",
           link: "https://github.com/marceleeller"
         },
         {
-          plataforma: "../../../assets/linkedin_icon.svg",
+          plataforma: "GitHub",
           link: "https://www.linkedin.com/in/marceleeller"
         }
       ]
@@ -34,15 +34,15 @@ export class CardEquipeComponent {
 
     {
       img:"../../../assets/grasiele.png",
-      nome:"Grasiele Tinoco",
+      nome:"Grasiele",
       funcao:"Vice-Monitora",
       redesSociais: [
         {
-          plataforma: "../../../assets/github_icon.svg",
+          plataforma: "GitHub",
           link: "https://github.com/grasieletinoco"
         },
         {
-          plataforma: "../../../assets/linkedin_icon.svg",
+          plataforma: "LinkedIn",
           link: "https://www.linkedin.com/in/grasieletinoco"
         }
       ]
@@ -51,15 +51,15 @@ export class CardEquipeComponent {
 
     {
       img:"../../../assets/isa.png",
-      nome:"Isadora de Oliveira",
+      nome:"Isadora",
       funcao:"Desenvolvedora",
       redesSociais: [
         {
-          plataforma: "../../../assets/github_icon.svg",
+          plataforma: "GitHub",
           link: "https://github.com/isadeop"
         },
         {
-          plataforma: "../../../assets/linkedin_icon.svg",
+          plataforma: "LinkedIn",
           link: "https://www.linkedin.com/in/isadoradeoliveirapinto"
         }
       ]
@@ -68,15 +68,15 @@ export class CardEquipeComponent {
 
     {
       img:"../../../assets/jaqueline.png",
-      nome:"Jaqueline Santos",
+      nome:"Jaqueline",
       funcao:"Desenvolvedora",
       redesSociais: [
         {
-          plataforma: "../../../assets/github_icon.svg",
+          plataforma: "GitHub",
           link: "https://github.com/JaquelineAPSantos"
         },
         {
-          plataforma: "../../../assets/linkedin_icon.svg",
+          plataforma: "LinkedIn",
           link: "https://www.linkedin.com/in/jaquelineapsantos"
         }
       ]
@@ -85,15 +85,15 @@ export class CardEquipeComponent {
 
     {
       img:"../../../assets/kelly.png",
-      nome:"Kelly Pedroso",
+      nome:"Kelly",
       funcao:"Desenvolvedora",
       redesSociais: [
         {
-          plataforma: "../../../assets/github_icon.svg",
+          plataforma: "GitHub",
           link: "https://github.com/PAKell"
         },
         {
-          plataforma: "../../../assets/linkedin_icon.svg",
+          plataforma: "LinkedIn",
           link: "https://www.linkedin.com/in/kelly-pedroso-11330790"
         }
       ]
@@ -102,15 +102,15 @@ export class CardEquipeComponent {
 
     {
       img:"../../../assets/erick.png",
-      nome:"Erick Prado",
+      nome:"Erick",
       funcao:"Desenvolvedor",
       redesSociais: [
         {
-          plataforma: "../../../assets/github_icon.svg",
+          plataforma: "GitHub",
           link: "https://github.com/ErickFPrado"
         },
         {
-          plataforma: "../../../assets/linkedin_icon.svg",
+          plataforma: "LinkedIn",
           link: "https://www.linkedin.com/in/erick-prado-5b3533258"
         }
       ]
@@ -119,15 +119,15 @@ export class CardEquipeComponent {
 
     {
       img:"../../../assets/gislene.png",
-      nome:"Gislene Peruzzo",
+      nome:"Gislene",
       funcao:"Desenvolvedora",
       redesSociais: [
         {
-          plataforma: "../../../assets/github_icon.svg",
+          plataforma: "GitHub",
           link: "https://github.com/giperuzzo"
         },
         {
-          plataforma: "../../../assets/linkedin_icon.svg",
+          plataforma: "LinkedIn",
           link: "https://www.linkedin.com/in/gisleneperuzzo"
         }
       ]
@@ -136,15 +136,14 @@ export class CardEquipeComponent {
 
     {
       img:"../../../assets/antonio.png",
-      nome:"Antonio de Castro",
+      nome:"Antonio",
       funcao:"Desenvolvedor",
       redesSociais: [
         {
-          plataforma: "../../../assets/github_icon.svg",
+          plataforma: "GitHub",
           link: "https://github.com/Antoniobarrosdecastro"
         },
         {
-          plataforma: "../../../assets/linkedin_icon.svg",
           link: "https://www.linkedin.com"
         }
       ]

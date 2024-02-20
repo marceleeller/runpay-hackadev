@@ -5,12 +5,21 @@
 
         <div class= "card-content">
             <img class="card-content-img" src="{{item.img}}" alt="Foto Equipe">
-            <h3 class="card-content-nome">{{item.nome}}</h3>
-            <p class="card-content-funcao">{{item.funcao}}</p>
-            <div class="card-content-redes-sociais">
-                <a href="{{item.redesSociais[0].link}}" target="_blank" title="Github"><img src="{{item.redesSociais[0].plataforma}}"></a>
-                <a href="{{item.redesSociais[1].link}}" target="_blank" title="Linkedin"><img src="{{item.redesSociais[1].plataforma}}"></a>
+
+            <div class="card-content-informacao">
+
+                <div class="card-content-boby">
+                    <h3 class="card-content-nome">{{item.nome}}</h3>
+                    <p class="card-content-funcao">{{item.funcao}}</p>       
+                </div>
+
+                <div class="card-content-redes-sociais">
+                    <a href="{{item.redesSociais[0].link}}" target="_blank" title="Github"> <img> <i class="bi bi-github"> </i></a>
+                    <a href="{{item.redesSociais[1].link}}" target="_blank" title="Linkedin"> <img> <i class="bi bi-linkedin"> </i></a>
+                </div>
+
             </div>
+            
         </div>
 
     </div>   
