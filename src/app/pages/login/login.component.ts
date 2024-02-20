@@ -10,21 +10,49 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
     standalone: true,
     templateUrl: './login.component.html',
     styleUrl: './login.component.css',
-    imports: [HeaderVoltarComponent, FooterComponent, CommonModule, ReactiveFormsModule ]
+    imports: [HeaderVoltarComponent, FooterComponent, CommonModule, ReactiveFormsModule]
 })
+
 export class LoginComponent {
 
-    constructor(private router: Router) { }
+    constructor(private rotas: Router) { }
 
     // navegação
     redirecionarParaCadastro() {
-      this.router.navigate(['/cadastro']);
+      this.rotas.navigate(['/cadastro']);
     }
 
     // formulário
     formularioLogin = new FormGroup ({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      senha: new FormControl('', Validators.required)
-    })
+      email: new FormControl('', [
+        Validators.required, 
+        Validators.email,
+      ]),
+      senha: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+      ])});
 
-  }
+    get emailDoUsuario() {
+      return this.formularioLogin.get('email');
+    }
+
+    get senhaDoUsuario() {
+      return this.formularioLogin.get('senha');
+    }
+
+    senhaIncorreta : boolean = false;
+    autenticar(): void {
+  const email = this.formularioLogin.value.email;
+  const senha = this.formularioLogin.value.senha;
+
+  const emailArmazenado = localStorage.getItem('email');
+  const senhaArmazenada = localStorage.getItem('senha');
+
+  if (emailArmazenado === email && senhaArmazenada === senha) {
+    this.rotas.navigateByUrl('/inicial');
+  } else {
+    this.senhaIncorreta = true
+    this.rotas.navigateByUrl('/login');
+  };
+} }
