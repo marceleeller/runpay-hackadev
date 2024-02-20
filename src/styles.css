@@ -104,7 +104,11 @@ body {
 }
 
 .texto-invalido {
+  position: absolute;
   color: red;
   font-size: 12px;
-  margin: -15px 0 0 5px;
+}
+.texto-valido {
+  font-size: 12px;
+  color: var(--cor-verde);
 }

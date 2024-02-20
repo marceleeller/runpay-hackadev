@@ -13,6 +13,9 @@ import { CommonModule } from '@angular/common';
 })
 export class ContatoComponent {
 
+  processando = false;
+  mostrarMensagemSucesso = false;
+
   formularioMensagem = new FormGroup({
     nome: new FormControl('', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -27,5 +30,23 @@ export class ContatoComponent {
   get email(): FormControl {
     return this.formularioMensagem.get('email') as FormControl;
   }
+  get celular(): FormControl {
+    return this.formularioMensagem.get('celular') as FormControl;
+  }
+  get cpf(): FormControl {
+    return this.formularioMensagem.get('cpf') as FormControl;
+  }
+  get mensagem(): FormControl {
+    return this.formularioMensagem.get('mensagem') as FormControl;
+  }
 
+  onFormSubmit() {
+    this.mostrarMensagemSucesso = false;
+    this.processando = true;
+    setTimeout(() => {
+      this.formularioMensagem.reset();
+      this.processando = false;
+      this.mostrarMensagemSucesso = true;
+    }, 2000);
+    }
 }
