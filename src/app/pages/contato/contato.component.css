@@ -21,8 +21,8 @@ main {
 }
 
 .img-megafone-web, .img-megafone-mobile {
-  max-width: 600px;
-  max-height: 600px;
+  max-width: 500px;
+  max-height: 500px;
   border-radius: 4rem;
 }
 
@@ -37,17 +37,17 @@ main {
 .titulo-contato {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .titulo {
-  font-size: 64px;
+  font-size: 48px;
   font-weight: 700;
   line-height: .8em;
 }
 
 .subtitulo {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
   line-height: normal;
 }

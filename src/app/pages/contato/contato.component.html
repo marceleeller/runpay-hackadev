@@ -14,7 +14,7 @@
           É só mandar sua mensagem por aqui ou ligar pro número abaixo ;&#41;
         </p>
       </div>
-      <form class="form-container d-flex flex-column gap-4" [formGroup]="formularioMensagem" (ngSubmit)="onFormSubmit()">
+      <form class="form-container d-flex flex-column gap-3" [formGroup]="formularioMensagem" (ngSubmit)="onFormSubmit()">
         <div class="row">
           <div class="col-md-12 col-lg-6">
             <label class="form-label" for="nome">Nome completo</label>
@@ -70,8 +70,8 @@
               class="form-control"
               name="mensagem"
               id="mensagem"
-              cols="40"
-              rows="5"
+              cols="50"
+              rows="4"
               formControlName="mensagem"
             ></textarea>
           </div>
