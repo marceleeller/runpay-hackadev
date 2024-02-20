@@ -3,7 +3,7 @@
 }
 
 ::placeholder {
-    color: #adb5bd;
+  color: #adb5bd;
 }
 
 main {
@@ -13,9 +13,16 @@ main {
 input {
   margin-bottom: 15px;
   color: white;
+
+  &.ng-invalid.ng-touched {
+    border: 1px solid #b7e77e;
+  }
 }
 div input {
   color: #ffffff;
+}
+.error {
+  color: #b7e77e;
 }
 
 .formulario {
@@ -33,30 +40,34 @@ div input {
 }
 
 #botao_criar_conta {
-    margin-top: 2em;
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    width: 150px;
-    height: 50px;
-    justify-content: center;
-    background-color: #c3f587;
-    color: var(--cor-azul-escuro);
+  margin-top: 2em;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 150px;
+  height: 50px;
+  justify-content: center;
+  background-color: #c3f587;
+  color: var(--cor-azul-escuro);
+
+  &:disabled {
+    background-color: var(--cor-azul-escuro);
+  }
 }
 
 input {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 #link_entrar {
-    color: #c3f587;
-    cursor: pointer;
+  color: #c3f587;
+  cursor: pointer;
 }
 
 h2 {
-    font-size: 32px;
-    font-weight: 700;
+  font-size: 32px;
+  font-weight: 700;
 }
 
 @media (max-width: 991px) {
@@ -91,5 +102,4 @@ h2 {
   ::ng-deep .secao-siga {
     display: none !important;
   }
-
 }
