@@ -1,3 +1,7 @@
+.sobre-nos-container{
+    margin: 0 20px;
+}
+
 .sobre-nos{
     display: flex;
     flex-direction: column;
@@ -36,7 +40,7 @@
 
 .sobre-nos-descricao{
     max-width: 1170px;
-    margin: 0 auto;
+    margin: 40px auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -45,4 +49,16 @@
 
 .sobre-nos-descricao img{
     width: 400px;
+    background-color: transparent;
+    border: 0;
+}
+
+@media (max-width: 991px) {
+    .sobre-nos-descricao{
+        flex-direction: column-reverse;
+    }
+
+    .sobre-nos-descricao p{
+        text-align: justify;
+    }
 }
