@@ -1,0 +1,20 @@
+
+<div class="row card-container mb-5">
+
+    <div class="card col-lg-3 col-md-6 col-sm-12" *ngFor="let item of equipe ">
+
+        <div class= "card-content">
+            <img class="card-content-img" src="{{item.img}}" alt="Foto Equipe">
+            <h3 class="card-content-nome">{{item.nome}}</h3>
+            <p class="card-content-funcao">{{item.funcao}}</p>
+            <div class="card-content-redes-sociais">
+                <a href="{{item.redesSociais[0].link}}" target="_blank" title="Github"><img src="{{item.redesSociais[0].plataforma}}"></a>
+                <a href="{{item.redesSociais[1].link}}" target="_blank" title="Linkedin"><img src="{{item.redesSociais[1].plataforma}}"></a>
+            </div>
+        </div>
+
+    </div>   
+
+</div>
+
+
