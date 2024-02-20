@@ -15,39 +15,42 @@
 .card-content{
     width: 160px;
     background-color: var(--cor-verde);
-    text-align: center;
     border-radius: 20px;
-    padding: 20px 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
-.card-content h3, .card-content p{
-    font-family: 'Raleway', sans-serif;
-    color: var(--cor-azul-escuro);
-}
-
 .card-content-img{
-    height: 100px;
-    border-radius: 20px 20px 0 0;
+    height: 140px;
 }
 
-.card-content-nome{
-    font-size: 13px;
-    font-weight: 700;
+.card-content-informacao{
+    display: flex;
+    justify-content: center;
+    background-color: var(--cor-azul-medio);
+    border-radius: 0 0 20px 20px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     padding-top: 10px;
 }
 
+.card-content-boby{
+    width: 80%;
+    padding-left: 10px;
+}
+
+.card-content-nome{
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+}
+
 .card-content-funcao{
+    font-family: 'Raleway', sans-serif;
+    font-size: 10px;
     font-weight: 500;
 }
 
 .card-content-redes-sociais a img{
     margin: 0 3px;
     width: 30px;
-    transition: all 0.2s;
-}
-
-.card-content-redes-sociais a img:hover{
-    scale: 1.1;
 }
