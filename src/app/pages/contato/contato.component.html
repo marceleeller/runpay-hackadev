@@ -1,6 +1,100 @@
 <app-header-home></app-header-home>
 
-<p>contato works!</p>
+<main>
+  <div class="main-container">
+    <div class="main-contato">
+      <div class="titulo-contato">
+        <h1 class="titulo">Quer falar com a gente?</h1>
+        <img
+          src="../../../assets/megafone.png"
+          alt="megafone"
+          class="img-fluid img-megafone-mobile"
+        />
+        <p class="subtitulo">
+          É só mandar sua mensagem por aqui ou ligar pro número abaixo ;&#41;
+        </p>
+      </div>
+      <form class="form-container d-flex flex-column gap-3" [formGroup]="formularioMensagem" (ngSubmit)="onFormSubmit()">
+        <div class="row">
+          <div class="col-md-12 col-lg-6">
+            <label class="form-label" for="nome">Nome completo</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nome"
+              formControlName="nome"
+            />
+            <span *ngIf=" nome.hasError('required') && nome.dirty" class="texto-invalido">Nome é obrigatório.</span>
+          </div>
 
+          <div class="col-lg-6 col-md-12">
+            <label class="form-label" for="email">E-mail</label>
+            <input
+              type="text"
+              class="form-control"
+              id="email"
+              formControlName="email"
+            />
+            <span *ngIf=" email.hasError('required') && email.dirty" class="texto-invalido">E-mail é obrigatório.</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <label class="form-label" for="celular">Celular</label>
+            <input
+              type="text"
+              class="form-control"
+              id="celular"
+              formControlName="celular"
+            />
+            <span *ngIf=" celular.hasError('required') && celular.dirty" class="texto-invalido">Celular é obrigatório.</span>
+          </div>
+
+          <div class="col-lg-6 col-md-12">
+            <label class="form-label" for="cpf">CPF</label>
+            <input
+              type="text"
+              class="form-control"
+              id="cpf"
+              formControlName="cpf"
+            />
+            <span *ngIf=" cpf.hasError('required') && cpf.dirty" class="texto-invalido">CPF é obrigatório.</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <label class="form-label" for="mensagem">Mensagem</label>
+            <textarea
+              class="form-control"
+              name="mensagem"
+              id="mensagem"
+              cols="50"
+              rows="4"
+              formControlName="mensagem"
+            ></textarea>
+          </div>
+          <span *ngIf=" mensagem.hasError('required') && mensagem.dirty" class="texto-invalido">Mensagem é obrigatória.</span>
+        </div>
+
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <button type="submit"
+          class="btn btn-primary"
+          [disabled]="formularioMensagem.invalid">{{ processando ? "Enviando..." : "Enviar" }}</button>
+          <p *ngIf="mostrarMensagemSucesso" class="texto-valido">Mensagem enviada!</p>
+        </div>
+      </form>
+    </div>
+
+    <div class="main-img">
+      <img
+        src="../../../assets/megafone.png"
+        alt="megafone"
+        class="img-fluid img-megafone-web"
+      />
+    </div>
+  </div>
+</main>
 
 <app-footer></app-footer>

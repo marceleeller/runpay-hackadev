@@ -1,0 +1,64 @@
+.sobre-nos-container{
+    margin: 0 20px;
+}
+
+.sobre-nos{
+    display: flex;
+    flex-direction: column;
+    max-width: 1170px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: var(--cor-verde);
+    border-radius: 50px;
+    margin-top: 40px;
+    overflow: hidden;
+    position: relative;
+}
+
+.sobre-nos h1{
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 8.5vw;
+    width: 100%;
+    text-transform: uppercase;
+    word-spacing: 15px;
+    color: var(--cor-branco);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0; 
+}
+
+.sobre-nos img{
+    width: 100%;
+    opacity: 0.5;
+    display: block;
+    z-index: 1;
+    margin-top: 70px;
+}
+
+.sobre-nos-descricao{
+    max-width: 1170px;
+    margin: 40px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+.sobre-nos-descricao img{
+    width: 400px;
+    background-color: transparent;
+    border: 0;
+}
+
+@media (max-width: 991px) {
+    .sobre-nos-descricao{
+        flex-direction: column-reverse;
+    }
+
+    .sobre-nos-descricao p{
+        text-align: justify;
+    }
+}
