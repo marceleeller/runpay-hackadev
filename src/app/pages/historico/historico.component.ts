@@ -75,6 +75,10 @@ export class HistoricoComponent implements OnInit {
             display: nomeMeses[i]
           });
         }
+        this.opcoes.push({
+          value: 'Todas transações',
+          display: 'Todas transações'
+        });
         return this.opcoes;
   }
 
@@ -105,6 +109,12 @@ export class HistoricoComponent implements OnInit {
   onFiltroAlterado() {
     this.imprimeValorSelecionado = this.valorSelecionado;
 
+    this.alterarFiltro();
+
+    this.carregarTransacoes();
+  }
+
+  alterarFiltro(){
     const mapeamentoMeses:any = {
       'Janeiro': 0,
       'Fevereiro': 1,
@@ -125,6 +135,9 @@ export class HistoricoComponent implements OnInit {
         this.transacoesFiltradas = this.transacoes.filter(transacao =>
           this.isDataRecente(transacao.data, 30));
         break;
+      case 'Todas transações':
+        this.transacoesFiltradas = this.transacoes;
+        break;
       default:
         if (mapeamentoMeses[this.valorSelecionado] !== undefined) {
           this.transacoesFiltradas = this.transacoes.filter(transacao =>
@@ -132,7 +145,6 @@ export class HistoricoComponent implements OnInit {
         }
         break;
     }
-    this.carregarTransacoes();
   }
 
   isDataRecente(date: Date, days: number): boolean {
@@ -145,12 +157,14 @@ export class HistoricoComponent implements OnInit {
 
   onMudancaPesquisa() {
       if (this.searchText.length !== 0) {
-        this.transacoesExibidas = this.transacoes;
+        this.alterarFiltro();
+        this.transacoesExibidas = this.transacoesFiltradas;
         this.todasTransacoesExibidas = true;
       }
 
       if(this.searchText.length === 0 || this.searchText === null) {
         this.carregarTransacoes();
+        this.imprimeValorSelecionado = this.valorSelecionado;
       }
   }
 

@@ -1,36 +1,30 @@
-.card-container{
-    max-width: 770px;
-    margin: 0 auto;
-}
-
-.card{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 0;
-    max-width: 770px;
-    background-color: transparent;
-}
-
 .card-content{
     width: 160px;
     background-color: var(--cor-verde);
     border-radius: 20px;
     margin-bottom: 20px;
+    border: none;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .card-content-img{
     height: 140px;
+    width: 140px;
+    object-fit: cover;
 }
 
 .card-content-informacao{
+  width: 100%;
     display: flex;
     justify-content: center;
     background-color: var(--cor-azul-medio);
     border-radius: 0 0 20px 20px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-    padding-top: 10px;
+
 }
 
 .card-content-boby{
@@ -50,7 +44,23 @@
     font-weight: 500;
 }
 
-.card-content-redes-sociais a img{
+.card-content-redes-sociais{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-right: 1rem;
+}
+
+.rede-social a{
     margin: 0 3px;
     width: 30px;
 }
+ h3 {
+  padding-top: 10px;
+ }
+
+ i:hover {
+  color: var(--cor-verde);
+  transition: ease-in-out 0.3s;
+ }

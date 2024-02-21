@@ -1,27 +1,35 @@
+<div class="card-content">
+  <img
+    class="card-content-img"
+    src="{{ membroEquipe?.img }}"
+    alt="Foto Equipe"
+  />
 
-<div class="row card-container mb-5">
+  <div class="card-content-informacao">
+    <div class="card-content-boby">
+      <h3 class="card-content-nome">{{ membroEquipe?.nome }}</h3>
+      <p class="card-content-funcao">{{ membroEquipe?.funcao }}</p>
+    </div>
 
-    <div class="col-lg-3 col-md-6 col-6" *ngFor="let item of equipe ">
+    <div
+      class="card-content-redes-sociais"
+    >
+    <div class="rede-social" *ngFor="let redeSocial of membroEquipe?.redesSociais">
+      <a
+      [href]="redeSocial.link"
+      target="_blank"
+      [title]="redeSocial.plataforma"
+    >
+      <i
+        class="bi"
+        [ngClass]="{
+          'bi-github': redeSocial.plataforma === 'Github',
+          'bi-linkedin': redeSocial.plataforma === 'Linkedin'
+        }"
+      ></i>
+    </a>
+    </div>
 
-        <div class= "card-content">
-            <img class="card-content-img" src="{{item.img}}" alt="Foto Equipe">
-
-            <div class="card-content-informacao">
-
-                <div class="card-content-boby">
-                    <h3 class="card-content-nome">{{item.nome}}</h3>
-                    <p class="card-content-funcao">{{item.funcao}}</p>       
-                </div>
-
-                <div class="card-content-redes-sociais">
-                    <a href="{{item.redesSociais[0].link}}" target="_blank" title="Github"> <img> <i class="bi bi-github"> </i></a>
-                    <a href="{{item.redesSociais[1].link}}" target="_blank" title="Linkedin"> <img> <i class="bi bi-linkedin"> </i></a>
-                </div>
-
-            </div>
-            
-        </div>
-
-    </div>   
-
+    </div>
+  </div>
 </div>

@@ -108,6 +108,11 @@ body {
   color: red;
   font-size: 12px;
 }
+
+.texto-invalido-mensagem {
+  color: red;
+  font-size: 12px;
+}
 .texto-valido {
   font-size: 12px;
   color: var(--cor-verde);

@@ -9,7 +9,7 @@
     margin: 0 auto;
     text-align: center;
     background-color: var(--cor-verde);
-    border-radius: 50px;
+    border-radius: 4rem;
     margin-top: 40px;
     overflow: hidden;
     position: relative;
@@ -18,7 +18,7 @@
 .sobre-nos h1{
     font-family: 'Raleway', sans-serif;
     font-weight: 700;
-    font-size: 8.5vw;
+    font-size: 128px;
     width: 100%;
     text-transform: uppercase;
     word-spacing: 15px;
@@ -27,7 +27,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 0; 
+    z-index: 0;
 }
 
 .sobre-nos img{
@@ -39,26 +39,81 @@
 }
 
 .sobre-nos-descricao{
-    max-width: 1170px;
-    margin: 40px auto;
+    max-width: 1000px;
+    margin: 3rem auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 40px;
+    gap: 3rem;
+    text-align: justify;
 }
 
 .sobre-nos-descricao img{
-    width: 400px;
+    width: 330px;
     background-color: transparent;
     border: 0;
 }
 
+.section-cards {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.cards{
+  max-width: 770px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  background-color: transparent;
+  max-width: 160px;
+}
+
+
 @media (max-width: 991px) {
+
+    .sobre-nos-container {
+      padding: 0 .8rem;
+    }
+
+    .sobre-nos {
+      border-radius: 2rem;
+      height: 100px;
+    }
+
+    .sobre-nos img {
+      margin: auto;
+      margin-bottom: 0;
+    }
+
+    .sobre-nos h1 {
+      font-size: 48px;
+    }
+
     .sobre-nos-descricao{
-        flex-direction: column-reverse;
+      margin: 2rem 0;
+      flex-direction: column-reverse;
+      gap: .5rem;
     }
 
     .sobre-nos-descricao p{
-        text-align: justify;
+      font-size: 14px;
     }
+
+    .sobre-nos-descricao img{
+      width: 140px;
+
+  }
+
+  .cards {
+    justify-content: center;
+    gap: 1rem;
+  }
 }
