@@ -31,7 +31,9 @@ export class LoginComponent {
       senha: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
-      ])});
+        this.validarForcaSenha
+      ])
+    });
 
     get emailDoUsuario() {
       return this.formularioLogin.get('email');
@@ -55,4 +57,21 @@ export class LoginComponent {
     this.senhaIncorreta = true
     this.rotas.navigateByUrl('/login');
   };
-} }
+} 
+
+//Passar a validação de força da senha para o cadastro
+validarForcaSenha(control: FormControl): { [key: string]: any } | null {
+  const senha: string = control.value;
+
+  if (!senha) return null;
+
+  const temNumero = /[0-9]/.test(senha);
+  const temMaiuscula = /[A-Z]/.test(senha);
+  const temMinuscula = /[a-z]/.test(senha);
+
+  const senhaValida = temNumero && temMaiuscula && temMinuscula;
+
+  return senhaValida ? null : { validarForcaSenha: true };
+}
+
+}
