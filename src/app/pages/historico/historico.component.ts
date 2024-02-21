@@ -6,6 +6,7 @@ import { TransacaoService } from '../../services/transacao.service';
 import { HeaderVoltarComponent } from '../../components/header-voltar/header-voltar.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { FormsModule } from '@angular/forms';
+import { FilterPipe } from '../../pipes/filter.pipe';
 
 @Component({
   selector: 'app-historico',
@@ -17,11 +18,13 @@ import { FormsModule } from '@angular/forms';
     CardtransacaoComponent,
     HeaderVoltarComponent,
     FooterComponent,
-    FormsModule
+    FormsModule,
+    FilterPipe
   ],
 })
 
 export class HistoricoComponent implements OnInit {
+
   @HostBinding('class')
   scrollClass = 'disable-scroll';
   transacoes: Transacao[] = [];
@@ -30,7 +33,8 @@ export class HistoricoComponent implements OnInit {
   todasTransacoesExibidas: boolean = false;
   mostrarBotaoCarregarMais = true;
   pesquisa: string = "";
-  intervaloTempo: number = 30; 
+  intervaloTempo: number = 30;
+  searchText: any;
 
   constructor(private transacaoService: TransacaoService) { }
 
@@ -56,7 +60,7 @@ export class HistoricoComponent implements OnInit {
   verificarTodasTransacoesExibidas() {
     if (this.transacoes.length <= this.transacoesExibidas.length) {
       this.todasTransacoesExibidas = true;
-      this.mostrarBotaoCarregarMais = this.transacoesExibidas.length < this.transacoes.length;
+      this.mostrarBotaoCarregarMais = false;
     }
   }
 
@@ -80,36 +84,32 @@ export class HistoricoComponent implements OnInit {
     }
 
     console.log("Limite",limite);
- 
+
     const transacoesFiltradas = this.transacoes.filter(transacao =>
       this.isDataRecente(transacao.data, limite));
-  
+
     this.transacoesExibidas = transacoesFiltradas.slice(0, 6);
     this.verificarTodasTransacoesExibidas();
   }
-  
+
     isDataRecente(data: Date, limite: number): boolean {
       const hoje = new Date();
       const dataLimite = new Date(hoje.getTime() - limite * 24 * 60 * 60 * 1000);
       return data >= dataLimite;
-    } 
-
-    removerAcentos(texto: string): string {
-      return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
-    
-  
-    pesquisar(tipoTransacao: string): void {
-      const tipoTransacaoSemAcento = this.removerAcentos(tipoTransacao.toLowerCase());
-      const dataLimite = new Date();
-      dataLimite.setDate(dataLimite.getDate() - this.intervaloTempo); // Subtrai o intervalo de tempo da data atual
-  
-      this.transacoesExibidas = this.transacoes.filter(transacao => {
-        const tipoTransacaoTransacao = this.removerAcentos(transacao.tipo.toLowerCase());
-        return tipoTransacaoTransacao.includes(tipoTransacaoSemAcento);
-      });
-      
 
-  }
-    
+    onMudancaPesquisa() {
+      if (this.searchText.length !== 0) {
+        this.transacoesExibidas = this.transacoes;
+        this.todasTransacoesExibidas = true;
+      }
+
+      if(this.searchText.length === 0 || this.searchText === null) {
+        this.transacoesExibidas = this.transacoes.slice(0, 6);
+        this.todasTransacoesExibidas = false;
+      }
+
+
+    }
+
 }
