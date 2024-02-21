@@ -33,6 +33,11 @@ export class TransacaoService {
       { id: 22, nome: 'Curso de Frances', data: new Date('2023-12-08T00:00:00'), tipo: 'Pagamento', valor: -380.0 },
       { id: 23, nome: 'Aula de musica', data: new Date('2023-12-06T00:00:00'), tipo: 'Pagamento', valor: -350.0 },
       { id: 24, nome: 'Marcelo', data: new Date('2023-12-02T00:00:00'), tipo: 'Pagamento', valor: -280.0},
+      { id: 25, nome: 'De Maria', data: new Date('2023-11-28T00:00:00'), tipo: 'Transferência', valor: 600.0},
+      { id: 26, nome: 'Para Laura', data: new Date('2023-11-27T00:00:00'), tipo: 'Transferência', valor: -180.0},
+      { id: 27, nome: 'Para Marcos', data: new Date('2023-10-26T00:00:00'), tipo: 'Transferência', valor: -150.0},
+      { id: 28, nome: 'Nosso Pão', data: new Date('2023-10-25T00:00:00'), tipo: 'Pagamento', valor: -190.0 },
+      { id: 29, nome: 'Ferragem', data: new Date('2023-10-24T00:00:00'), tipo: 'Pagamento', valor: -200.0 },
     ];
     return transacoes.sort((a, b) => b.data.getTime() - a.data.getTime());
   }
