@@ -13,11 +13,8 @@ main {
 input {
   margin-bottom: 15px;
   color: white;
-
-  &.ng-invalid.ng-touched {
-    border: 1px solid #b7e77e;
-  }
 }
+
 div input {
   color: #ffffff;
 }
@@ -68,6 +65,12 @@ input {
 h2 {
   font-size: 32px;
   font-weight: 700;
+}
+
+.texto-invalido {
+  position: absolute;
+  color: red;
+  font-size: 12px;
 }
 
 @media (max-width: 991px) {

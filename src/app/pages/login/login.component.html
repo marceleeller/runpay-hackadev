@@ -26,9 +26,10 @@
 
         @if(emailDoUsuario?.invalid && (emailDoUsuario?.dirty
         ||emailDoUsuario?.touched)){ @if(emailDoUsuario?.errors?.['required']){
-        <span class="error">O e-mail é um campo obrigatório.</span> <br />
+        <span class="texto-invalido">O e-mail é um campo obrigatório.</span>
+        <br />
         } @if(emailDoUsuario?.errors?.['email']){
-        <span class="error">Insira um e-mail válido.</span> <br />
+        <span class="texto-invalido">Insira um e-mail válido.</span> <br />
         }}
 
         <label class="form-label" for="senha">Senha</label>
@@ -42,11 +43,11 @@
 
         @if(senhaDoUsuario?.invalid && (senhaDoUsuario?.dirty ||
         senhaDoUsuario?.touched)){
-        <span class="error"
+        <span class="texto-invalido"
           >Insira uma senha válida, contendo no mínimo 6 caracteres.</span
         >
         } @if(senhaIncorreta){
-        <span class="error">E-mail ou senha incorreta.</span>
+        <span class="texto-invalido">E-mail ou senha incorreta.</span>
         }
       </div>
       <input
