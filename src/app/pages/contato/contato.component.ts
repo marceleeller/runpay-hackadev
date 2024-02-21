@@ -3,13 +3,16 @@ import { HeaderHomeComponent } from "../../components/header-home/header-home.co
 import { FooterComponent } from "../../components/footer/footer.component";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+
 
 @Component({
     selector: 'app-contato',
     standalone: true,
     templateUrl: './contato.component.html',
     styleUrl: './contato.component.css',
-    imports: [HeaderHomeComponent, FooterComponent, CommonModule, ReactiveFormsModule]
+    imports: [HeaderHomeComponent, FooterComponent, CommonModule, ReactiveFormsModule, NgxMaskDirective],
+    providers: [provideNgxMask()]
 })
 export class ContatoComponent {
 
@@ -17,11 +20,11 @@ export class ContatoComponent {
   mostrarMensagemSucesso = false;
 
   formularioMensagem = new FormGroup({
-    nome: new FormControl('', Validators.required),
+    nome: new FormControl('', [Validators.required, Validators.minLength(3)]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    celular: new FormControl('', Validators.required),
-    cpf: new FormControl('', Validators.required),
-    mensagem: new FormControl('', Validators.required)
+    celular: new FormControl('', [Validators.required, Validators.minLength(11)]),
+    cpf: new FormControl('', [Validators.required, Validators.minLength(11)]),
+    mensagem: new FormControl('', [Validators.required, Validators.minLength(10)])
   });
 
   get nome(): FormControl {

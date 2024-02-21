@@ -5,13 +5,12 @@ main {
   align-items: center;
 }
 
-.main-container {
-  height: 100%;
+.section-principal {
   max-width: 1170px;
   max-height: 600px;
   display: flex;
   justify-content: space-between;
-  margin: 0 2rem;
+  padding: 0 2rem;
 }
 
 .main-contato {
@@ -65,7 +64,7 @@ main {
     gap: 1rem;
   }
 
-  .main-container {
+  .section-principal {
     max-height: inherit;
     padding: 3rem 1.5rem;
     margin: 0;

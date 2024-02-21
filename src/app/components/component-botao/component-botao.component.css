@@ -6,7 +6,7 @@ p {
 
 .botao {
   width: 105px;
-  max-height: 115px;
+  max-height: 120px;
 }
 
 .btn-icone {
@@ -23,8 +23,10 @@ p {
 .btn-icone:hover {
   box-shadow: 0px 0px 10px var(--cor-verde);
   transition: ease 0.3s;
+
 }
 
 .bi {
   font-size: 30px;
+  margin-top: 4px;
 }
