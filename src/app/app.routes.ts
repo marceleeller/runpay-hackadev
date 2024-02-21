@@ -17,5 +17,5 @@ export const routes: Routes = [
     { path: 'contato', component: ContatoComponent },
     { path: 'inicial',component: InicialComponent, canActivate:[autenticarGuard]},
     { path: 'transacoes', component: HistoricoComponent, canActivate:[autenticarGuard] },
-    // { path: '**', title:'Home Page', component: HomeComponent}
+    { path: '**', title:'Home Page', component: HomeComponent}
 ];

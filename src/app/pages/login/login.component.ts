@@ -52,6 +52,7 @@ export class LoginComponent {
   const senhaArmazenada = localStorage.getItem('senha');
 
   if (emailArmazenado === email && senhaArmazenada === senha) {
+    localStorage.setItem('token', 'token-provisorio');
     this.rotas.navigateByUrl('/inicial');
   } else {
     this.senhaIncorreta = true
