@@ -6,7 +6,10 @@
       <h2 class="text-center">Olá de novo!</h2>
       <p class="text-center">
         Ainda não tem uma conta na Runpay?
-        <a (click)="redirecionarParaCadastro()" id="link_entrar" style="text-decoration: underline; font-weight: 700;"
+        <a
+          (click)="redirecionarParaCadastro()"
+          id="link_entrar"
+          style="text-decoration: underline; font-weight: 700"
           >Cadastre-se</a
         >
       </p>
@@ -21,6 +24,13 @@
           formControlName="email"
         />
 
+        @if(emailDoUsuario?.invalid && (emailDoUsuario?.dirty
+        ||emailDoUsuario?.touched)){ @if(emailDoUsuario?.errors?.['required']){
+        <span class="error">O e-mail é um campo obrigatório.</span> <br />
+        } @if(emailDoUsuario?.errors?.['email']){
+        <span class="error">Insira um e-mail válido.</span> <br />
+        }}
+
         <label class="form-label" for="senha">Senha</label>
         <input
           type="password"
@@ -29,17 +39,26 @@
           placeholder="Insira sua senha"
           formControlName="senha"
         />
+
+        @if(senhaDoUsuario?.invalid && (senhaDoUsuario?.dirty ||
+        senhaDoUsuario?.touched)){
+        <span class="error"
+          >Insira uma senha válida, contendo no mínimo 6 caracteres.</span
+        >
+        } @if(senhaIncorreta){
+        <span class="error">E-mail ou senha incorreta.</span>
+        }
       </div>
       <input
         type="submit"
         id="botao_criar_conta"
         class="btn btn-primary"
-        value="Criar"
+        value="Entrar"
+        [disabled]="formularioLogin.invalid"
+        (click)="autenticar()"
       />
     </form>
   </div>
-
 </main>
-
 
 <app-footer></app-footer>
