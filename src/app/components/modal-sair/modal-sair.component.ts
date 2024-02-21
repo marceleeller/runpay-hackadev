@@ -20,6 +20,7 @@ export class ModalSairComponent {
   @Input() rota:string = 'home';
 
   redirecionarPara() {
+    localStorage.removeItem('token');
     this.routes.navigate([this.rota]);
   }
 }
