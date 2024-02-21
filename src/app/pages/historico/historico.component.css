@@ -54,8 +54,10 @@
 .transacoes_content {
   width: 100%;
   max-width: 770px;
-  background-image: url('../../../assets/bg-card.png');
-  background-size: cover;
+  background-image: url('../../../assets/bg-transacoes.png');
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-color: var(--cor-azul-medio);
   display: flex;
   flex-direction: column;
   align-items: center;

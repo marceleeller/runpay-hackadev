@@ -40,7 +40,7 @@ export class CardtransacaoComponent {
   }
 
   private formatarDataFormatada(data: Date): string {
-    return formatDate(data, 'dd MMM', 'en-US').toLowerCase();
+    return formatDate(data, 'dd MMM YY', 'en-US').toLowerCase();
   }
 
   isMesmoDia(data1: Date, data2: Date): boolean {

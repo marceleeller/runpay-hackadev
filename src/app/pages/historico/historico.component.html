@@ -6,25 +6,23 @@
 <main class="main_container">
   <section class="section_filtro d-flex justify-content-center gap-3">
     <div class="select-pesquisa">
-      <select class="form-select select-arrow" (change)="onFiltroAlterado($event)">
-        <option value="30dias" selected>Últimos 30 dias</option>
-        <option value="60dias">Últimos 60 dias</option>
-        <option value="90dias">Últimos 90 dias</option>
+      <select class="form-select select-arrow" [(ngModel)]="valorSelecionado" (change)="onFiltroAlterado()">
+        <option *ngFor="let opcao of opcoes" [value]="opcao.value">{{ opcao.display }}</option>
       </select>
     </div>
 
     <div class="input-group mb-3">
-      <input type="text" #tipoTransacaoInput class="input-pesquisa form-control" placeholder="Pesquisar" />
-      <button (click)="pesquisar(tipoTransacaoInput.value)" class="input-group-text bi bi-search" id="basic-addon2">
-      </button>
+      <input type="search" (input)="onMudancaPesquisa()" #tipoTransacaoInput class="input-pesquisa form-control" placeholder="Pesquisar" [(ngModel)]="searchText" />
+      <span class="input-group-text bi bi-search" id="basic-addon2">
+      </span>
     </div>
   </section>
 
   <section class="section_transacoes">
     <div class="transacoes_content">
-      <h3 class="card-title mb-4">Transações recentes</h3>
+      <h3 class="card-title mb-4">{{ imprimeValorSelecionado }}</h3>
       <div class="transacoes">
-        <div *ngFor="let transacao of transacoesExibidas">
+        <div *ngFor="let transacao of transacoesExibidas | filter: searchText">
           <app-cardtransacao [transacao]="transacao"></app-cardtransacao>
         </div>
       </div>

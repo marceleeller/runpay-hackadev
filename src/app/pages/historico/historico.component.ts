@@ -6,6 +6,7 @@ import { TransacaoService } from '../../services/transacao.service';
 import { HeaderVoltarComponent } from '../../components/header-voltar/header-voltar.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { FormsModule } from '@angular/forms';
+import { FilterPipe } from '../../pipes/filter.pipe';
 
 @Component({
   selector: 'app-historico',
@@ -17,35 +18,73 @@ import { FormsModule } from '@angular/forms';
     CardtransacaoComponent,
     HeaderVoltarComponent,
     FooterComponent,
-    FormsModule
+    FormsModule,
+    FilterPipe
   ],
 })
 
 export class HistoricoComponent implements OnInit {
+
   @HostBinding('class')
   scrollClass = 'disable-scroll';
   transacoes: Transacao[] = [];
+  transacoesFiltradas: Transacao[] = [];
   transacoesExibidas: Transacao[] = [];
   totalTransacoesExibidas: number = 12;
   todasTransacoesExibidas: boolean = false;
   mostrarBotaoCarregarMais = true;
   pesquisa: string = "";
-  intervaloTempo: number = 30; 
+  intervaloTempo: number = 30;
+  searchText: any;
+  valorSelecionado:any = 'Últimos 30 dias';
+  imprimeValorSelecionado:string = 'Últimos 30 dias'
 
-  constructor(private transacaoService: TransacaoService) { }
+  opcoes: Array<any> = [];
+
+  constructor(private transacaoService: TransacaoService) {  }
 
   ngOnInit(): void {
+    this.transacoes = this.transacaoService.carregarTransacoes();
+    this.transacoesFiltradas = this.transacoes.filter(transacao =>
+    this.isDataRecente(transacao.data, 30));
+
     this.carregarTransacoes();
+    this.criarOpcoesSeletor()
+  }
+
+  criarOpcoesSeletor() {
+      const hoje = new Date();
+      const mesAtual = hoje.getMonth();
+      const mesesAnoAnterior = Math.abs(mesAtual-11);
+      let cont = mesAtual;
+      this.opcoes.push({
+        value: 'Últimos 30 dias',
+        display: 'Últimos 30 dias'
+      });
+      const nomeMeses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+        for (let i = cont-1; i >= 0; i--) {
+          this.opcoes.push({
+            value: nomeMeses[i],
+            display: nomeMeses[i]
+          });
+          cont--;
+        }
+        for(let i = 11; i > 11 - mesesAnoAnterior; i--) {
+          this.opcoes.push({
+            value: nomeMeses[i],
+            display: nomeMeses[i]
+          });
+        }
+        return this.opcoes;
   }
 
   carregarTransacoes() {
-    this.transacoes = this.transacaoService.carregarTransacoes();
-    this.transacoesExibidas = this.transacoes.slice(0, 6);
+    this.transacoesExibidas = this.transacoesFiltradas.slice(0, 6);
     this.verificarTodasTransacoesExibidas();
   }
 
   carregarMaisTransacoes() {
-    const proximasTransacoes = this.transacoes.slice(
+    const proximasTransacoes = this.transacoesFiltradas.slice(
       this.transacoesExibidas.length,
       this.transacoesExibidas.length + 6
     );
@@ -54,62 +93,65 @@ export class HistoricoComponent implements OnInit {
   }
 
   verificarTodasTransacoesExibidas() {
-    if (this.transacoes.length <= this.transacoesExibidas.length) {
+    if (this.transacoesFiltradas.length <= this.transacoesExibidas.length) {
       this.todasTransacoesExibidas = true;
-      this.mostrarBotaoCarregarMais = this.transacoesExibidas.length < this.transacoes.length;
+      this.mostrarBotaoCarregarMais = false;
+    } else {
+      this.todasTransacoesExibidas = false;
+      this.mostrarBotaoCarregarMais = true;
     }
   }
 
-  onFiltroAlterado(event: Event) {
-    const target = event.target as HTMLSelectElement;
-    const valorSelecionado = target.value;
+  onFiltroAlterado() {
+    this.imprimeValorSelecionado = this.valorSelecionado;
 
-    console.log('Valor selecionado:', valorSelecionado);
+    const mapeamentoMeses:any = {
+      'Janeiro': 0,
+      'Fevereiro': 1,
+      'Março': 2,
+      'Abril': 3,
+      'Maio': 4,
+      'Junho': 5,
+      'Julho': 6,
+      'Agosto': 7,
+      'Setembro': 8,
+      'Outubro': 9,
+      'Novembro': 10,
+      'Dezembro': 11,
+    };
 
-    let limite = 0;
-    switch (valorSelecionado) {
+    switch (this.valorSelecionado) {
       case 'Últimos 30 dias':
-        limite = 30;
+        this.transacoesFiltradas = this.transacoes.filter(transacao =>
+          this.isDataRecente(transacao.data, 30));
         break;
-      case 'Últimos 60 dias':
-        limite = 60;
-        break;
-      case 'Últimos 90 dias':
-        limite = 90;
+      default:
+        if (mapeamentoMeses[this.valorSelecionado] !== undefined) {
+          this.transacoesFiltradas = this.transacoes.filter(transacao =>
+            transacao.data.getMonth() === mapeamentoMeses[this.valorSelecionado]);
+        }
         break;
     }
-
-    console.log("Limite",limite);
- 
-    const transacoesFiltradas = this.transacoes.filter(transacao =>
-      this.isDataRecente(transacao.data, limite));
-  
-    this.transacoesExibidas = transacoesFiltradas.slice(0, 6);
-    this.verificarTodasTransacoesExibidas();
+    this.carregarTransacoes();
   }
-  
-    isDataRecente(data: Date, limite: number): boolean {
-      const hoje = new Date();
-      const dataLimite = new Date(hoje.getTime() - limite * 24 * 60 * 60 * 1000);
-      return data >= dataLimite;
-    } 
 
-    removerAcentos(texto: string): string {
-      return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    }
-    
-  
-    pesquisar(tipoTransacao: string): void {
-      const tipoTransacaoSemAcento = this.removerAcentos(tipoTransacao.toLowerCase());
-      const dataLimite = new Date();
-      dataLimite.setDate(dataLimite.getDate() - this.intervaloTempo); // Subtrai o intervalo de tempo da data atual
-  
-      this.transacoesExibidas = this.transacoes.filter(transacao => {
-        const tipoTransacaoTransacao = this.removerAcentos(transacao.tipo.toLowerCase());
-        return tipoTransacaoTransacao.includes(tipoTransacaoSemAcento);
-      });
-      
+  isDataRecente(date: Date, days: number): boolean {
+    const currentDate = new Date();
+    const testDate = new Date(date);
+    testDate.setDate(testDate.getDate() + days);
 
+    return testDate >= currentDate;
   }
-    
+
+  onMudancaPesquisa() {
+      if (this.searchText.length !== 0) {
+        this.transacoesExibidas = this.transacoes;
+        this.todasTransacoesExibidas = true;
+      }
+
+      if(this.searchText.length === 0 || this.searchText === null) {
+        this.carregarTransacoes();
+      }
+  }
+
 }
