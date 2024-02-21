@@ -2,10 +2,6 @@
   height: 30px !important;
 }
 
-::placeholder {
-    color: #adb5bd;
-}
-
 .formulario {
   padding: 4em 6em 1em;
   width: 100%;
@@ -34,8 +30,11 @@
 }
 
 input {
-    margin-bottom: 15px;
     color: white;
+}
+
+.form-label {
+  margin-top: 20px;
 }
 
 #link_entrar {

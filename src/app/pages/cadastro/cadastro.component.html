@@ -16,7 +16,6 @@
         <input
           type="string"
           class="form-control"
-          placeholder="Insira seu CPF"
           formControlName="cpf"
           [mask]="'000.000.000-00'"
         />
@@ -25,7 +24,6 @@
         <input
           type="text"
           class="form-control"
-          placeholder="Insira seu nome completo"
           formControlName="nome"
         />
 
@@ -33,15 +31,14 @@
         <input
           type="email"
           class="form-control"
-          placeholder="Insira seu E-mail"
           formControlName="email"
         />
+        <span *ngIf=" emaildoUsuario.hasError('required') && emaildoUsuario.dirty" class="texto-invalido">Insira um e-mail válido.</span>
 
         <label class="form-label">Confirme seu E-mail</label>
         <input
           type="email"
           class="form-control"
-          placeholder="Confirme seu E-mail"
           formControlName="confirmacao_email"
         />
 
@@ -49,15 +46,15 @@
         <input
           type="password"
           class="form-control"
-          placeholder="Insira sua senha"
           formControlName="senha"
         />
+        <span *ngIf=" senhadoUsuario.hasError('required') && senhadoUsuario.dirty" class="texto-invalido">Insira uma senha contendo no mínimo 6 caracteres.</span>
+
 
         <label class="form-label">Confirme sua senha</label>
         <input
           type="password"
           class="form-control"
-          placeholder="Confirme sua senha"
           formControlName="confirmacao_senha"
         />
       </div>
