@@ -14,8 +14,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 
 export class LoginComponent {
-    userValido:any;
-
     constructor(private rotas: Router) { }
 
     // navegação
@@ -48,10 +46,11 @@ export class LoginComponent {
       const userList = JSON.parse(localStorage.getItem('userList') as string);
       const email = this.formularioLogin.value.email;
       const senha = this.formularioLogin.value.senha;
+      let userValido:any;
 
       userList.forEach((item:any) => {
         if (item.email == email && item.senha == senha) {
-            this.userValido = {
+            userValido = {
                 nome: item.nome,
                 email: item.email,
                 senha: item.senha
@@ -59,18 +58,15 @@ export class LoginComponent {
         }
       });
 
-      console.log(userList)
-      console.log(this.userValido)
-
-      if (email == this.userValido.email && senha == this.userValido.senha) {
-        let token = Math.random().toString(16).substring(2) + Math.random().toString(16).substring(2)
-        localStorage.setItem('token', token);
-        localStorage.setItem('usuarioLogado', JSON.stringify(this.userValido))
-        this.rotas.navigateByUrl('/inicial');
-      } else {
+      if (userValido == undefined) {
         this.senhaIncorreta = true
         this.rotas.navigateByUrl('/login');
+      } else {
+        let token = Math.random().toString(16).substring(2) + Math.random().toString(16).substring(2)
+        localStorage.setItem('token', token);
+        localStorage.setItem('usuarioLogado', JSON.stringify(userValido))
+        this.rotas.navigateByUrl('/inicial');
       }
-}
 
+    }
 }
