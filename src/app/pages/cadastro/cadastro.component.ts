@@ -17,6 +17,7 @@ import { NgxMaskDirective, provideNgxMask} from 'ngx-mask';
 export class CadastroComponent {
 cpf: any;
 mostrarMensagemSucesso = false;
+  invalidUser: boolean = false;
 
   constructor(private router: Router) {
     this.cadastro.get('confirmacao_senha')!.setValidators([this.validarConfirmacaoSenha.bind(this)]);
@@ -99,21 +100,33 @@ get confirmacaoDeEmail() {
   }
 
   cadastrar(): void {
-    this.mostrarMensagemSucesso = true;
+    const userList = JSON.parse(localStorage.getItem('userList') || '[]');
+    console.log(userList);
 
-    const cpf: string = this.cadastro.value.cpf ?? '';;
-    const nome: string = this.cadastro.value.nome ?? '';;
-    const email: string = this.cadastro.value.email ?? '';;
-    const senha: string = this.cadastro.value.senha ?? '';;
-    const confirmacao_email: string = this.cadastro.value.confirmacao_email ?? '';;
-    const confirmacao_senha: string = this.cadastro.value.confirmacao_senha ?? '';;
+    userList.forEach((user:any) => {
+      if((user.cpf == this.cadastro.value.cpf) || (user.email == this.cadastro.value.email)){
+          this.invalidUser = true;
+      }
+    });
 
-    localStorage.setItem('cpf', cpf);
-    localStorage.setItem('nome', nome);
-    localStorage.setItem('email', email);
-    localStorage.setItem('senha', senha);
-    localStorage.setItem('confirmacao_email', confirmacao_email);
-    localStorage.setItem('confirmacao_senha', confirmacao_senha);
+    if(this.invalidUser == true) {
+      console.log('Usuário já cadastrado')
+      return;
+    }
+
+    userList.push(
+      {
+          cpf: this.cadastro.value.cpf ?? '',
+          nome: this.cadastro.value.nome ?? '',
+          email: this.cadastro.value.email ?? '',
+          senha: this.cadastro.value.senha ?? ''
+      }
+  )
+
+  localStorage.setItem('userList', JSON.stringify(userList))
+
+  this.mostrarMensagemSucesso = true;
+
     setTimeout(() => {
       this.router.navigateByUrl('/login');
     }, 2000);

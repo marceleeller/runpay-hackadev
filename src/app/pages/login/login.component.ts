@@ -14,6 +14,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 
 export class LoginComponent {
+    userValido:any;
 
     constructor(private rotas: Router) { }
 
@@ -25,7 +26,7 @@ export class LoginComponent {
     // formulário
     formularioLogin = new FormGroup ({
       email: new FormControl('', [
-        Validators.required, 
+        Validators.required,
         Validators.email,
       ]),
       senha: new FormControl('', [
@@ -44,19 +45,32 @@ export class LoginComponent {
 
     senhaIncorreta : boolean = false;
     autenticar(): void {
-  const email = this.formularioLogin.value.email;
-  const senha = this.formularioLogin.value.senha;
+      const userList = JSON.parse(localStorage.getItem('userList') as string);
+      const email = this.formularioLogin.value.email;
+      const senha = this.formularioLogin.value.senha;
 
-  const emailArmazenado = localStorage.getItem('email');
-  const senhaArmazenada = localStorage.getItem('senha');
+      userList.forEach((item:any) => {
+        if (item.email == email && item.senha == senha) {
+            this.userValido = {
+                nome: item.nome,
+                email: item.email,
+                senha: item.senha
+            }
+        }
+      });
 
-  if (emailArmazenado === email && senhaArmazenada === senha) {
-    localStorage.setItem('token', 'token-provisorio');
-    this.rotas.navigateByUrl('/inicial');
-  } else {
-    this.senhaIncorreta = true
-    this.rotas.navigateByUrl('/login');
-  };
-} 
+      console.log(userList)
+      console.log(this.userValido)
+
+      if (email == this.userValido.email && senha == this.userValido.senha) {
+        let token = Math.random().toString(16).substring(2) + Math.random().toString(16).substring(2)
+        localStorage.setItem('token', token);
+        localStorage.setItem('usuarioLogado', JSON.stringify(this.userValido))
+        this.rotas.navigateByUrl('/inicial');
+      } else {
+        this.senhaIncorreta = true
+        this.rotas.navigateByUrl('/login');
+      }
+}
 
 }

@@ -126,6 +126,7 @@
         (click)="cadastrar()"
       />
       <p *ngIf="mostrarMensagemSucesso" class="texto-valido text-center">Conta criada com sucesso!</p>
+      <p *ngIf="invalidUser" class="texto-invalido-mensagem text-center">CPF ou e-mail já utilizados.</p>
     </form>
   </div>
 </main>

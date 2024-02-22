@@ -21,6 +21,7 @@ export class ModalSairComponent {
 
   redirecionarPara() {
     localStorage.removeItem('token');
+    localStorage.removeItem('usuarioLogado');
     this.routes.navigate([this.rota]);
   }
 }
