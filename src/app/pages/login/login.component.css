@@ -6,24 +6,31 @@
   color: #adb5bd;
 }
 
+.form-label {
+  margin: 0;
+}
+
+#formulario-preenchido {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 main {
   height: 75vh;
 }
 
 input {
-  margin-bottom: 15px;
+  margin: 0;
   color: white;
 }
 
 div input {
   color: #ffffff;
 }
-.error {
-  color: #b7e77e;
-}
 
 .formulario {
-  padding: 4em 6em 1em;
+  padding: 4em 6em 2em;
   width: 100%;
   max-width: 770px;
   border-radius: 50px;
@@ -53,9 +60,6 @@ div input {
   }
 }
 
-input {
-  margin-bottom: 15px;
-}
 
 #link_entrar {
   color: #c3f587;
@@ -67,15 +71,13 @@ h2 {
   font-weight: 700;
 }
 
-.texto-invalido {
-  position: absolute;
-  color: red;
-  font-size: 12px;
-}
-
 @media (max-width: 991px) {
   .formulario {
     padding: 2.5em 2.5em 1em;
+  }
+
+  #formulario-preenchido {
+    gap: 1rem;
   }
 
   h2 {
@@ -88,6 +90,12 @@ h2 {
 
   .btn-primary {
     box-shadow: 0px 0px 10px var(--cor-verde);
+  }
+
+  .texto-invalido {
+    max-width: 280px;
+    line-height: .6rem;
+    margin-top: 5px;
   }
 
   ::ng-deep .icone-runpay {
