@@ -30,7 +30,7 @@ div input {
 }
 
 .formulario {
-  padding: 4em 6em 2em;
+  padding: 4em 6em 1em;
   width: 100%;
   max-width: 770px;
   border-radius: 50px;
@@ -45,6 +45,7 @@ div input {
 
 #botao_criar_conta {
   margin-top: 2em;
+  margin-bottom: 1em;
   display: flex;
   align-items: center;
   margin-left: auto;

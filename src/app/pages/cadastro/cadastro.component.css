@@ -51,8 +51,17 @@ div input {
     color: #ffffff;
 }
 
-
 @media (max-width: 991px) {
+  .texto-invalido {
+    margin-top: -5px;
+    line-height: .7rem;
+    max-width: 260px;
+  }
+
+  .form-control {
+    margin-bottom: .4rem;
+  }
+
   .formulario {
     margin: 0 2rem;
     padding: 2.5em 2.5em 1em;

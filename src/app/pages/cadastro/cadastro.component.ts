@@ -16,16 +16,17 @@ import { NgxMaskDirective, provideNgxMask} from 'ngx-mask';
 })
 export class CadastroComponent {
 cpf: any;
+mostrarMensagemSucesso = false;
 
-  constructor(private router: Router) { 
+  constructor(private router: Router) {
     this.cadastro.get('confirmacao_senha')!.setValidators([this.validarConfirmacaoSenha.bind(this)]);
     this.cadastro.get('confirmacao_email')!.setValidators([this.validarConfirmacaoEmail.bind(this)]);
 
   }
 
   cadastro = new FormGroup ({
-    cpf: new FormControl('', Validators.required),
-    nome: new FormControl('', Validators.required),
+    cpf: new FormControl('', [Validators.required, Validators.minLength(11)]),
+    nome: new FormControl('', [Validators.required, Validators.minLength(3)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     senha: new FormControl('', [Validators.required, Validators.minLength(6), this.validarForcaSenha]),
     confirmacao_email: new FormControl('', Validators.required),
@@ -54,15 +55,15 @@ cpf: any;
 
   validarForcaSenha(control: FormControl): { [key: string]: any } | null {
     const senha: string = control.value;
-  
+
     if (!senha) return null;
-  
+
     const temNumero = /[0-9]/.test(senha);
     const temMaiuscula = /[A-Z]/.test(senha);
     const temMinuscula = /[a-z]/.test(senha);
-  
+
     const senhaValida = temNumero && temMaiuscula && temMinuscula;
-  
+
     return senhaValida ? null : { validarForcaSenha: true };
   }
 
@@ -76,16 +77,16 @@ validarConfirmacaoSenha(control: AbstractControl): ValidationErrors | null {
   const confirmacaoSenha: string = control.value;
 
   if (senha !== confirmacaoSenha) {
-    return { senhasDiferentes: true }; 
+    return { senhasDiferentes: true };
   } else {
-    return null; 
+    return null;
   }
 }
 
 get confirmacaoDeEmail() {
   return this.cadastro.get('confirmacao_email') as FormControl;
 }
-  
+
   validarConfirmacaoEmail(control: AbstractControl): ValidationErrors | null {
     const email: any = this.cadastro.get('email')!.value;
     const confirmacaoEmail:string = control.value;
@@ -98,14 +99,14 @@ get confirmacaoDeEmail() {
   }
 
   cadastrar(): void {
+    this.mostrarMensagemSucesso = true;
+
     const cpf: string = this.cadastro.value.cpf ?? '';;
     const nome: string = this.cadastro.value.nome ?? '';;
     const email: string = this.cadastro.value.email ?? '';;
     const senha: string = this.cadastro.value.senha ?? '';;
     const confirmacao_email: string = this.cadastro.value.confirmacao_email ?? '';;
     const confirmacao_senha: string = this.cadastro.value.confirmacao_senha ?? '';;
-    
-    alert("Conta criada com sucesso!")
 
     localStorage.setItem('cpf', cpf);
     localStorage.setItem('nome', nome);
@@ -113,8 +114,9 @@ get confirmacaoDeEmail() {
     localStorage.setItem('senha', senha);
     localStorage.setItem('confirmacao_email', confirmacao_email);
     localStorage.setItem('confirmacao_senha', confirmacao_senha);
-
-    this.router.navigateByUrl('/login');
+    setTimeout(() => {
+      this.router.navigateByUrl('/login');
+    }, 2000);
   }
 
 }

@@ -2,7 +2,7 @@
 
 <main class="main_container d-flex flex-column align-items-center px-4 pt-5">
   <div class="formulario">
-    <form class="justify-content-center" [formGroup]="formularioLogin">
+    <form class="d-flex flex-column justify-content-center" [formGroup]="formularioLogin">
       <h2 class="text-center">Olá de novo!</h2>
       <p class="text-center">
         Ainda não tem uma conta na RunPay?
@@ -25,8 +25,7 @@
             formControlName="email"
           />
 
-          @if(emailDoUsuario?.invalid && (emailDoUsuario?.dirty
-          ||emailDoUsuario?.touched)){ @if(emailDoUsuario?.errors?.['required']){
+          @if(emailDoUsuario?.invalid && emailDoUsuario?.dirty){ @if(emailDoUsuario?.errors?.['required']){
           <span class="texto-invalido">O e-mail é um campo obrigatório.</span>
           } @if(emailDoUsuario?.errors?.['email']){
           <span class="texto-invalido">Insira um e-mail válido.</span>
@@ -35,26 +34,23 @@
 
         <div class="form-item">
           <label class="form-label" for="senha">Senha</label>
-        <input
-          type="password"
-          class="form-control"
-          id="senha"
-          placeholder="Insira sua senha"
-          formControlName="senha"
-        />
+          <input
+            type="password"
+            class="form-control"
+            id="senha"
+            placeholder="Insira sua senha"
+            formControlName="senha"
+          />
 
-        @if(senhaDoUsuario?.invalid && (senhaDoUsuario?.dirty ||
-        senhaDoUsuario?.touched)){
-        <span class="texto-invalido"
-          >Insira uma senha válida, contendo no mínimo 6 caracteres.</span
-        >
-        } @if(senhaIncorreta){
-        <span class="texto-invalido">E-mail ou senha incorreta.</span>
-        }
-      </div>
+          @if(senhaDoUsuario?.invalid && senhaDoUsuario?.dirty){
+          <span class="texto-invalido"
+            >Insira uma senha válida, contendo no mínimo 6 caracteres.</span
+          >
+          }
         </div>
-
-      <input
+      </div>
+      <div class="d-flex flex-column justify-content-end align-items-center">
+        <input
         type="submit"
         id="botao_criar_conta"
         class="btn btn-primary"
@@ -62,6 +58,9 @@
         [disabled]="formularioLogin.invalid"
         (click)="autenticar()"
       />
+      <span *ngIf="senhaIncorreta" class="texto-invalido text-center">E-mail ou senha incorreta.</span>
+      </div>
+
     </form>
   </div>
 </main>
