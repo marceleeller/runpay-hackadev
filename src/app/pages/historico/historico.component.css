@@ -93,6 +93,7 @@
 @media (max-width: 768px) {
   .transacoes_content {
     background-image: none;
+    background-color: transparent;
     padding: 1rem 1.5rem;
   }
 
@@ -108,6 +109,7 @@
   .btn-primary {
     box-shadow: 0px 0px 10px var(--cor-verde);
   }
+
 
 
 

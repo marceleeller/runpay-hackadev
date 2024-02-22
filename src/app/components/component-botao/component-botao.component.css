@@ -30,3 +30,9 @@ p {
   font-size: 30px;
   margin-top: 4px;
 }
+
+@media (max-width: 768px) {
+  .btn-icone:hover {
+    box-shadow: none;
+  }
+}
