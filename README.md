@@ -1,7 +1,7 @@
 [ANGULAR__BADGE]: https://img.shields.io/badge/Angular-red?style=for-the-badge&logo=angular
 [BOOTSTRAP__BADGE]: https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white
 [PROJECT__BADGE]: https://img.shields.io/badge/📱Visite_este_projeto-000?style=for-the-badge&logo=project
-[PROJECT__URL]: https://github.com/Fernanda-Kipper/Readme-Templates
+[PROJECT__URL]: https://runpay.vercel.app/home
 
 <h1 align="center" style="font-weight: bold;">RunPay - Hackadev 💻</h1>
 
