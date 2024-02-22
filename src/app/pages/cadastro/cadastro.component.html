@@ -25,36 +25,72 @@
           [mask]="'000.000.000-00'"
         />
 
+        <span
+          *ngIf="cpfDoUsuario.touched && cpfDoUsuario.pristine"
+          class="texto-invalido"
+          >O campo CPF é obrigatório.</span
+        >
+
         <label class="form-label">Nome Completo</label>
-        <input
-          type="text"
-          class="form-control"
-          formControlName="nome"
-        />
+        <input type="text" class="form-control" formControlName="nome" />
+
+        <span
+          *ngIf="nomeDoUsuario.touched && nomeDoUsuario.pristine"
+          class="texto-invalido"
+          >O campo nome completo é obrigatório.</span
+        >
 
         <label class="form-label">E-mail</label>
-        <input
-          type="email"
-          class="form-control"
-          formControlName="email"
-        />
-        <span *ngIf=" emaildoUsuario.hasError('required') && emaildoUsuario.dirty" class="texto-invalido">Insira um e-mail válido.</span>
+        <input type="email" class="form-control" formControlName="email" />
+        <span
+          *ngIf="emailDoUsuario.hasError('required') && emailDoUsuario.dirty"
+          class="texto-invalido"
+          >O campo e-mail é obrigatório.</span
+        >
+        <span *ngIf="emailDoUsuario.hasError('email')" class="texto-invalido"
+          >Insira um e-mail válido.</span
+        >
+        <span
+          *ngIf="emailDoUsuario.touched && emailDoUsuario.pristine"
+          class="texto-invalido"
+          >O campo email é obrigatório.</span
+        >
 
-        <label class="form-label">Confirme seu E-mail</label>
+        <label class="form-label">Confirme seu e-mail</label>
         <input
           type="email"
           class="form-control"
           formControlName="confirmacao_email"
         />
+        <span
+          *ngIf="
+            confirmacaoDeEmail.hasError('emailsDiferentes') ||
+            (confirmacaoDeEmail.hasError('required') &&
+              confirmacaoDeEmail.dirty)
+          "
+          class="texto-invalido"
+          >Os campos email e confirmação são obrigatórios e devem ser
+          iguais.</span
+        >
+        <span
+          *ngIf="confirmacaoDeEmail.touched && confirmacaoDeEmail.pristine"
+          class="texto-invalido"
+          >O campo de confirmação de email é obrigatório.</span
+        >
 
         <label class="form-label">Senha</label>
-        <input
-          type="password"
-          class="form-control"
-          formControlName="senha"
-        />
-        <span *ngIf=" senhadoUsuario.hasError('required') && senhadoUsuario.dirty" class="texto-invalido">Insira uma senha contendo no mínimo 6 caracteres.</span>
-
+        <input type="password" class="form-control" formControlName="senha" />
+        <span
+          *ngIf="senhaDoUsuario.hasError('required') && senhaDoUsuario.dirty"
+          class="texto-invalido"
+          >A senha deve conter no mínimo 6 caracteres, uma letra maiúscula,
+          minúscula e um número.</span
+        >
+        <span
+          *ngIf="senhaDoUsuario.touched && senhaDoUsuario.pristine"
+          class="texto-invalido"
+          >O campo senha é obrigatório.</span
+        >
 
         <label class="form-label">Confirme sua senha</label>
         <input
@@ -62,6 +98,21 @@
           class="form-control"
           formControlName="confirmacao_senha"
         />
+        <span
+          *ngIf="
+            confirmacaoDeSenha.hasError('senhasDiferentes') ||
+            (confirmacaoDeSenha.hasError('required') &&
+              confirmacaoDeSenha.dirty)
+          "
+          class="texto-invalido"
+          >Os campos senha e confirmação são obrigatórios e devem ser
+          iguais.</span
+        >
+        <span
+          *ngIf="confirmacaoDeSenha.touched && confirmacaoDeSenha.pristine"
+          class="texto-invalido"
+          >O campo de confirmação de senha é obrigatório.</span
+        >
       </div>
       <input
         type="submit"
@@ -69,6 +120,7 @@
         class="btn btn-primary"
         value="Criar"
         [disabled]="cadastro.invalid"
+        (click)="cadastrar()"
       />
     </form>
   </div>
