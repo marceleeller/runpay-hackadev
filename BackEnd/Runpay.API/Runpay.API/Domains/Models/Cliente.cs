@@ -1,4 +1,6 @@
-﻿namespace Runpay.API.Domain.Model;
+﻿using Runpay.API.Domain.Enums;
+
+namespace Runpay.API.Domain.Model;
 
 public class Cliente
 {
@@ -6,7 +8,7 @@ public class Cliente
     public Conta Conta { get; set; } = null!;
     public string Nome { get; set; } = null!;
     public string? NomeSocial { get; set; }
-    public Date DataNascimento { get; set; }
+    public DateTime DataNascimento { get; set; }
     public string Cpf { get; set; } = null!;
     public string Rg { get; set; } = null!;
     public string RgExpedidor { get; set; } = null!;

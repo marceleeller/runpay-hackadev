@@ -1,4 +1,6 @@
-﻿namespace Runpay.API.Domain.Model;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Runpay.API.Domain.Model;
 
 public class Conta
 {
