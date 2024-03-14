@@ -1,135 +1,81 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { AbstractControl, ControlContainer, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { HeaderVoltarComponent } from "../../components/header-voltar/header-voltar.component";
 import { FooterComponent } from "../../components/footer/footer.component";
-import { Router } from '@angular/router';
-import { NgxMaskDirective, provideNgxMask} from 'ngx-mask';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormularioEnderecoComponent } from './formulario-endereco/formulario-endereco.component';
+import FormularioInfopessoaisComponent from './formulario-infopessoais/formulario-infopessoais.component';
+import { CommonModule } from '@angular/common';
+import { FormularioSenhaComponent } from "./formulario-senha/formulario-senha.component";
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { idadeMinima } from './idade-minima-validator';
 
 @Component({
     selector: 'app-cadastro',
     standalone: true,
     templateUrl: './cadastro.component.html',
     styleUrl: './cadastro.component.css',
-    imports: [ReactiveFormsModule, CommonModule, HeaderVoltarComponent, FooterComponent, NgxMaskDirective],
-    providers: [provideNgxMask()]
+    providers: [provideNgxMask()],
+    imports: [RouterOutlet, HeaderVoltarComponent, FooterComponent, ReactiveFormsModule, FormularioEnderecoComponent, FormularioInfopessoaisComponent, CommonModule, FormularioSenhaComponent, NgxMaskDirective]
 })
-export class CadastroComponent {
-cpf: any;
-mostrarMensagemSucesso = false;
-  invalidUser: boolean = false;
+export class CadastroComponent implements OnInit {
 
-  constructor(private router: Router) {
-    this.cadastro.get('confirmacao_senha')!.setValidators([this.validarConfirmacaoSenha.bind(this)]);
-    this.cadastro.get('confirmacao_email')!.setValidators([this.validarConfirmacaoEmail.bind(this)]);
+  cadastroForm!: FormGroup;
+  formularioExibido = 'inicial';
+  constructor(private fb: FormBuilder, private router: Router) { }
 
+  ngOnInit(): void {
+    this.cadastroForm = this.fb.group({
+        nome: this.fb.control('', [Validators.required, Validators.minLength(3)]),
+        nomeSocial: this.fb.control(''),
+        dataNascimento: this.fb.control('', [Validators.required, idadeMinima(8)]),
+        cpf: this.fb.control('', [Validators.required, Validators.minLength(11)]),
+        rg: this.fb.control('', Validators.required),
+        rgExpedidor: this.fb.control('', Validators.required),
+        rgUf: this.fb.control('', Validators.required),
+        nacionalidade: this.fb.control('', Validators.required),
+        estadoCivil: this.fb.control('', Validators.required),
+        genero: this.fb.control('', Validators.required),
+        ddd: this.fb.control('', [Validators.required, Validators.minLength(2)]),
+        celular: this.fb.control('', [Validators.required, Validators.minLength(9)]),
+        email: this.fb.control('', [Validators.required, Validators.email]),
+        confirmarEmail: this.fb.control('', Validators.required),
+        senha: this.fb.control(''),
+        confirmarSenha: this.fb.control(''),
+        endereco: this.fb.group({
+          cep: this.fb.control(''),
+          logradouro: this.fb.control(''),
+          numero: this.fb.control(''),
+          complemento: this.fb.control(''),
+          bairro: this.fb.control(''),
+          cidade: this.fb.control(''),
+          estado: this.fb.control('')
+        })
+    });
   }
 
-  cadastro = new FormGroup ({
-    cpf: new FormControl('', [Validators.required, Validators.minLength(11)]),
-    nome: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    senha: new FormControl('', [Validators.required, Validators.minLength(6), this.validarForcaSenha]),
-    confirmacao_email: new FormControl('', Validators.required),
-    confirmacao_senha: new FormControl('', Validators.required)
-  });
+  mudarParaFormularioEndereco(){
+    this.formularioExibido = 'endereco';
+  }
+
+  mudarParaFormularioInfopessoais(){
+    this.formularioExibido = 'infopessoais';
+  }
+
+  mudarParaFormularioSenha(){
+    this.formularioExibido = 'senha';
+  }
+
+  mudarParaFormularioInicial(){
+    this.formularioExibido = 'inicial';
+  }
 
   redirecionarParaLogin() {
     this.router.navigate(['/login']);
   }
 
-  get cpfDoUsuario() {
-    return this.cadastro.get('cpf') as FormControl;
+  // get
+  getCampo(nomeCampo: string) {
+    return this.cadastroForm.get(nomeCampo);
   }
-
-  get nomeDoUsuario() {
-    return this.cadastro.get('nome') as FormControl;
-  }
-
-  get emailDoUsuario() {
-    return this.cadastro.get('email') as FormControl;
-  }
-
-  get senhaDoUsuario() {
-    return this.cadastro.get('senha') as FormControl;
-  }
-
-  validarForcaSenha(control: FormControl): { [key: string]: any } | null {
-    const senha: string = control.value;
-
-    if (!senha) return null;
-
-    const temNumero = /[0-9]/.test(senha);
-    const temMaiuscula = /[A-Z]/.test(senha);
-    const temMinuscula = /[a-z]/.test(senha);
-
-    const senhaValida = temNumero && temMaiuscula && temMinuscula;
-
-    return senhaValida ? null : { validarForcaSenha: true };
-  }
-
-  get confirmacaoDeSenha() {
-    return this.cadastro.get('confirmacao_senha') as FormControl;
-  }
-
-
-validarConfirmacaoSenha(control: AbstractControl): ValidationErrors | null {
-  const senha: any = this.cadastro.get('senha')!.value;
-  const confirmacaoSenha: string = control.value;
-
-  if (senha !== confirmacaoSenha) {
-    return { senhasDiferentes: true };
-  } else {
-    return null;
-  }
-}
-
-get confirmacaoDeEmail() {
-  return this.cadastro.get('confirmacao_email') as FormControl;
-}
-
-  validarConfirmacaoEmail(control: AbstractControl): ValidationErrors | null {
-    const email: any = this.cadastro.get('email')!.value;
-    const confirmacaoEmail:string = control.value;
-
-    if(email !== confirmacaoEmail){
-      return {emailsDiferentes: true};
-    } else {
-      return null;
-    }
-  }
-
-  cadastrar(): void {
-    const userList = JSON.parse(localStorage.getItem('userList') || '[]');
-    console.log(userList);
-
-    userList.forEach((user:any) => {
-      if((user.cpf == this.cadastro.value.cpf) || (user.email == this.cadastro.value.email)){
-          this.invalidUser = true;
-      }
-    });
-
-    if(this.invalidUser == true) {
-      console.log('Usuário já cadastrado')
-      return;
-    }
-
-    userList.push(
-      {
-          cpf: this.cadastro.value.cpf ?? '',
-          nome: this.cadastro.value.nome ?? '',
-          email: this.cadastro.value.email ?? '',
-          senha: this.cadastro.value.senha ?? ''
-      }
-  )
-
-  localStorage.setItem('userList', JSON.stringify(userList))
-
-  this.mostrarMensagemSucesso = true;
-
-    setTimeout(() => {
-      this.router.navigateByUrl('/login');
-    }, 2000);
-  }
-
 }

@@ -1,10 +1,10 @@
 <app-header-voltar logo="../../../assets/logo.svg"></app-header-voltar>
 
 <main
-  class="main_container d-flex flex-column justify-content-center align-items-center px-4 mt-5 mb-4"
+  class="main_container d-flex flex-column justify-content-center align-items-center px-4 mt-3 mb-4"
 >
   <div class="formulario">
-    <form class="justify-content-center" [formGroup]="cadastro">
+    <form class="justify-content-center" [formGroup]="cadastroForm">
       <h2 class="text-center">Crie a sua conta da RunPay</h2>
       <p class="text-center">
         Já possui uma conta?
@@ -16,119 +16,69 @@
         >
       </p>
 
-      <div id="formulario-preenchido">
-        <label class="form-label">CPF</label>
-        <input
-          type="string"
-          class="form-control"
-          formControlName="cpf"
-          [mask]="'000.000.000-00'"
-        />
-        <span
-          *ngIf="cpfDoUsuario.dirty && cpfDoUsuario.hasError('required')"
+      <!-- Formulario cpf -->
+      <div *ngIf="formularioExibido == 'inicial'" class="d-flex flex-column justify-content-center gap-5">
+        <div>
+          <label class="form-label" >Primeiro, insira seu CPF</label>
+          <input type="text" class="form-control" formControlName="cpf" [mask]="'000.000.000-00'"/>
+          <span
+          *ngIf="getCampo('cpf')?.dirty && getCampo('cpf')?.hasError('required')"
           class="texto-invalido"
-          >O campo CPF é obrigatório.</span
-        >
-        <span
-          *ngIf="cpfDoUsuario.hasError('minlength')"
-          class="texto-invalido"
-          >Digite um CPF válido.</span
-        >
+          >CPF é obrigatório.</span
+          >
+          <span
+            *ngIf="getCampo('cpf')?.hasError('minlength')"
+            class="texto-invalido"
+            >Digite um CPF válido.</span
+          >
+        </div>
 
-        <label class="form-label">Nome Completo</label>
-        <input type="text" class="form-control" formControlName="nome" />
+        <div class="inicial d-flex flex-column justify-content-center align-items-center gap-3">
+          <button class="btn btn-primary" (click)="mudarParaFormularioInfopessoais()" [disabled]="getCampo('cpf')?.invalid">Continuar</button>
+          <p class="texto-termosdeuso text-center">Ao se cadastrar, você aceita os nossos
+            <a id="link_entrar" style="text-decoration: underline; font-weight: 700">Termos de Uso</a>
+            e a nossa
+            <a id="link_entrar" style="text-decoration: underline; font-weight: 700">Política de Privacidade</a>
+          </p>
+        </div>
 
-        <span
-          *ngIf="nomeDoUsuario.dirty && nomeDoUsuario.hasError('required')"
-          class="texto-invalido"
-          >O campo nome completo é obrigatório.</span
-        >
-        <span
-          *ngIf="nomeDoUsuario.hasError('minlength')"
-          class="texto-invalido"
-          >Nome deve conter no mínimo 3 caracteres.</span
-        >
-
-        <label class="form-label">E-mail</label>
-        <input type="email" class="form-control" formControlName="email" />
-        <span
-          *ngIf="emailDoUsuario.hasError('required') && emailDoUsuario.dirty"
-          class="texto-invalido"
-          >O campo e-mail é obrigatório.</span
-        >
-        <span *ngIf="emailDoUsuario.hasError('email')" class="texto-invalido"
-          >Insira um e-mail válido.</span
-        >
-
-        <label class="form-label">Confirme seu e-mail</label>
-        <input
-          type="email"
-          class="form-control"
-          formControlName="confirmacao_email"
-        />
-        <span
-          *ngIf="confirmacaoDeEmail.dirty && confirmacaoDeEmail.hasError('required')"
-          class="texto-invalido"
-          >O campo de confirmação de email é obrigatório.</span
-        >
-        <span
-          *ngIf="
-            confirmacaoDeEmail.hasError('emailsDiferentes')
-          "
-          class="texto-invalido"
-          >Os campos email e confirmação são obrigatórios e devem ser
-          iguais.</span
-        >
-
-        <label class="form-label">Senha</label>
-        <input type="password" class="form-control" formControlName="senha" />
-        <span
-          *ngIf="senhaDoUsuario.dirty && senhaDoUsuario.hasError('required')"
-          class="texto-invalido"
-          >O campo senha é obrigatório.</span
-        >
-        <span
-          *ngIf="senhaDoUsuario.hasError('validarForcaSenha')"
-          class="texto-invalido"
-          >A senha deve conter no mínimo 6 caracteres, uma letra maiúscula,
-          minúscula e um número.</span
-        >
-
-
-        <label class="form-label">Confirme sua senha</label>
-        <input
-          type="password"
-          class="form-control"
-          formControlName="confirmacao_senha"
-        />
-        <span
-          *ngIf="confirmacaoDeSenha.touched && confirmacaoDeSenha.hasError('required')"
-          class="texto-invalido"
-          >O campo de confirmação de senha é obrigatório.</span
-        >
-        <span
-          *ngIf="
-            confirmacaoDeSenha.hasError('senhasDiferentes') ||
-            (confirmacaoDeSenha.hasError('required') &&
-              confirmacaoDeSenha.touched)
-          "
-          class="texto-invalido"
-          >Os campos senha e confirmação são obrigatórios e devem ser
-          iguais.</span
-        >
       </div>
-      <input
-        type="submit"
-        id="botao_criar_conta"
-        class="btn btn-primary"
-        value="Criar"
-        [disabled]="cadastro.invalid"
-        (click)="cadastrar()"
-      />
-      <p *ngIf="mostrarMensagemSucesso" class="texto-valido text-center">Conta criada com sucesso!</p>
-      <p *ngIf="invalidUser" class="texto-invalido-mensagem text-center">CPF ou e-mail já utilizados.</p>
+
+      <!-- formulario info-pessoais -->
+      <div *ngIf="formularioExibido == 'infopessoais'">
+        <formulario-infopessoais [cadastroForm]="cadastroForm"></formulario-infopessoais>
+        <div class="buttons mt-5 d-flex gap-5">
+          <button class="btn btn-primary" (click)="mudarParaFormularioInicial()">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+          <button class="btn btn-primary flex-fill"  (click)="mudarParaFormularioEndereco()">Continuar</button>
+        </div>
+      </div >
+
+      <div *ngIf="formularioExibido == 'endereco'">
+        <formulario-endereco [cadastroForm]="cadastroForm"></formulario-endereco>
+        <div class="buttons mt-5 d-flex gap-5">
+          <button class="btn btn-primary" (click)="mudarParaFormularioInfopessoais()">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+          <button class="btn btn-primary flex-fill"  (click)="mudarParaFormularioSenha()">Continuar</button>
+        </div>
+      </div>
+
+      <div *ngIf="formularioExibido == 'senha'">
+        <formulario-senha [cadastroForm]="cadastroForm"></formulario-senha>
+        <div class="buttons mt-5 d-flex gap-5">
+          <button class="btn btn-primary" (click)="mudarParaFormularioEndereco()">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+          <button class="btn btn-primary flex-fill">Criar</button>
+        </div>
+      </div>
+
+
+
     </form>
   </div>
 </main>
-
-<app-footer></app-footer>
+<!--
+<app-footer></app-footer> -->
