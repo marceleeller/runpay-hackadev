@@ -16,7 +16,7 @@ namespace DTOs.Responses
             SaldoDestinoAposTransferencia = saldo;
         }
 
-        public void SetMensagem(string mensagem) /*criar mensagem de sucesso e de erro ou algo do tipo*/
+        public void SetMensagem(string mensagem) /*criar mensagem de sucesso e */
         {
             Mensagem = "Transferencia realizada com sucesso.";
         }
