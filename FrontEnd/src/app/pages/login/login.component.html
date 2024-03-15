@@ -1,6 +1,7 @@
 <app-header-voltar logo="../../../assets/logo.svg"></app-header-voltar>
 
-<main class="main_container d-flex flex-column align-items-center px-4 pt-5">
+<main class="main_container d-flex flex-column align-items-center px-4 mt-3 mb-4">
+
   <div class="formulario">
     <form class="d-flex flex-column justify-content-center" [formGroup]="formularioLogin">
       <h2 class="text-center">Olá de novo!</h2>
@@ -13,56 +14,51 @@
           >Cadastre-se</a
         >
       </p>
+      <div>
+        <label class="form-label" for="cpf">Insira seu CPF</label>
+        <input
+          type="cpf"
+          class="form-control"
+          id="cpf"
+          formControlName="cpf"
+          [mask]="'000.000.000-00'"
+        />
 
-      <div id="formulario-preenchido">
-        <div class="form-item">
-          <label class="form-label" for="email">E-mail</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            placeholder="Insira seu e-mail"
-            formControlName="email"
-          />
+        <span
+        *ngIf="(cpf?.touched || cpf?.dirty) && cpf?.hasError('required')" class="texto-invalido"
+        >Digite seu CPF</span
+        >
+        <span
+        *ngIf="cpf?.hasError('minlength')" class="texto-invalido"
+        >Insira um CPF válido.</span
+        >
+      </div>
 
-          @if(emailDoUsuario?.invalid && emailDoUsuario?.dirty){ @if(emailDoUsuario?.errors?.['required']){
-          <span class="texto-invalido">O e-mail é um campo obrigatório.</span>
-          } @if(emailDoUsuario?.errors?.['email']){
-          <span class="texto-invalido">Insira um e-mail válido.</span>
-          }}
-        </div>
-
-        <div class="form-item">
-          <label class="form-label" for="senha">Senha</label>
+      <div>
+        <label class="form-label" for="senha">Insira sua senha</label>
           <input
             type="password"
             class="form-control"
             id="senha"
-            placeholder="Insira sua senha"
             formControlName="senha"
           />
-
-          @if(senhaDoUsuario?.invalid && senhaDoUsuario?.dirty){
-          <span class="texto-invalido"
+          <span
+          *ngIf="(senha?.touched || senha?.dirty) && senha?.hasError('required')" class="texto-invalido"
+          >Digite sua senha</span
+          >
+          <span
+            *ngIf="senha?.invalid && senha?.dirty"
+            class="texto-invalido"
             >Insira uma senha válida, contendo no mínimo 6 caracteres.</span
           >
-          }
-        </div>
       </div>
-      <div class="d-flex flex-column justify-content-end align-items-center">
-        <input
-        type="submit"
-        id="botao_criar_conta"
-        class="btn btn-primary"
-        value="Entrar"
-        [disabled]="formularioLogin.invalid"
-        (click)="autenticar()"
-      />
-      <span *ngIf="senhaIncorreta" class="texto-invalido text-center">E-mail ou senha incorreta.</span>
-      </div>
+
+      <button type="submit"
+      class="btn btn-primary mt-5"
+      [disabled]="formularioLogin.invalid">
+      Entrar
+      </button>
 
     </form>
   </div>
 </main>
-
-<app-footer></app-footer>

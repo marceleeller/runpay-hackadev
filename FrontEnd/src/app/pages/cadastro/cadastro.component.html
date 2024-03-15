@@ -33,6 +33,7 @@
           >
         </div>
 
+        <!-- termos e condicoes -->
         <div class="inicial d-flex flex-column justify-content-center align-items-center gap-3">
           <button class="btn btn-primary" (click)="mudarParaFormularioInfopessoais()" [disabled]="getCampo('cpf')?.invalid">Continuar</button>
           <p class="texto-termosdeuso text-center">Ao se cadastrar, você aceita os nossos
@@ -55,6 +56,7 @@
         </div>
       </div >
 
+      <!-- formulario endereco -->
       <div *ngIf="formularioExibido == 'endereco'" class="formularioinvalido">
         <formulario-endereco [cadastroForm]="cadastroForm"></formulario-endereco>
         <div class="buttons mt-5 d-flex gap-5">
@@ -70,6 +72,7 @@
         <p *ngIf="mostrarMensagemSucesso" class="texto-valido text-center">Conta criada com sucesso!</p>
         <p *ngIf="invalidUser" class="texto-invalido-mensagem text-center">E-mail já utilizado.</p>
 
+        <!-- Formulario senha -->
         <formulario-senha [cadastroForm]="cadastroForm"></formulario-senha>
         <div class="buttons mt-5 d-flex gap-5">
           <button class="btn btn-primary btn-voltar" (click)="mudarParaFormularioEndereco()">
@@ -82,5 +85,3 @@
 
   </div>
 </main>
-<!--
-<app-footer></app-footer> -->

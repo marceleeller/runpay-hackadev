@@ -8,12 +8,8 @@
 
 .form-label {
   margin: 0;
-}
-
-#formulario-preenchido {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  margin-top: 20px;
+  font-size: 14px;
 }
 
 main {
@@ -21,7 +17,6 @@ main {
 }
 
 input {
-  margin: 0;
   color: white;
 }
 
@@ -30,7 +25,7 @@ div input {
 }
 
 .formulario {
-  padding: 4em 6em 1em;
+  padding: 2em 6em 2em;
   width: 100%;
   max-width: 770px;
   border-radius: 50px;
@@ -39,64 +34,25 @@ div input {
   background-repeat: no-repeat;
 }
 
-.form-label {
-  margin: 0;
-}
-
-#botao_criar_conta {
-  margin-top: 2em;
-  margin-bottom: 1em;
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-  width: 150px;
-  height: 50px;
-  justify-content: center;
-  background-color: #c3f587;
-  color: var(--cor-azul-escuro);
-
-  &:disabled {
-    background-color: var(--cor-azul-escuro);
-  }
-}
-
-
 #link_entrar {
   color: #c3f587;
   cursor: pointer;
 }
 
 h2 {
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 700;
 }
 
+p {
+  font-size: 14px;
+}
+
 @media (max-width: 991px) {
-  .formulario {
-    padding: 2.5em 2.5em 1em;
-  }
-
-  #formulario-preenchido {
-    gap: 1rem;
-  }
-
-  h2 {
-    font-size: 24px;
-  }
-
-  .btn:disabled {
-    box-shadow: none;
-  }
-
-  .btn-primary {
-    box-shadow: 0px 0px 10px var(--cor-verde);
-  }
-
   .texto-invalido {
     max-width: 280px;
     line-height: .6rem;
-    margin-top: 5px;
+
   }
 
   ::ng-deep .icone-runpay {
@@ -113,5 +69,12 @@ h2 {
 
   ::ng-deep .secao-siga {
     display: none !important;
+  }
+}
+
+@media (max-width: 768px){
+  .formulario {
+    margin: 0 2rem;
+    padding: 2.5em 3em 2.5em;
   }
 }
