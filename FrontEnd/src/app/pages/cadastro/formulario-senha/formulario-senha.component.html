@@ -1,13 +1,37 @@
 <div [formGroup]="cadastroForm" class="formularioinvalido">
   <label class="form-label">E-mail</label>
   <input type="text" class="form-control" formControlName="email" />
+  <span
+    *ngIf="(getCampo('email')?.dirty || getCampo('email')?.touched) && getCampo('email')?.hasError('required') "
+    class="texto-invalido"
+    >E-mail é obrigatório.
+  </span >
+  <span *ngIf="getCampo('email')?.hasError('email')" class="texto-invalido"
+          >Insira um e-mail válido.
+  </span>
 
   <label class="form-label">Confirme seu E-mail</label>
   <input type="text" class="form-control" formControlName="confirmarEmail" />
+  <span
+    *ngIf="((getCampo('confirmarEmail')?.touched) && getCampo('confirmarEmail')?.hasError('required')) || getCampo('confirmarEmail')?.hasError('emailsDiferentes')"
+    class="texto-invalido"
+    >Os campos e-mail e confirmação de e-mail devem ser iguais.
+  </span >
 
   <label class="form-label">Senha</label>
-  <input type="text" class="form-control" formControlName="senha" />
+  <input type="password" class="form-control" formControlName="senha" />
+  <span
+    *ngIf="(getCampo('senha')?.dirty || getCampo('senha')?.touched) && getCampo('senha')?.hasError('required') "
+    class="texto-invalido"
+    >Senha é obrigatória.
+  </span >
 
   <label class="form-label">Confirme sua senha</label>
-  <input type="text" class="form-control" formControlName="confirmarSenha" />
+  <input type="password" class="form-control" formControlName="confirmarSenha" />
+  <span
+    *ngIf="((getCampo('confirmarSenha')?.touched) && getCampo('confirmarSenha')?.hasError('required')) || getCampo('confirmarSenha')?.hasError('senhasDiferentes') "
+    class="texto-invalido"
+    >Os campos senha e confirmação devem ser
+    iguais.
+  </span>
 </div>

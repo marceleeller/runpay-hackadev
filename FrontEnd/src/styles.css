@@ -75,6 +75,7 @@ body {
 
 .btn:disabled {
   background-color: #8aae5f !important;
+  border: 2px solid #8aae5f !important;
   border: none;
 }
 
@@ -94,7 +95,7 @@ body {
   color: var(--cor-cinza);
 }
 
-.ng-invalid.ng-dirty:not(form)  {
+.ng-invalid.ng-dirty:not(form), .ng-invalid.ng-touched:not(form)  {
   border: 1px solid red;
 }
 
@@ -118,3 +119,4 @@ body {
   font-size: 12px;
   color: var(--cor-verde);
 }
+

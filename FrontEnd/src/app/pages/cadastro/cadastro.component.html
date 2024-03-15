@@ -4,7 +4,7 @@
   class="main_container d-flex flex-column justify-content-center align-items-center px-4 mt-3 mb-4"
 >
   <div class="formulario">
-    <form class="justify-content-center" [formGroup]="cadastroForm">
+    <form class="justify-content-center formularioinvalido" [formGroup]="cadastroForm" (ngSubmit)="cadastrar()">
       <h2 class="text-center">Crie a sua conta da RunPay</h2>
       <p class="text-center">
         Já possui uma conta?
@@ -45,39 +45,41 @@
       </div>
 
       <!-- formulario info-pessoais -->
-      <div *ngIf="formularioExibido == 'infopessoais'">
+      <div *ngIf="formularioExibido == 'infopessoais'" class="formularioinvalido">
         <formulario-infopessoais [cadastroForm]="cadastroForm"></formulario-infopessoais>
         <div class="buttons mt-5 d-flex gap-5">
-          <button class="btn btn-primary" (click)="mudarParaFormularioInicial()">
+          <button class="btn btn-primary btn-voltar" (click)="mudarParaFormularioInicial()">
             <i class="bi bi-chevron-left"></i>
           </button>
-          <button class="btn btn-primary flex-fill"  (click)="mudarParaFormularioEndereco()">Continuar</button>
+          <button class="btn btn-primary flex-fill"  (click)="mudarParaFormularioEndereco()" [disabled]="!validarFormularioInfopessoais()">Continuar</button>
         </div>
       </div >
 
-      <div *ngIf="formularioExibido == 'endereco'">
+      <div *ngIf="formularioExibido == 'endereco'" class="formularioinvalido">
         <formulario-endereco [cadastroForm]="cadastroForm"></formulario-endereco>
         <div class="buttons mt-5 d-flex gap-5">
-          <button class="btn btn-primary" (click)="mudarParaFormularioInfopessoais()">
+          <button class="btn btn-primary btn-voltar" (click)="mudarParaFormularioInfopessoais()">
             <i class="bi bi-chevron-left"></i>
           </button>
-          <button class="btn btn-primary flex-fill"  (click)="mudarParaFormularioSenha()">Continuar</button>
+          <button class="btn btn-primary flex-fill"  (click)="mudarParaFormularioSenha()" [disabled]="getCampo('endereco')?.invalid">Continuar</button>
         </div>
       </div>
 
       <div *ngIf="formularioExibido == 'senha'">
+
+        <p *ngIf="mostrarMensagemSucesso" class="texto-valido text-center">Conta criada com sucesso!</p>
+        <p *ngIf="invalidUser" class="texto-invalido-mensagem text-center">E-mail já utilizado.</p>
+
         <formulario-senha [cadastroForm]="cadastroForm"></formulario-senha>
         <div class="buttons mt-5 d-flex gap-5">
-          <button class="btn btn-primary" (click)="mudarParaFormularioEndereco()">
+          <button class="btn btn-primary btn-voltar" (click)="mudarParaFormularioEndereco()">
             <i class="bi bi-chevron-left"></i>
           </button>
-          <button class="btn btn-primary flex-fill">Criar</button>
+          <button type="submit" class="btn btn-primary flex-fill" [disabled]="cadastroForm.invalid">Criar</button>
         </div>
       </div>
-
-
-
     </form>
+
   </div>
 </main>
 <!--

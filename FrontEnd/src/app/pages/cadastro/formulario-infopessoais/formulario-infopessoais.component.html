@@ -1,20 +1,27 @@
 <div [formGroup]="cadastroForm" class="formularioinvalido">
 
-    <label class="form-label">Nome Completo</label>
-    <input type="text" class="form-control" formControlName="nome" (keypress)="this.formService.apenasCaracteres($event)"/>
-    <span
-          *ngIf="getCampo('nome')?.dirty && getCampo('nome')?.hasError('required')"
-          class="texto-invalido"
-          >Nome Completo é obrigatório.</span
-        >
-        <span
-          *ngIf="getCampo('nome')?.hasError('minlength')"
-          class="texto-invalido"
-          >Nome deve conter no mínimo 3 caracteres.</span
-        >
+  <div class="row">
+    <div class="col">
+      <label class="form-label">Nome Completo</label>
+      <input type="text" class="form-control" formControlName="nome" (keypress)="this.formService.apenasCaracteres($event)"/>
+      <span
+            *ngIf="(getCampo('nome')?.dirty || getCampo('nome')?.touched) && getCampo('nome')?.hasError('required')"
+            class="texto-invalido"
+            >Nome Completo é obrigatório.</span
+          >
+          <span
+            *ngIf="getCampo('nome')?.hasError('minlength')"
+            class="texto-invalido"
+            >Nome deve conter no mínimo 3 caracteres.</span
+          >
+    </div>
+    <div class="col">
+      <label class="form-label">Nome Social</label>
+      <input type="text" class="form-control" formControlName="nomeSocial" (keypress)="this.formService.apenasCaracteres($event)"/>
+    </div>
+  </div>
 
-    <label class="form-label">Nome Social</label>
-    <input type="text" class="form-control" formControlName="nomeSocial" (keypress)="this.formService.apenasCaracteres($event)"/>
+
 
 
     <div class="row">
@@ -22,7 +29,7 @@
         <label class="form-label">RG</label>
         <input type="text" class="form-control" formControlName="rg" (keypress)="this.formService.apenasNumeros($event)"/>
         <span
-          *ngIf="getCampo('rg')?.dirty && getCampo('rg')?.hasError('required')"
+          *ngIf="(getCampo('logradouro')?.dirty || getCampo('rg')?.touched) && getCampo('rg')?.hasError('required')"
           class="texto-invalido"
           >RG é obrigatório.
         </span>
@@ -31,7 +38,7 @@
         <label class="form-label">Órgão expedidor</label>
         <input type="text" class="form-control" formControlName="rgExpedidor" (keypress)="this.formService.apenasCaracteres($event)"/>
         <span
-          *ngIf="getCampo('rgExpedidor')?.dirty && getCampo('rgExpedidor')?.hasError('required')"
+          *ngIf="(getCampo('rgExpedidor')?.dirty || getCampo('rgExpedidor')?.touched) && getCampo('rgExpedidor')?.hasError('required')"
           class="texto-invalido"
           >Campo obrigatório.</span
         >
@@ -69,7 +76,7 @@
           <option value="TO">TO</option>
         </select>
         <span
-          *ngIf="getCampo('rgUf')?.touched && getCampo('rgUf')?.hasError('required') "
+          *ngIf="(getCampo('rgUf')?.dirty || getCampo('rgUf')?.touched) && getCampo('rgUf')?.hasError('required') "
           class="texto-invalido"
           >RG é obrigatório.
         </span>
@@ -91,7 +98,7 @@
         <label class="form-label">Nacionalidade</label>
         <input type="text" class="form-control" formControlName="nacionalidade" (keypress)="this.formService.apenasCaracteres($event)"/>
         <span
-          *ngIf="getCampo('nacionalidade')?.dirty && getCampo('nacionalidade')?.hasError('required')"
+          *ngIf="(getCampo('nacionalidade')?.dirty || getCampo('nacionalidade')?.touched) && getCampo('nacionalidade')?.hasError('required')"
           class="texto-invalido"
           >Nacionalidade é obrigatório.
         </span>
@@ -132,9 +139,9 @@
         <label class="form-label">DDD</label>
         <input type="text" class="form-control" formControlName="ddd" maxlength="2" (keypress)="this.formService.apenasNumeros($event)"/>
         <span
-          *ngIf="getCampo('ddd')?.dirty && getCampo('ddd')?.hasError('required')"
+          *ngIf="(getCampo('ddd')?.dirty || getCampo('ddd')?.touched) && getCampo('ddd')?.hasError('required')"
           class="texto-invalido"
-          >DDD é obrigatório.
+          >DDD obrigatório.
         </span>
         <span
           *ngIf=" getCampo('ddd')?.hasError('minlength')"
@@ -146,7 +153,7 @@
         <label class="form-label">Celular</label>
         <input type="text" class="form-control" formControlName="celular" [mask]="'00000-0000'"/>
         <span
-          *ngIf="getCampo('celular')?.dirty && getCampo('celular')?.hasError('required')"
+          *ngIf="(getCampo('celular')?.dirty || getCampo('celular')?.touched) && getCampo('celular')?.hasError('required')"
           class="texto-invalido"
           >Celular é obrigatório.
         </span>

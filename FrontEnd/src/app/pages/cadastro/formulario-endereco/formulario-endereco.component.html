@@ -1,5 +1,5 @@
 <div [formGroup]="cadastroForm" class="formularioinvalido">
-  <div formGroupName="endereco">
+  <div formGroupName="endereco" class="formularioinvalido">
 
     <label class="form-label">CEP</label>
     <div class="input-group">
@@ -9,7 +9,7 @@
       </button>
     </div>
     <span
-      *ngIf="getCampo('cep')?.dirty && getCampo('cep')?.hasError('required') "
+      *ngIf="(getCampo('cep')?.dirty || getCampo('cep')?.touched) && getCampo('cep')?.hasError('required') "
       class="texto-invalido"
       >CEP é obrigatório.
     </span >
@@ -30,25 +30,58 @@
           <option value select>Selecionar</option>
           <option *ngFor="let estado of estados" [value]="estado">{{estado}}</option>
         </select>
+        <span
+          *ngIf="(getCampo('estado')?.dirty || getCampo('estado')?.touched) && getCampo('estado')?.hasError('required') "
+          class="texto-invalido"
+          >Estado é obrigatório.
+        </span >
       </div>
       <div class="col">
         <label class="form-label" >Cidade</label>
         <input type="text" class="form-control" formControlName="cidade" (keypress)="this.formService.apenasCaracteres($event)"/>
+        <span
+          *ngIf="(getCampo('cidade')?.dirty || getCampo('cidade')?.touched ) && getCampo('cidade')?.hasError('required') "
+          class="texto-invalido"
+          >Cidade é obrigatório.
+        </span >
       </div>
     </div>
 
 
     <label class="form-label">Logradouro</label>
     <input type="text" class="form-control" formControlName="logradouro" />
+    <span
+      *ngIf="(getCampo('logradouro')?.dirty || getCampo('logradouro')?.touched) && getCampo('logradouro')?.hasError('required') "
+      class="texto-invalido"
+      >Logradouro é obrigatório.
+    </span >
 
     <label class="form-label">Número</label>
     <input type="text" class="form-control" formControlName="numero" />
+    <span
+      *ngIf="(getCampo('numero')?.dirty || getCampo('numero')?.touched) && getCampo('numero')?.hasError('required') "
+      class="texto-invalido"
+      >Número é obrigatório.
+    </span >
 
-    <label class="form-label">Complemento</label>
-    <input type="text" class="form-control" formControlName="complemento" />
+    <div class="row">
+      <div class="col">
+        <label class="form-label">Complemento</label>
+      <input type="text" class="form-control" formControlName="complemento" />
+      </div>
+      <div class="col">
+        <label class="form-label">Bairro</label>
+        <input type="text" class="form-control" formControlName="bairro" />
+        <span
+          *ngIf="(getCampo('bairro')?.dirty || getCampo('bairro')?.touched) && getCampo('bairro')?.hasError('required') "
+          class="texto-invalido"
+          >Bairro é obrigatório.
+        </span >
+      </div>
+    </div>
 
-    <label class="form-label">Bairro</label>
-    <input type="text" class="form-control" formControlName="bairro" />
+
+
 
   </div>
 </div>
