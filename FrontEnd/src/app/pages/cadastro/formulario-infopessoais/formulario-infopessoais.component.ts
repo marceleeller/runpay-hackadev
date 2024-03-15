@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { FormService } from '../../../services/form.service';
 
 @Component({
   selector: 'formulario-infopessoais',
@@ -15,29 +16,28 @@ export default class FormularioInfopessoaisComponent {
 
   @Input({ required: true}) cadastroForm!: FormGroup;
 
+  constructor(public formService: FormService) { }
+
+  generos = [
+    { value: 'CisFeminino', exibicao: 'Cis Feminino' },
+    { value: 'CisMasculino', exibicao: 'Cis Masculino' },
+    { value: 'Feminino', exibicao: 'Feminino' },
+    { value: 'Masculino', exibicao: 'Masculino' },
+    { value: 'NaoBinario', exibicao: 'Não Binário' },
+    { value: 'Outro', exibicao: 'Outro' },
+  ];
+
+  estadosCivis = [
+    { value: 'Solteiro', exibicao: 'Solteiro(a)' },
+    { value: 'Casado', exibicao: 'Casado(a)' },
+    { value: 'Viuvo', exibicao: 'Viuvo(a)' },
+    { value: 'Divorciado', exibicao: 'Divorciado(a)' },
+    { value: 'UniaoEstavel', exibicao: 'União Estável' },
+  ];
+
   // get
   getCampo(nomeCampo: string) {
     return this.cadastroForm.get(nomeCampo);
   }
 
-  // metodos para travar input para apenas numeros ou caracteres
-  apenasNumeros(event: any): void {
-    const pattern = /[0-9\+\-\ ]/;
-    let inputChar = String.fromCharCode(event.charCode);
-
-    if (!pattern.test(inputChar)) {
-      // caractere invalido, impedir input
-      event.preventDefault();
-    }
-  }
-
-  apenasCaracteres(event: any): void {
-    const pattern = /[a-zA-Z\ ]/;
-    let inputChar = String.fromCharCode(event.charCode);
-
-    if (!pattern.test(inputChar)) {
-    // caractere inválido, impedir input
-    event.preventDefault();
-  }
-  }
 }

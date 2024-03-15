@@ -1,7 +1,7 @@
 <div [formGroup]="cadastroForm" class="formularioinvalido">
 
     <label class="form-label">Nome Completo</label>
-    <input type="text" class="form-control" formControlName="nome" (keypress)="apenasCaracteres($event)"/>
+    <input type="text" class="form-control" formControlName="nome" (keypress)="this.formService.apenasCaracteres($event)"/>
     <span
           *ngIf="getCampo('nome')?.dirty && getCampo('nome')?.hasError('required')"
           class="texto-invalido"
@@ -14,13 +14,13 @@
         >
 
     <label class="form-label">Nome Social</label>
-    <input type="text" class="form-control" formControlName="nomeSocial" (keypress)="apenasCaracteres($event)"/>
+    <input type="text" class="form-control" formControlName="nomeSocial" (keypress)="this.formService.apenasCaracteres($event)"/>
 
 
     <div class="row">
       <div class="col-sm-12 col-md-6">
         <label class="form-label">RG</label>
-        <input type="text" class="form-control" formControlName="rg" (keypress)="apenasNumeros($event)"/>
+        <input type="text" class="form-control" formControlName="rg" (keypress)="this.formService.apenasNumeros($event)"/>
         <span
           *ngIf="getCampo('rg')?.dirty && getCampo('rg')?.hasError('required')"
           class="texto-invalido"
@@ -29,7 +29,7 @@
       </div>
       <div class="col-sm-12 col-md-3">
         <label class="form-label">Órgão expedidor</label>
-        <input type="text" class="form-control" formControlName="rgExpedidor" (keypress)="apenasCaracteres($event)"/>
+        <input type="text" class="form-control" formControlName="rgExpedidor" (keypress)="this.formService.apenasCaracteres($event)"/>
         <span
           *ngIf="getCampo('rgExpedidor')?.dirty && getCampo('rgExpedidor')?.hasError('required')"
           class="texto-invalido"
@@ -89,7 +89,7 @@
       </div>
       <div class="col">
         <label class="form-label">Nacionalidade</label>
-        <input type="text" class="form-control" formControlName="nacionalidade" (keypress)="apenasCaracteres($event)"/>
+        <input type="text" class="form-control" formControlName="nacionalidade" (keypress)="this.formService.apenasCaracteres($event)"/>
         <span
           *ngIf="getCampo('nacionalidade')?.dirty && getCampo('nacionalidade')?.hasError('required')"
           class="texto-invalido"
@@ -104,11 +104,7 @@
         <label class="form-label">Estado Civil</label>
         <select class="form-select" formControlName="estadoCivil">
           <option value selected>Selecione</option>
-          <option value="Solteiro">Solteiro(a)</option>
-          <option value="Casado">Casado(a)</option>
-          <option value="Viuvo">Viuvo(a)</option>
-          <option value="Divorciado">Divorciado(a)</option>
-          <option value="UniaoEstavel">Uniao Estavel</option>
+          <option *ngFor="let estadoCivil of estadosCivis" [value]="estadoCivil.value">{{ estadoCivil.exibicao }}</option>
         </select>
         <span
           *ngIf="getCampo('estadoCivil')?.touched && getCampo('estadoCivil')?.hasError('required') "
@@ -120,12 +116,7 @@
         <label class="form-label">Gênero</label>
         <select class="form-select" formControlName="genero">
           <option value selected>Selecione</option>
-          <option value="CisFeminino">Cis Feminino</option>
-          <option value="CisMasculino">Cis Masculino</option>
-          <option value="Feminino">Feminino</option>
-          <option value="Masculino">Masculino</option>
-          <option value="NaoBinario">Não Binário</option>
-          <option value="Outro">Outro</option>
+          <option *ngFor="let genero of generos" [value]="genero.value">{{ genero.exibicao }}</option>
         </select>
         <span
           *ngIf="getCampo('genero')?.touched && getCampo('genero')?.hasError('required') "
@@ -139,7 +130,7 @@
     <div class="row">
       <div class="col">
         <label class="form-label">DDD</label>
-        <input type="text" class="form-control" formControlName="ddd" maxlength="2" (keypress)="apenasNumeros($event)"/>
+        <input type="text" class="form-control" formControlName="ddd" maxlength="2" (keypress)="this.formService.apenasNumeros($event)"/>
         <span
           *ngIf="getCampo('ddd')?.dirty && getCampo('ddd')?.hasError('required')"
           class="texto-invalido"

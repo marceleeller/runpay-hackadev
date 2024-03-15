@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { FormularioSenhaComponent } from "./formulario-senha/formulario-senha.component";
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { idadeMinima } from './idade-minima-validator';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
     selector: 'app-cadastro',
@@ -16,12 +17,12 @@ import { idadeMinima } from './idade-minima-validator';
     templateUrl: './cadastro.component.html',
     styleUrl: './cadastro.component.css',
     providers: [provideNgxMask()],
-    imports: [RouterOutlet, HeaderVoltarComponent, FooterComponent, ReactiveFormsModule, FormularioEnderecoComponent, FormularioInfopessoaisComponent, CommonModule, FormularioSenhaComponent, NgxMaskDirective]
+    imports: [RouterOutlet, HeaderVoltarComponent, FooterComponent, ReactiveFormsModule, FormularioEnderecoComponent, FormularioInfopessoaisComponent, CommonModule, FormularioSenhaComponent, NgxMaskDirective, HttpClientModule ]
 })
 export class CadastroComponent implements OnInit {
 
   cadastroForm!: FormGroup;
-  formularioExibido = 'inicial';
+  formularioExibido = 'endereco';
   constructor(private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
@@ -43,7 +44,7 @@ export class CadastroComponent implements OnInit {
         senha: this.fb.control(''),
         confirmarSenha: this.fb.control(''),
         endereco: this.fb.group({
-          cep: this.fb.control(''),
+          cep: this.fb.control('', [Validators.required, Validators.minLength(8)]),
           logradouro: this.fb.control(''),
           numero: this.fb.control(''),
           complemento: this.fb.control(''),
