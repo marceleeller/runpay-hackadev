@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HeaderVoltarComponent } from "../../components/header-voltar/header-voltar.component";
 import { FooterComponent } from "../../components/footer/footer.component";
 import { Router } from '@angular/router';
@@ -18,6 +18,9 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 export class LoginComponent {
     constructor(private rotas: Router) { }
 
+    mensagemErro:boolean = false;
+    mensagemSucesso:boolean = false;
+
     // navegação
     redirecionarParaCadastro() {
       this.rotas.navigate(['/cadastro']);
@@ -26,7 +29,7 @@ export class LoginComponent {
     // formulário
     formularioLogin = new FormGroup ({
       cpf: new FormControl('', [Validators.required, Validators.minLength(11)]),
-      senha: new FormControl('', [Validators.required, Validators.minLength(6)])
+      senha: new FormControl('', Validators.required)
     });
 
     get cpf() {

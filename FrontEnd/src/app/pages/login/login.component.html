@@ -15,49 +15,49 @@
         >
       </p>
       <div>
-        <label class="form-label" for="cpf">Insira seu CPF</label>
-        <input
-          type="cpf"
-          class="form-control"
-          id="cpf"
-          formControlName="cpf"
-          [mask]="'000.000.000-00'"
-        />
-
-        <span
-        *ngIf="(cpf?.touched || cpf?.dirty) && cpf?.hasError('required')" class="texto-invalido"
-        >Digite seu CPF</span
-        >
-        <span
-        *ngIf="cpf?.hasError('minlength')" class="texto-invalido"
-        >Insira um CPF válido.</span
-        >
-      </div>
-
-      <div>
-        <label class="form-label" for="senha">Insira sua senha</label>
+        <p *ngIf="mensagemSucesso" class="texto-valido text-center">Conta criada com sucesso!</p>
+        <p *ngIf="mensagemErro" class="texto-invalido-mensagem text-center">CPF ou senha incorretos.</p>
+        <div>
+          <label class="form-label" for="cpf">Insira seu CPF</label>
           <input
-            type="password"
+            type="cpf"
             class="form-control"
-            id="senha"
-            formControlName="senha"
+            id="cpf"
+            formControlName="cpf"
+            [mask]="'000.000.000-00'"
           />
+
           <span
-          *ngIf="(senha?.touched || senha?.dirty) && senha?.hasError('required')" class="texto-invalido"
-          >Digite sua senha</span
+          *ngIf="(cpf?.touched || cpf?.dirty) && cpf?.hasError('required')" class="texto-invalido"
+          >Digite seu CPF</span
           >
           <span
-            *ngIf="senha?.invalid && senha?.dirty"
-            class="texto-invalido"
-            >Insira uma senha válida, contendo no mínimo 6 caracteres.</span
+          *ngIf="cpf?.hasError('minlength')" class="texto-invalido"
+          >Insira um CPF válido.</span
           >
+        </div>
+
+        <div>
+          <label class="form-label" for="senha">Insira sua senha</label>
+            <input
+              type="password"
+              class="form-control"
+              id="senha"
+              formControlName="senha"
+            />
+            <span
+            *ngIf="(senha?.touched || senha?.dirty) && senha?.hasError('required')" class="texto-invalido"
+            >Digite sua senha</span
+            >
+        </div>
+
+        <button type="submit"
+        class="btn btn-primary mt-5"
+        [disabled]="formularioLogin.invalid">
+        Entrar
+        </button>
       </div>
 
-      <button type="submit"
-      class="btn btn-primary mt-5"
-      [disabled]="formularioLogin.invalid">
-      Entrar
-      </button>
 
     </form>
   </div>

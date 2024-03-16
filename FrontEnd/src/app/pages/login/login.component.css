@@ -12,6 +12,17 @@
   font-size: 14px;
 }
 
+.texto-invalido-mensagem, .texto-valido {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  margin-top: 0;
+}
+
+.btn {
+  width: 100%;
+}
+
 main {
   height: 75vh;
 }
@@ -52,7 +63,6 @@ p {
   .texto-invalido {
     max-width: 280px;
     line-height: .6rem;
-
   }
 
   ::ng-deep .icone-runpay {
