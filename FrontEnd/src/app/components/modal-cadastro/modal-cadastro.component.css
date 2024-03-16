@@ -1,0 +1,18 @@
+::ng-deep .modal-content {
+  background-color: var(--cor-azul-escuro) !important;
+  border: none;
+  border-radius: 30px;
+}
+
+.modal-header, .modal-body, .modal-footer {
+  border-color: var(--cor-azul-claro);
+  background-color: none;
+}
+
+.btn {
+  width: 100px;
+}
+
+p {
+  font-size: 12px;
+}

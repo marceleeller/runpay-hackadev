@@ -6,7 +6,7 @@ p {
 
 .botao {
   width: 105px;
-  max-height: 120px;
+  min-height: 120px;
 }
 
 .btn-icone {

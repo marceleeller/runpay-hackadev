@@ -10,8 +10,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
     imports: [ModalSairComponent]
 })
 export class HeaderInicialComponent {
-  usuario = JSON.parse(localStorage.getItem('usuarioLogado') as string);
-  nomeArmazenado = this.usuario.nome;
+  // usuario = JSON.parse(localStorage.getItem('usuarioLogado') as string);
+  nomeArmazenado = 'Maria';
 
   // Exibir modal
   private modalService = inject(NgbModal);

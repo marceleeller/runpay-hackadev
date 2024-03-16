@@ -101,11 +101,6 @@ input {
     margin-bottom: .4rem;
   }
 
-  /* .formulario {
-    margin: 0 2rem;
-    padding: 2.5em 2.5em 1em;
-  } */
-
   .btn:disabled {
     box-shadow: none;
   }

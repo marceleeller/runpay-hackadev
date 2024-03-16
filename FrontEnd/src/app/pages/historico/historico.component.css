@@ -55,7 +55,8 @@
   width: 100%;
   max-width: 770px;
   background-image: url('../../../assets/bg-transacoes.png');
-  background-size: auto;
+  background-position: top;
+
   background-repeat: no-repeat;
   background-color: var(--cor-azul-medio);
   display: flex;

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { HeaderVoltarComponent } from "../../components/header-voltar/header-voltar.component";
 import { FooterComponent } from "../../components/footer/footer.component";
@@ -10,6 +10,8 @@ import { FormularioSenhaComponent } from "./formulario-senha/formulario-senha.co
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { idadeMinima } from './idade-minima-validator';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalCadastroComponent } from '../../components/modal-cadastro/modal-cadastro.component';
 
 @Component({
     selector: 'app-cadastro',
@@ -139,5 +141,20 @@ export class CadastroComponent implements OnInit {
 
   redirecionarParaLogin() {
     this.router.navigate(['/login']);
+  }
+
+  // Exibir modal
+  private modalService = inject(NgbModal);
+
+  abrirModalTermos() {
+    const modalRef = this.modalService.open(ModalCadastroComponent);
+    modalRef.componentInstance.titulo = 'Termos de Uso';
+    modalRef.componentInstance.conteudo = 'Os Termos de Uso do Banco RunPay são um conjunto de diretrizes e políticas que regem o uso dos nossos serviços financeiros. Ao adentrar em nossa plataforma, os usuários concordam em se submeter às disposições estabelecidas nesses termos, garantindo uma utilização responsável e ética dos serviços oferecidos. Comprometemo-nos a garantir a segurança e a privacidade das informações pessoais e financeiras dos nossos clientes, implementando medidas rigorosas de proteção de dados. Além disso, enfatizamos a importância da confidencialidade das credenciais de acesso e incentivamos os usuários a reportarem qualquer atividade suspeita ou não autorizada. O Banco RunPay reserva-se o direito de realizar alterações nos Termos de Uso, e recomendamos que os usuários revisem periodicamente essas modificações. Agradecemos por escolher o Banco RunPay como seu provedor de serviços financeiros.';
+  }
+
+  abrirModalPolitica() {
+    const modalRef = this.modalService.open(ModalCadastroComponent);
+    modalRef.componentInstance.titulo = 'Política de Privacidade';
+    modalRef.componentInstance.conteudo = 'A Política de Privacidade do Banco RunPay é um compromisso com a segurança e confidencialidade das informações dos nossos usuários. Nossa política abrange a coleta, o uso e a proteção dos dados pessoais, seguindo os mais altos padrões de segurança e conformidade com a legislação aplicável. Ao utilizar nossos serviços, os usuários consentem com a coleta e o processamento de seus dados de acordo com esta política. Garantimos que as informações fornecidas serão utilizadas apenas para os fins especificados, como fornecer serviços financeiros, melhorar a experiência do usuário e cumprir obrigações legais. Comprometemo-nos a não compartilhar, vender ou alugar dados pessoais a terceiros sem consentimento expresso dos usuários, exceto quando exigido por lei ou para proteger nossos interesses legítimos. Além disso, implementamos medidas técnicas e organizacionais para proteger os dados contra acesso não autorizado, uso indevido ou divulgação. Os usuários têm o direito de acessar, corrigir ou excluir suas informações pessoais, e estamos comprometidos em fornecer os meios necessários para exercer esses direitos. Quaisquer dúvidas ou preocupações sobre nossa Política de Privacidade podem ser direcionadas ao nosso departamento de atendimento ao cliente.';
   }
 }

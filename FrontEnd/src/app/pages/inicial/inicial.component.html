@@ -2,33 +2,65 @@
   <app-header-inicial></app-header-inicial>
 
   <main class="main_container">
-    <section class="section_saldo">
-      <div class="saldo_textos">
-        <h1 class="text-center text-white">R$ 32.000,00</h1>
-        <p class="text-center text-white">Saldo Atual</p>
-      </div>
-    </section>
+    <div class="row">
+      <div class="col col-lg-4 col-md-5 col-sm-12">
+        <section class="section_saldo">
+          <div class="saldo_textos">
+            <h1 class="text-center text-white" [ngStyle]="{'filter': mostrarSaldo ? 'none' : 'blur(10px)'}">R$ 32.000,00</h1>
+            <div class="saldo_atual d-flex justify-content-center gap-3 align-items-center">
+              <p class="text-center text-white">Saldo Atual</p>
+              <i class="bi {{ icon }} botao-exibir-saldo" (click)="exibirSaldo()"></i>
+            </div>
+            </div>
 
-    <section class="section_botoes d-flex justify-content-center gap-4">
-      <app-component-botao icone="bi-arrow-left-right" texto="Transferência"></app-component-botao>
-      <app-component-botao icone="bi-arrow-up" texto="Pagamentos"></app-component-botao>
-      <app-component-botao icone="bi-card-text" texto="Histórico de transações"></app-component-botao>
-    </section>
+        </section>
 
-    <section class="section_transacoes">
-      <div class="transacoes_content">
-        <h3 class="card-title mb-4">Transações recentes</h3>
-        <div class="transacoes">
-          <div *ngFor="let transacao of transacoesExibidas">
-            <app-cardtransacao [transacao]="transacao"></app-cardtransacao>
+        <section class="section_botoes d-flex flex-column justify-content-center gap-4 mt-4">
+          <div class="d-flex justify-content-center secao-um-show" *ngIf="mostrarPrimeirosBotoes">
+            <app-component-botao icone="bi-arrow-left-right" texto="Transferência"></app-component-botao>
+            <app-component-botao icone="bi-arrow-up" texto="Pagamentos"></app-component-botao>
+            <app-component-botao icone="bi-arrow-down-left" texto="Depositar"></app-component-botao>
           </div>
-        </div>
+          <div class="d-flex justify-content-center " *ngIf="mostrarSegundosBotoes">
+            <app-component-botao icone="bi-card-text" texto="Histórico de transações"></app-component-botao>
+            <app-component-botao icone="bi-phone" texto="Recarregar celular"></app-component-botao>
+            <app-component-botao icone="bi-graph-up-arrow" texto="Investir"></app-component-botao>
+          </div>
+          <div class="botoes d-flex gap-3 justify-content-center">
+            <div class="botaoum" [ngStyle]="{'background-color': mostrarPrimeirosBotoes ? 'var(--cor-cinza)' : 'transparent'}" (click)="mostrarSegundos()"></div>
+            <div class="botaodois" [ngStyle]="{'background-color': mostrarSegundosBotoes ? 'var(--cor-cinza)' : 'transparent'}" (click)="mostrarPrimeiros()"></div>
+          </div>
+        </section>
       </div>
-    </section>
+
+      <div class="col d-flex flex-column justify-content-center align-items-center section_cards">
+        <section class="gastoseganhos">
+          <div class="row order-last order-md-first">
+            <div class="col">
+              <app-card-gastoseganhos titulo="Ganhos" mes="{{mes}}" valor="{{valorGanhos}}" icon="bi-cash"></app-card-gastoseganhos>
+            </div>
+            <div class="col gastos-card">
+              <app-card-gastoseganhos titulo="Gastos" mes="{{mes}}" valor="{{valorGastos}}"></app-card-gastoseganhos>
+            </div>
+          </div>
+        </section>
+        <section class="section_transacoes order-first order-md-last">
+          <div class="transacoes_content">
+            <h3 class="card-title mb-4">Últimas transações</h3>
+            <div class="transacoes">
+              <div *ngFor="let transacao of transacoesExibidas">
+                <app-cardtransacao [transacao]="transacao"></app-cardtransacao>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+
+
 
 
   </main>
-
-  <app-footer></app-footer>
 
 </div>
