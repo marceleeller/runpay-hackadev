@@ -12,7 +12,7 @@
 
 .section_saldo {
   background-image: url('../../../assets/bg-saldo.png');
-  background-size: 300px;
+  background-size: 250px;
   background-position: center;
   background-repeat: no-repeat;
   height: 300px;
@@ -52,7 +52,8 @@
   .transacoes_content {
     width: 100%;
     max-width:650px;
-    background-image: url('../../../assets/bg-card.png');
+    background-image: url('../../../assets/bg-transacoes.png');
+    background-position: top;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -77,6 +78,10 @@
     max-width: 650px;
   }
 
+  .botao-exibir-saldo {
+    cursor: pointer;
+  }
+
   @media (max-width: 992px) {
     .main_container {
       padding: 2rem;
@@ -84,10 +89,6 @@
   }
 
   @media (max-width: 767px) {
-
-    /* .gap-4 {
-      gap: 0.6rem !important;
-    } */
 
     .section_cards {
       margin: 0;
@@ -122,6 +123,7 @@
       height: 15px;
       border: 1px solid var(--cor-cinza);
       border-radius: 2rem;
+      cursor: pointer;
     }
 
     ::ng-deep .footer {

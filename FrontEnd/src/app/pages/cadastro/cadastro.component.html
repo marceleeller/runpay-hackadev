@@ -35,7 +35,7 @@
 
         <!-- termos e condicoes -->
         <div class="inicial d-flex flex-column justify-content-center align-items-center gap-3">
-          <button class="btn btn-primary" (click)="mudarParaFormularioInfopessoais()" [disabled]="getCampo('cpf')?.invalid">Continuar</button>
+          <button type="button" class="btn btn-primary" (click)="mudarParaFormularioInfopessoais()" [disabled]="getCampo('cpf')?.invalid">Continuar</button>
           <p class="texto-termosdeuso text-center">Ao se cadastrar, você aceita os nossos
             <a id="link_entrar" (click)="abrirModalTermos() " style="text-decoration: underline; font-weight: 700">Termos de Uso</a>
             e a nossa
@@ -49,10 +49,10 @@
       <div *ngIf="formularioExibido == 'infopessoais'" class="formularioinvalido">
         <formulario-infopessoais [cadastroForm]="cadastroForm"></formulario-infopessoais>
         <div class="buttons mt-5 d-flex gap-5">
-          <button class="btn btn-primary btn-voltar" (click)="mudarParaFormularioInicial()">
+          <button type="button" class="btn btn-primary btn-voltar" (click)="mudarParaFormularioInicial()">
             <i class="bi bi-chevron-left"></i>
           </button>
-          <button class="btn btn-primary flex-fill"  (click)="mudarParaFormularioEndereco()" [disabled]="!validarFormularioInfopessoais()">Continuar</button>
+          <button type="button" class="btn btn-primary flex-fill"  (click)="mudarParaFormularioEndereco()" [disabled]="!validarFormularioInfopessoais()">Continuar</button>
         </div>
       </div >
 
@@ -60,10 +60,10 @@
       <div *ngIf="formularioExibido == 'endereco'" class="formularioinvalido">
         <formulario-endereco [cadastroForm]="cadastroForm"></formulario-endereco>
         <div class="buttons mt-5 d-flex gap-5">
-          <button class="btn btn-primary btn-voltar" (click)="mudarParaFormularioInfopessoais()">
+          <button type="button" class="btn btn-primary btn-voltar" (click)="mudarParaFormularioInfopessoais()">
             <i class="bi bi-chevron-left"></i>
           </button>
-          <button class="btn btn-primary flex-fill"  (click)="mudarParaFormularioSenha()" [disabled]="getCampo('endereco')?.invalid">Continuar</button>
+          <button type="button" class="btn btn-primary flex-fill"  (click)="mudarParaFormularioSenha()" [disabled]="getCampo('endereco')?.invalid">Continuar</button>
         </div>
       </div>
 
@@ -75,7 +75,7 @@
         <!-- Formulario senha -->
         <formulario-senha [cadastroForm]="cadastroForm"></formulario-senha>
         <div class="buttons mt-5 d-flex gap-5">
-          <button class="btn btn-primary btn-voltar" (click)="mudarParaFormularioEndereco()">
+          <button type="button" class="btn btn-primary btn-voltar" (click)="mudarParaFormularioEndereco()">
             <i class="bi bi-chevron-left"></i>
           </button>
           <button type="submit" class="btn btn-primary flex-fill" [disabled]="cadastroForm.invalid">Criar</button>

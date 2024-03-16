@@ -3,7 +3,7 @@
 
     <label class="form-label">CEP</label>
     <div class="input-group">
-      <input type="text" class="form-control" formControlName="cep" [mask]="'00.000-000'"/>
+      <input type="text" class="form-control" formControlName="cep" [mask]="'00.000-000'" (keyup.enter)="procurarCep()"/>
       <button class="button-cep" type="button" (click)="procurarCep()">
         <i class="bi bi-search"></i>
       </button>
