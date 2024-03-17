@@ -1,0 +1,69 @@
+
+<app-header-voltar
+  logo="../../../assets/icone-degrade.svg"
+  nomeDaPagina="Transferindo"
+></app-header-voltar>
+
+<div class=" d-flex flex-column justify-content-center align-content-center">
+  <div class="main_container">
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <div class="card-conta">
+          <p class="titulo-pequeno">Origem</p>
+          <div class="conta ">
+            <p>Conta</p>
+            <p class="titulo">{{ numeroConta }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <div class="card-saldo">
+          <p class="titulo-pequeno">Saldo disponível</p>
+          <div class="saldo">
+            <p class="titulo">R$ {{ saldo }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form [formGroup]="formularioTransferencia">
+      <div class="row">
+        <div class="col mt-3">
+          <p class="titulo-pequeno">Valor</p>
+          <div class="valor d-flex align-items-center gap-4">
+            <span>R$</span>
+            <input currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', align: 'left', precision: 2, allowNegative: false }" class="form-valor" formControlName="valor" type="text" />
+          </div>
+        </div>
+      </div>
+      <div class="row card-transferencia mt-4">
+        <div class="col d-flex flex-column gap-3">
+          <p>Para quem você deseja transferir?</p>
+          <div>
+            <label class="form-label" for="conta">Digite o número da conta</label>
+            <input
+              type="text"
+              class="form-control mb-3"
+              formControlName="conta"
+              [mask]="'0000000-0'"
+            />
+
+            <label class="form-label" for="descricao">Você pode adicionar uma descrição</label>
+            <div class="input-group">
+              <input
+              type="text"
+              class="form-control inputgroup"
+              formControlName="descricao"
+              maxlength="60"
+            />
+              <span class="input-group-text"><span>{{ getDescricaoLength() }}</span>/ 60</span>
+            </div>
+          </div>
+            <button class="btn btn-primary mt-3">Enviar</button>
+          </div>
+      </div>
+    </form>
+  </div>
+
+</div>
+
