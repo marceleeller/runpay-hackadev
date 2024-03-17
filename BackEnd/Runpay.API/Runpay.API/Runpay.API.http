@@ -1,6 +1,14 @@
-@Runpay.API_HostAddress = http://localhost:5208
+@Runpay.API_HostAddress = https://localhost:7008
 
-GET {{Runpay.API_HostAddress}}/weatherforecast/
-Accept: application/json
+POST {{Runpay.API_HostAddress}}/api/contato
+Content-Type: application/json
+
+{
+  "nome": "asdsadasdaddsa",
+  "email": "sadads@asddsa",
+  "telefone": "123123213",
+  "cpf": "12322154323",
+  "mensagem": "dsaadaddsadsa"
+}
 
 ###

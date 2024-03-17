@@ -26,6 +26,7 @@ public class ContatoController : ControllerBase
 
         _dbcontext.Contatos.Add(contato);
         _dbcontext.SaveChanges();
-        return Ok("Formulário de contato enviado!");
+        return Ok(new { message = "Formulário de contato enviado!" });
+
     }
 }

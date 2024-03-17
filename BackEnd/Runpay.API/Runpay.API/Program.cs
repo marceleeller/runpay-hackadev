@@ -17,6 +17,12 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
+app.UseCors(policy =>
+    policy.WithOrigins("http://localhost:4200")
+          .AllowAnyHeader()
+          .AllowAnyMethod());
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
