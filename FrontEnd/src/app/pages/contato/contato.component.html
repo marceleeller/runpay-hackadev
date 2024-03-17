@@ -46,22 +46,22 @@
 
         <div class="row">
           <div class="col-lg-6 col-md-12">
-            <label class="form-label" for="celular">Celular</label>
+            <label class="form-label" for="telefone">Celular</label>
             <input
-              type="string"
+              type="text"
               class="form-control"
-              id="celular"
-              formControlName="celular"
+              id="telefone"
+              formControlName="telefone"
               [mask]="'(00) 00000-0000'"
             />
-            <span *ngIf=" celular.hasError('required') && celular.dirty" class="texto-invalido">Celular é obrigatório.</span>
-            <span *ngIf=" celular.hasError('minlength')" class="texto-invalido">Número inválido.</span>
+            <span *ngIf=" telefone.hasError('required') && telefone.dirty" class="texto-invalido">Celular é obrigatório.</span>
+            <span *ngIf=" telefone.hasError('minlength')" class="texto-invalido">Número inválido.</span>
           </div>
 
           <div class="col-lg-6 col-md-12">
             <label class="form-label" for="cpf">CPF</label>
             <input
-              type="string"
+              type="text"
               class="form-control"
               id="cpf"
               formControlName="cpf"
@@ -79,20 +79,22 @@
               class="form-control"
               name="mensagem"
               id="mensagem"
-              cols="50"
+              cols="45"
               rows="4"
               formControlName="mensagem"
             ></textarea>
+            <span *ngIf=" mensagem.hasError('required') && mensagem.dirty" class="texto-invalido">Mensagem é obrigatória.</span>
+            <span *ngIf=" mensagem.hasError('minlength')" class="texto-invalido">Sua mensagem deve conter no mínimo 10 caracteres.</span>
           </div>
-          <span *ngIf=" mensagem.hasError('required') && mensagem.dirty" class="texto-invalido-mensagem">Mensagem é obrigatória.</span>
-          <span *ngIf=" mensagem.hasError('minlength')" class="texto-invalido-mensagem">Sua mensagem deve conter no mínimo 10 caracteres.</span>
+
         </div>
 
-        <div class="d-flex flex-column justify-content-center align-items-center">
+        <div class="d-flex flex-column justify-content-center align-items-center mt-2">
           <button type="submit"
           class="btn btn-primary"
           [disabled]="formularioMensagem.invalid">{{ processando ? "Enviando..." : "Enviar" }}</button>
           <p *ngIf="mostrarMensagemSucesso" class="texto-valido">Mensagem enviada!</p>
+          <p *ngIf="mostrarMensagemErro" class="texto-invalido-mensagem">Erro no envio da mensagem.</p>
         </div>
       </form>
 
