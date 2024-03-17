@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Runpay.API.Domains.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<RunpayContext>(options => {
+builder.Services.AddDbContext<RunpayDbContext>(options => {
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
