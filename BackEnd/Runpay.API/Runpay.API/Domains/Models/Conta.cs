@@ -1,20 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Runpay.API.Domains.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Runpay.API.Domain.Model;
 
-public class Conta
+public class Conta : Entity
 {
+    private readonly Random _random = new Random();
     public string NumeroConta { get; set; }
-
-    /* podemos definir uma agencia específica como valor base */
-
-    public int Agencia { get; set; } = 016273;
-
-    public int ClienteId { get; set; }
-
-    public Cliente Cliente { get; set; }
-
-    /* data anotation declarando que o metadado é do tipo currency (financeiro) */
+    public int Agencia { get; set; } = 00008;
 
     [DataType(DataType.Currency)]
 
@@ -22,10 +15,12 @@ public class Conta
 
     public bool StatusContaAtiva { get; set; } = true;
 
-    /* data anotation declarando que o campo é obrigatório */
-
     [Required]
     public string SenhaHash { get; private set; } = null!;
 
+    public int ClienteId { get; set; }
+    public virtual Cliente Cliente { get; set; }
+
+    public List<Transacao> Transacoes { get; set; } = new();
 
 }
