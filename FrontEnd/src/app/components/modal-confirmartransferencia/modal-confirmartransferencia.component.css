@@ -1,0 +1,38 @@
+::ng-deep .modal-content {
+  background-color: var(--cor-azul-escuro) !important;
+  border: none;
+  border-radius: 30px;
+}
+.formulario-invalido, .formularioinvalido.ng-touched, .formularioinvalido.ng-dirty, .formularioinvalido.ng-invalid {
+  border: none !important;
+}
+
+.modal-header, .modal-footer {
+  border-color: var(--cor-azul-claro);
+  background-color: none;
+}
+
+.btn {
+  width: 100px;
+}
+
+p {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.valor {
+  font-size: 24px;
+  color: var(--cor-verde);
+}
+
+.numero {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.titulo-pequeno, .form-label {
+  font-size: 14px;
+  color: var(--cor-cinza);
+  font-weight: 500;
+  margin: 0;
+}

@@ -40,13 +40,26 @@
         <div class="col d-flex flex-column gap-3">
           <p>Para quem você deseja transferir?</p>
           <div>
-            <label class="form-label" for="conta">Digite o número da conta</label>
-            <input
-              type="text"
-              class="form-control mb-3"
-              formControlName="conta"
-              [mask]="'0000000-0'"
-            />
+            <div>
+              <label class="form-label" for="conta">Digite o número da conta</label>
+              <input
+                type="text"
+                class="form-control mb-3"
+                formControlName="conta"
+                [mask]="'0000000-0'"
+              />
+              <span
+                *ngIf="(getCampo('conta')?.dirty || getCampo('conta')?.touched) && getCampo('conta')?.hasError('required')"
+                class="texto-invalido"
+                >Conta destino é obrigatório.</span
+              >
+              <span
+                *ngIf="getCampo('conta')?.hasError('minlength')"
+                class="texto-invalido"
+                >Conta deve conter 8 caracteres.</span
+              >
+            </div>
+
 
             <label class="form-label" for="descricao">Você pode adicionar uma descrição</label>
             <div class="input-group">
@@ -59,7 +72,7 @@
               <span class="input-group-text"><span>{{ getDescricaoLength() }}</span>/ 60</span>
             </div>
           </div>
-            <button class="btn btn-primary mt-3">Enviar</button>
+            <button class="btn btn-primary mt-3" (click)="abrirModalConfirmacao()" [disabled]="!validarContaEValor()">Confirmar</button>
           </div>
       </div>
     </form>
