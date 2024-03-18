@@ -21,9 +21,6 @@ namespace DTOs.Responses
         {
             Mensagem = "Transferencia realizada com sucesso.";
         }
-         public void SetDescricao()
-        {
-            Descricao = Descricao;
-        }
+       
     }
 }

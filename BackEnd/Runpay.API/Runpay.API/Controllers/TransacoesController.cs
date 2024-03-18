@@ -46,7 +46,6 @@ namespace TransacaoesController.Controllers
         public IActionResult PostRealizarSaque([FromBody] SaqueRequest request)
         {
             // Lógica para realizar um saque na conta
-            /*return Ok("Realizando saque de " + request.Amount + " na conta com o ID: " + request.AccountId);*/
             return Ok();
         }
 
@@ -54,7 +53,6 @@ namespace TransacaoesController.Controllers
         public IActionResult PostRealizarTransferencia([FromBody] TransferenciaRequest request)
         {
             // Lógica para realizar uma transferência entre contas
-            /*return Ok("Realizando transferência de " + request.Amount + " da conta com o ID: " + request.AccountFromId + " para a conta com o ID: " + request.AccountToId);*/
             return Ok("Tranferencia realizada com sucesso.");
         }
     }

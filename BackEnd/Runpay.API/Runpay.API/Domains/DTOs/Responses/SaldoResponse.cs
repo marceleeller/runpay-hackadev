@@ -15,10 +15,5 @@ namespace DTOs.Responses
         {
             Mensagem = "Consulta de saldo realizada com sucesso.";
         }
-
-       /* public void SetMensagemErro(string erro)
-        {
-            Mensagem = $"Erro ao consultar saldo: {erro}";
-        }*/
     }
 }

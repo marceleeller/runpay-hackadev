@@ -4,5 +4,4 @@ namespace DTOs.Requests
     {
         public int ContaId { get; set; }
     }
-
 }
