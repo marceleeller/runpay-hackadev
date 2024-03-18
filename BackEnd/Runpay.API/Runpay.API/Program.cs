@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Runpay.API.Domains.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

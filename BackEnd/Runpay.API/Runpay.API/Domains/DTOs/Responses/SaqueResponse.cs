@@ -1,4 +1,4 @@
-namespace DTOs.Responses
+namespace Runpay.API.Domains.DTOs.Responses
 {
     public class SaqueResponse
     {

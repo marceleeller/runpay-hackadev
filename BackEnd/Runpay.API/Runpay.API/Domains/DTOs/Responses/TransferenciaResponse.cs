@@ -1,24 +1,29 @@
-namespace DTOs.Responses
+namespace Runpay.API.Domains.DTOs.Responses
 {
     public class TransferenciaResponse
     {
-        public decimal SaldoOrigemAposTransferencia { get; set; }
-        public decimal SaldoDestinoAposTransferencia { get; set; }
-        public string Mensagem { get; set; } = string.Empty;
+        public decimal TransferirDaContaId { get; set; }
+        public decimal TransferirParaContaId { get; set; }
+        public string Descricao { get; set; } = string.Empty;
+        public string? Mensagem { get; set; } /*para descrição opcional*/
 
-        public void SetSaldoOrigemAposTransferencia(decimal saldo)
+        public void SetTransferirDaContaId(decimal saldo)
         {
-            SaldoOrigemAposTransferencia = saldo;
+            TransferirDaContaId = saldo;
         }
 
-        public void SetSaldoDestinoAposTransferencia(decimal saldo)
+        public void SetTransferirParaContaId(decimal saldo)
         {
-            SaldoDestinoAposTransferencia = saldo;
+           TransferirParaContaId = saldo;
         }
 
-        public void SetMensagem(string mensagem) /*criar mensagem de sucesso e */
+        public void SetMensagem(string mensagem) /*criar mensagem de sucesso */
         {
             Mensagem = "Transferencia realizada com sucesso.";
+        }
+         public void SetDescricao(string descricao)
+        {
+            Descricao = Descricao;
         }
     }
 }

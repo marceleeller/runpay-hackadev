@@ -1,20 +1,17 @@
-namespace DTOs.Responses
+namespace Runpay.API.Domains.DTOs.Responses
 {
     public class DepositoResponse
     {
         public decimal ValorDeposito { get; set; }
-        public string Mensagem { get; set; } = string.Empty;
+        public string Descricao { get; set; } = string.Empty;
+        public string? Mensagem { get; set; } /* para uma descrição opcional sobre o depósito*/
+        
 
         /* para gerar a mensagem- desposito realizado com sucesso*/
         public void SetMensagemSucesso()
         {
             Mensagem = "Depósito realizado com sucesso.";
         }
-
-        /* criar uma mensagem personalizada, de erro ou algo do tipo*/
-        public void SetMensagem(string mensagem)
-        {
-            Mensagem = mensagem;
-        }
+        
     }
 }
