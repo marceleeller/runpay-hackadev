@@ -1,0 +1,52 @@
+<app-header-voltar
+  logo="../../../assets/icone-degrade.svg"
+  nomeDaPagina="Depositando"
+></app-header-voltar>
+
+
+<div class=" d-flex flex-column justify-content-center align-content-center">
+  <div class="main_container">
+
+    <div *ngIf="paginaExibida" class="card-principal d-flex flex-column justify-content-between">
+      <p>Qual valor você deseja depositar?</p>
+
+      <form [formGroup]="formularioDeposito">
+        <div class="row">
+          <div class="col mt-3">
+            <div class="valor d-flex align-items-center gap-4">
+              <span>R$</span>
+              <input currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', align: 'left', precision: 2, allowNegative: false }" class="form-valor" formControlName="valor" type="text" />
+            </div>
+            <p class="titulo-pequeno">Digite um valor mínimo de R$ 20,00</p>
+          </div>
+        </div>
+      </form>
+
+      <div class="d-flex">
+        <button class="btn btn-primary flex-fill mt-3" [disabled]="formularioDeposito.invalid" (click)="paginaExibida = !paginaExibida">Criar código</button>
+      </div>
+    </div>
+
+    <div *ngIf="!paginaExibida" class="card-principal d-flex flex-column justify-content-between">
+      <div>
+        <p [ngStyle]="{'color': 'var(--cor-verde)'}">O boleto de depósito de <span class="numero">{{ this.formularioDeposito.get('valor')?.value | formatBRL }}</span> foi gerado</p>
+        <p class="titulo-pequeno">Vencimento em<span [ngStyle]="{'font-family': 'montserrat'}"> {{ vencimento }}</span></p>
+      </div>
+
+      <div>
+        <div class="d-flex gap-2 align-items-center">
+          <i class="bi bi-upc"></i>
+          <p class="titulo-boleto">Código do boleto</p>
+        </div>
+
+        <p class="codigo-boleto">{{codigoBoleto}}</p>
+      </div>
+
+
+      <div class="d-flex">
+        <button [cdkCopyToClipboard]="codigoBoleto" (click)="copiarCodigo()" class="btn btn-primary flex-fill mt-3" >{{textoBotao}}</button>
+      </div>
+    </div>
+
+  </div>
+</div>

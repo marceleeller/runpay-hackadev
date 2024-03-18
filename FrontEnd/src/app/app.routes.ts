@@ -8,6 +8,7 @@ import { autenticarGuard } from './seguranca/autenticar.guard';
 import { ContatoComponent } from './pages/contato/contato.component';
 import { SobreComponent } from './pages/sobre/sobre.component';
 import { TransferenciaComponent } from './pages/transferencia/transferencia.component';
+import { DepositoComponent } from './pages/deposito/deposito.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -21,5 +22,6 @@ export const routes: Routes = [
     // { path: 'transacoes', component: HistoricoComponent, canActivate:[autenticarGuard] },
     { path: 'transacoes', component: HistoricoComponent},
     { path: 'transferencia', component: TransferenciaComponent},
+    { path: 'deposito', component: DepositoComponent},
     { path: '**', title:'Home Page', component: HomeComponent}
 ];
