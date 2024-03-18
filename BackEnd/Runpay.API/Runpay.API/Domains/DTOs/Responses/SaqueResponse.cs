@@ -10,7 +10,7 @@ namespace DTOs.Responses
             SaldoAposSaque = novoSaldo;
         }
 
-        public void SetMensagem(string mensagem) /*criar uma mensagem de envio com sucesso ou de erro*/
+        public void SetMensagem() /*criar uma mensagem de envio com sucesso ou de erro*/
         {
             Mensagem = "Saque realizado com sucesso.";
         }
