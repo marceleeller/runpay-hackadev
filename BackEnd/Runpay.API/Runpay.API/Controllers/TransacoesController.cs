@@ -10,7 +10,7 @@ namespace Runpay.API.Controllers
     {
 
         [HttpGet("Acessar-Historico")]
-        public IActionResult GetAcessarHistorico([FromBody] HistoricoRequest request)
+        public IActionResult GetAcessarHistorico()
         {
             // Lógica para acessar o histórico de transações
             /*return Ok("Acessando histórico para a conta com o ID: " + accountId);*/
@@ -18,7 +18,7 @@ namespace Runpay.API.Controllers
         }
 
         [HttpGet("Consultar-Saldo")]
-        public IActionResult GetConsultarSaldo([FromQuery] ConsultarSaldoRequest request)
+        public IActionResult GetConsultarSaldo()
         {
              decimal saldo = 0; // precisamos colocar um saldo?
 
@@ -44,7 +44,7 @@ namespace Runpay.API.Controllers
         }
 
         [HttpPost("Realizar-Saque")]
-        public IActionResult PostRealizarSaque([FromBody] SaqueRequest request)
+        public IActionResult PostRealizarSaque()
         {
             // Lógica para realizar um saque na conta
             /*return Ok("Realizando saque de " + request.Amount + " na conta com o ID: " + request.AccountId);*/
@@ -52,7 +52,7 @@ namespace Runpay.API.Controllers
         }
 
         [HttpPost("Realizar-Transferencia")]
-        public IActionResult PostRealizarTransferencia([FromBody] TransferenciaRequest request)
+        public IActionResult PostRealizarTransferencia()
         {
             // Lógica para realizar uma transferência entre contas
             /*return Ok("Realizando transferência de " + request.Amount + " da conta com o ID: " + request.AccountFromId + " para a conta com o ID: " + request.AccountToId);*/
