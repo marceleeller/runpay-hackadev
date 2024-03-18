@@ -19,6 +19,15 @@ p {
   width: 100%;
 }
 
+.form-valor.ng-invalid.ng-dirty:not(form), .form-valor.ng-invalid.ng-touched:not(form)  {
+  border: none !important;
+}
+
+.form-valor.ng-invalid.ng-dirty:not(form):focus {
+  border: none !important;
+  box-shadow: none !important;
+}
+
 .saldo, .conta {
   background-image: url(../../../assets/bg-transacoes.png);
   background-size: cover;
@@ -45,6 +54,10 @@ p {
   font-size: 14px;
   font-weight: 600;
   padding-left: 1rem;
+}
+
+.texto-invalido {
+  margin-top: -1rem;
 }
 
 .card-conta .titulo-pequeno, .card-saldo .titulo-pequeno {
