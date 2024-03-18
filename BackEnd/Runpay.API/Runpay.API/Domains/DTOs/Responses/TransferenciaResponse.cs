@@ -1,4 +1,4 @@
-namespace Runpay.API.Domains.DTOs.Responses
+namespace DTOs.Responses
 {
     public class TransferenciaResponse
     {
@@ -17,11 +17,11 @@ namespace Runpay.API.Domains.DTOs.Responses
            TransferirParaContaId = saldo;
         }
 
-        public void SetMensagem(string mensagem) /*criar mensagem de sucesso */
+        public void SetMensagem() /*criar mensagem de sucesso */
         {
             Mensagem = "Transferencia realizada com sucesso.";
         }
-         public void SetDescricao(string descricao)
+         public void SetDescricao()
         {
             Descricao = Descricao;
         }

@@ -1,4 +1,4 @@
-namespace Runpay.API.Domains.DTOs.Responses
+namespace DTOs.Responses
 {
     public class SaqueResponse
     {
@@ -10,7 +10,7 @@ namespace Runpay.API.Domains.DTOs.Responses
             SaldoAposSaque = novoSaldo;
         }
 
-        public void SetMensagem(string mensagem) /*criar uma mensagem de envio com sucesso ou de erro*/
+        public void SetMensagem() /*criar uma mensagem de envio com sucesso ou de erro*/
         {
             Mensagem = "Saque realizado com sucesso.";
         }

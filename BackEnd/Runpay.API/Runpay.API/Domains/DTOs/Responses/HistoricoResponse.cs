@@ -1,4 +1,4 @@
-namespace Runpay.API.Domains.DTOs.Responses
+namespace DTOs.Responses
 {
     public class HistoricoResponse
     {

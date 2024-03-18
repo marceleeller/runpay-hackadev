@@ -1,8 +1,8 @@
-using Runpay.API.Domains.DTOs.Requests;
-using Runpay.API.Domains.DTOs.Responses;
+using DTOs.Requests;
+using DTOs.Responses;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Runpay.API.Controllers
+namespace TransacaoesController.Controllers
 {
     [ApiController]
     [Route("api/transacoes")] 
@@ -10,15 +10,14 @@ namespace Runpay.API.Controllers
     {
 
         [HttpGet("Acessar-Historico")]
-        public IActionResult GetAcessarHistorico()
+        public IActionResult GetAcessarHistorico(int accountId)
         {
             // Lógica para acessar o histórico de transações
-            /*return Ok("Acessando histórico para a conta com o ID: " + accountId);*/
             return Ok();
         }
 
         [HttpGet("Consultar-Saldo")]
-        public IActionResult GetConsultarSaldo()
+        public IActionResult GetConsultarSaldo(int accountId)
         {
              decimal saldo = 0; // precisamos colocar um saldo?
 
@@ -44,7 +43,7 @@ namespace Runpay.API.Controllers
         }
 
         [HttpPost("Realizar-Saque")]
-        public IActionResult PostRealizarSaque()
+        public IActionResult PostRealizarSaque([FromBody] SaqueRequest request)
         {
             // Lógica para realizar um saque na conta
             /*return Ok("Realizando saque de " + request.Amount + " na conta com o ID: " + request.AccountId);*/
@@ -52,11 +51,11 @@ namespace Runpay.API.Controllers
         }
 
         [HttpPost("Realizar-Transferencia")]
-        public IActionResult PostRealizarTransferencia()
+        public IActionResult PostRealizarTransferencia([FromBody] TransferenciaRequest request)
         {
             // Lógica para realizar uma transferência entre contas
             /*return Ok("Realizando transferência de " + request.Amount + " da conta com o ID: " + request.AccountFromId + " para a conta com o ID: " + request.AccountToId);*/
-            return Ok();
+            return Ok("Tranferencia realizada com sucesso.");
         }
     }
 }

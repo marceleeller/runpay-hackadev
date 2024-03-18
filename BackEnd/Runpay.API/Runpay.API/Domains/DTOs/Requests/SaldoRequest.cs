@@ -1,4 +1,4 @@
-namespace Runpay.API.Domains.DTOs.Requests
+namespace DTOs.Requests
 {
     public class ConsultarSaldoRequest
     {

@@ -1,10 +1,10 @@
-namespace Runpay.API.Domains.DTOs.Requests
+namespace DTOs.Requests
 {
     public class TransferenciaRequest
    {
-        public int TransferirDaContaId { get; set; }
-        public int TransferirParaContaId { get; set; }
-        public decimal ValorTransferencia { get; set; }
+        public int AccountFromId { get; set; }
+        public int AccountToId { get; set; }
+        public decimal Amount { get; set; }
          public string? Mensagem { get; set; } /* para descrição opcional*/
    }
 }
