@@ -1,4 +1,5 @@
 ﻿using Runpay.API.Domains.Models;
+using Runpay.API.Services;
 using System.ComponentModel.DataAnnotations;
 
 namespace Runpay.API.Domain.Model;
@@ -16,7 +17,6 @@ public class Conta : Entity
 
     [Required]
     public string SenhaHash { get; private set; } = null!;
-
     public int ClienteId { get; set; }
     public virtual Cliente Cliente { get; set; } = null!;
 

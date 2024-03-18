@@ -36,8 +36,6 @@ public class ClienteController : ControllerBase
 
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
-        novoCliente.Conta.Senha = CriptografiaService.GerarHash(novoCliente.Conta.Senha, CriptografiaService.GerarSalt(16));
-
         Cliente clienteParaCadastro = _mapper.Map<Cliente>(novoCliente);
 
         _dbcontext.Clientes.Add(clienteParaCadastro);
