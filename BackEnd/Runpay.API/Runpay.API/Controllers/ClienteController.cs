@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Runpay.API.Domain.Model;
 using Runpay.API.Domains.Context;
 using Runpay.API.Domains.DTOs.Requests;
+using Runpay.API.Domains.DTOs.Responses;
+using Runpay.API.Services;
 
 
 namespace Runpay.API.Controllers;
@@ -20,35 +22,32 @@ public class ClienteController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
-    public IActionResult ListarClientes() {
-        var cliente = _dbcontext.Clientes.ToList();
-        return Ok(cliente);
-    }
-
-    [HttpGet("{id}")]
-    public IActionResult BuscaCliente(int id) {
-        var cliente = _dbcontext.Clientes.Find(id);
-        if (BuscaCliente == null) {
-            return NotFound();
-        }
-
-        return Ok(cliente);
-    }
-
-
+    // cadastra um novo cliente
     [HttpPost("cadastro")]
+    public IActionResult Cadastrar(ClienteRequestDto novoCliente) {
 
-    public IActionResult Cadastrar(CadastrarClienteDto novoCliente) {
+        var clienteExiste = _dbcontext.Clientes.Any(c => c.Cpf == novoCliente.Cpf);
 
-        var clienteParaCadastro = _mapper.Map<Cliente>(novoCliente);
+        if(clienteExiste)
+            return BadRequest(new {message = "Cliente já cadastrado"});
 
-        var result = _dbcontext.Clientes.Add(clienteParaCadastro);
+        if (novoCliente.Conta.Senha != novoCliente.Conta.ConfirmarSenha)
+            return BadRequest(new { message = "As senhas não conferem" });
+
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        novoCliente.Conta.Senha = CriptografiaService.GerarHash(novoCliente.Conta.Senha, CriptografiaService.GerarSalt(16));
+
+        Cliente clienteParaCadastro = _mapper.Map<Cliente>(novoCliente);
+
+        _dbcontext.Clientes.Add(clienteParaCadastro);
         _dbcontext.SaveChanges();
-        var clienteCadastrado = result.Entity;
 
-        return CreatedAtAction(nameof(BuscaCliente), new{clienteCadastrado.Id}, clienteCadastrado);
+        var clienteParaRetornar = _mapper.Map<ClienteResponseDto>(clienteParaCadastro);
 
+        return Ok(new { 
+            message = "Cliente cadastrado com sucesso",
+            cliente = clienteParaRetornar
+        });
     }
-
 }
