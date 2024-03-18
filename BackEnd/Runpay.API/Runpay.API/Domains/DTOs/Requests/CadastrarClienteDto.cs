@@ -1,10 +1,9 @@
-﻿using Runpay.API.Domain.Enums;
-using Runpay.API.Domains.Models;
+using Runpay.API.Domain.Enums;
+using Runpay.API.Domain.Model;
 
-namespace Runpay.API.Domain.Model;
+namespace Runpay.API.Domains.DTOs.Requests;
 
-public class Cliente:Entity
-{
+public class CadastrarClienteDto {
     public string Nome { get; set; } = null!;
     public string? NomeSocial { get; set; }
     public DateTime DataNascimento { get; set; }
@@ -22,5 +21,4 @@ public class Cliente:Entity
 
     public int? EnderecoId { get; set; }
     public virtual Endereco Endereco { get; set; } = null!;
-
 }
