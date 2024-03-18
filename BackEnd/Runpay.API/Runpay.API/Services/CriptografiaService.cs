@@ -5,21 +5,19 @@ namespace Runpay.API.Services;
 
 public static class CriptografiaService
 {
-    public static string GerarHash(this string valor, string salt)
+    public static string GerarHash(this string valor)
     {
         using (var sha256 = SHA256.Create())
         {
-            var combinedInputs = Encoding.UTF8.GetBytes(valor + salt);
-            var hash = sha256.ComputeHash(combinedInputs);
+            var inputBytes = Encoding.UTF8.GetBytes(valor);
+            var hash = sha256.ComputeHash(inputBytes);
             return BitConverter.ToString(hash).Replace("-", "").ToLower();
         }
     }
 
-    public static string GerarSalt(int tamanho)
+
+    public static bool VerificarSenha(string senha, string hash)
     {
-        using var rng = RandomNumberGenerator.Create();
-        var saltBytes = new byte[tamanho];
-        rng.GetBytes(saltBytes);
-        return Convert.ToBase64String(saltBytes);
+        return GerarHash(senha) == hash;
     }
 }
