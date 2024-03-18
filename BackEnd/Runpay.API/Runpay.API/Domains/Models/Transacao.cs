@@ -19,7 +19,6 @@ public class Transacao : Entity
     [Required]
     [Range(0.01, double.MaxValue, ErrorMessage = "O campo Valor deve ser maior que zero.")]
     public decimal Valor { get; set; }
-    [Required]
 
     [Required(ErrorMessage = "O campo Tipo de Transação é obrigatório.")]
     public ETipoTransacao TipoTransacao { get; set; }

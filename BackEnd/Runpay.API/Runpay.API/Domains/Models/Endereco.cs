@@ -1,4 +1,5 @@
 ﻿using Runpay.API.Domains.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Runpay.API.Domain.Model;
 

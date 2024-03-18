@@ -1,4 +1,6 @@
-﻿namespace Runpay.API.Domains.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Runpay.API.Domains.Models;
 
 public class Contato : Entity
 {
@@ -17,7 +19,7 @@ public class Contato : Entity
 
     [Required(ErrorMessage = "O campo CPF é obrigatório.")]
     [RegularExpression(@"^\d{11}$", ErrorMessage = "O CPF deve conter 11 números.")]
-    public string Cpf { get; set; }
+    public string Cpf { get; set; } = null!;
     public string Mensagem { get; set; } = null!;
     public bool EstaRespondido { get; set; } = false;
 }
