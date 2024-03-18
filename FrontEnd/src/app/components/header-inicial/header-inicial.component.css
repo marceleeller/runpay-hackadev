@@ -1,9 +1,12 @@
 .header-inicial {
   height: 10vh;
 }
+p {
+  margin: 0;
+}
 
 .container {
-  max-width: 770px;
+  max-width: 1170px;
   height: 100%;
   padding: 0;
 }
@@ -18,8 +21,12 @@
 }
 
 .texto-nome {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
+}
+
+.texto-boasvindas {
+  line-height: 1.1rem;
 }
 
 .foto-usuario {

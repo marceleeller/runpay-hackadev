@@ -16,14 +16,14 @@ export class ComponentBotaoComponent {
 
   redirecionarPara() {
     switch (this.texto) {
-      case 'Transferência':
+      case 'Transferir':
         this.routes.navigate(['transferencia']);
-        break;
-      case 'Pagamentos':
-        this.routes.navigate(['pagamento']);
         break;
       case 'Histórico de transações':
         this.routes.navigate(['transacoes']);
+        break;
+      case 'Depositar':
+        this.routes.navigate(['deposito']);
         break;
     }
   }

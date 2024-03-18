@@ -3,7 +3,7 @@
 }
 
 .formulario {
-  padding: 4em 6em 2em;
+  padding: 2em 6em 2em;
   width: 100%;
   max-width: 770px;
   border-radius: 50px;
@@ -16,25 +16,69 @@
   margin: 0;
 }
 
-#botao_criar_conta {
-    margin-top: 2em;
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    width: 150px;
-    height: 50px;
-    justify-content: center;
-    background-color: #c3f587;
-    color: var(--cor-azul-escuro);
+.texto-termosdeuso {
+  max-width: 400px;
+}
+
+.inicial button {
+  width: 100%;
+}
+
+.btn-voltar {
+  max-width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.texto-invalido-mensagem, .texto-valido {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  margin-top: -.4rem;
+}
+
+h2 {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+P {
+  font-size: 14px;
+}
+
+div input {
+  color: #ffffff;
 }
 
 input {
-    color: white;
+  color: white;
 }
 
 .form-label {
   margin-top: 20px;
+  color: var(--cor-cinza);
+  font-size: 14px;
+}
+
+.form-select, .input-group-text {
+  background-color: transparent !important;
+  color: white;
+  border: 1px solid var(--cor-cinza);
+}
+
+.form-select:focus {
+  background-color: var(--cor-azul-medio) !important;
+}
+
+.form-control::placeholder, option, .form-select {
+  color: white;
+  background-color: transparent;
+}
+
+.bi {
+  color: var(--cor-azul-escuro);
+  -webkit-text-stroke: 1px;
 }
 
 #link_entrar {
@@ -42,33 +86,19 @@ input {
     cursor: pointer;
 }
 
-h2 {
-    font-size: 32px;
-    font-weight: 700;
-}
-
-div input {
-    color: #ffffff;
+.formularioinvalido.ng-touched, .formularioinvalido.ng-dirty, .formularioinvalido.ng-invalid {
+  border: none;
 }
 
 @media (max-width: 991px) {
   .texto-invalido {
-    margin-top: -5px;
     line-height: .7rem;
     max-width: 260px;
+    margin-top: 0;
   }
 
   .form-control {
     margin-bottom: .4rem;
-  }
-
-  .formulario {
-    margin: 0 2rem;
-    padding: 2.5em 2.5em 1em;
-  }
-
-  h2 {
-    font-size: 24px;
   }
 
   .btn:disabled {
@@ -95,4 +125,11 @@ div input {
     display: none !important;
   }
 
+}
+
+@media (max-width: 768px){
+  .formulario {
+    margin: 0 2rem;
+    padding: 2.5em 3em 2.5em;
+  }
 }

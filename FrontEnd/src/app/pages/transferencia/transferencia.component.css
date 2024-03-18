@@ -1,0 +1,164 @@
+p {
+  margin: 0;
+  font-weight: 600;
+}
+
+.main_container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 770px;
+  width: 100%;
+}
+
+.row {
+  margin: 0;
+}
+
+.card-conta, .card-saldo {
+  /* max-width: 375px; */
+  width: 100%;
+}
+
+.form-valor.ng-invalid.ng-dirty:not(form), .form-valor.ng-invalid.ng-touched:not(form)  {
+  border: none !important;
+}
+
+.form-valor.ng-invalid.ng-dirty:not(form):focus {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.saldo, .conta {
+  background-image: url(../../../assets/bg-transacoes.png);
+  background-size: cover;
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2rem;
+}
+
+.saldo .titulo {
+  color: var(--cor-verde);
+}
+
+.titulo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.titulo-pequeno {
+  color: var(--cor-cinza);
+  font-size: 14px;
+  font-weight: 600;
+  padding-left: 1rem;
+}
+
+.texto-invalido {
+  margin-top: -1rem;
+}
+
+.card-conta .titulo-pequeno, .card-saldo .titulo-pequeno {
+  padding-bottom: .6rem;
+}
+
+.card-transferencia {
+  background-image: url(../../../assets/bg-transacoes.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 2em 6em 2em;
+  border-radius: 3rem;
+}
+
+.form-valor {
+  background: transparent;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 48px;
+  font-weight: 500;
+}
+
+.form-valor:focus {
+  outline: none;
+}
+
+.valor {
+  margin: none;
+  height: 3rem;
+}
+
+.form-control {
+  color: white;
+}
+
+.valor span {
+  padding-left: 1rem;
+  font-family: 'montserrat', sans-serif;
+  font-size: 32px;
+}
+
+.input-group-text {
+  background: transparent;
+  border: 1px solid var(--cor-cinza);
+  border-left: none;
+  color: white;
+  font-size: 12px;
+  font-family: 'montserrat', sans-serif;
+}
+
+.input-group-text span {
+  width: 1.3rem;
+}
+.inputgroup {
+  border-right: none;
+}
+
+.form-label {
+  margin: 0;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .form-valor {
+    max-width: 500px;
+  }
+
+  .card-transferencia {
+    margin: 0 1.5rem;
+    padding: 2.5em 3em 2.5em;
+  }
+
+  .card-saldo {
+    margin-top: 1rem;
+  }
+
+  .saldo {
+    background: transparent;
+    justify-content: baseline;
+    align-items: baseline;
+    padding-left: 1rem;
+    min-height: auto;
+  }
+
+  .conta {
+    margin: 0 .5rem;
+  }
+
+  .saldo .titulo {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 576px) {
+  .form-valor {
+    max-width: 250px;
+    font-size: 38px;
+  }
+
+  .valor span {
+    font-size: 25px;
+  }
+
+}

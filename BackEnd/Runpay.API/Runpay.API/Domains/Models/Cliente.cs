@@ -1,11 +1,10 @@
 ﻿using Runpay.API.Domain.Enums;
+using Runpay.API.Domains.Models;
 
 namespace Runpay.API.Domain.Model;
 
-public class Cliente
+public class Cliente:Entity
 {
-    public int ClienteId { get; set; }
-    public Conta Conta { get; set; } = null!;
     public string Nome { get; set; } = null!;
     public string? NomeSocial { get; set; }
     public DateTime DataNascimento { get; set; }
@@ -15,12 +14,13 @@ public class Cliente
     public string RgUF { get; set; } = null!;
     public string Nacionalidade { get; set; } = null!;
     public EEstadoCivil EstadoCivil { get; set; }
-    public string NomeMae { get; set; } = null!;
-    public string NomePai { get; set; } = null!;
     public EGenero Genero { get; set; }
     public int Ddd { get; set; }
     public string Celular { get; set; } = null!;
     public string Email { get; set; } = null!;
-    public Endereco Endereco { get; set; } = null!;
+    public Conta Conta { get; set; } = null!;
+
+    public int? EnderecoId { get; set; }
+    public virtual Endereco Endereco { get; set; } = null!;
 
 }

@@ -1,0 +1,44 @@
+
+
+<div class="modal-background ">
+  <div class="modal-header">
+    <h4 class="modal-title fs-5">Revise os detalhes da sua transferência</h4>
+  </div>
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="col-5">
+        <p class="titulo-pequeno">Para</p>
+        <p >{{ nomeConta }}</p>
+      </div>
+      <div class="col-7">
+        <p class="titulo-pequeno">Conta</p>
+        <p class="numero">{{ numeroConta }}</p>
+      </div>
+    </div>
+    <div class="row">
+
+        <div class="col-5">
+          <p class="titulo-pequeno">Total a pagar</p>
+          <p class="numero valor">{{ valorTransferencia | formatBRL }}</p>
+        </div>
+        <div class="col-7">
+          <div [formGroup]="formularioTransferencia" class="formulario-invalido">
+            <label class="form-label">Senha</label>
+            <input type="password" class="form-control" formControlName="senha" />
+            <span
+              *ngIf="(getCampo('senha')?.dirty || getCampo('senha')?.touched) && getCampo('senha')?.hasError('required') "
+              class="texto-invalido"
+              >Senha é obrigatória.
+            </span >
+          </div>
+        </div>
+    </div>
+
+
+  </div>
+  <div class="modal-footer d-flex justify-content-between">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Cancelar</button>
+    <button type="submit" class="btn btn-primary" [disabled]="getCampo('senha')?.invalid"  (click)="transferir()">Transferir</button>
+  </div>
+</div>

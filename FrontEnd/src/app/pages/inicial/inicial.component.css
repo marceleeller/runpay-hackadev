@@ -4,9 +4,15 @@
   background-repeat: no-repeat;
 }
 
+.main_container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1120px;
+}
+
 .section_saldo {
   background-image: url('../../../assets/bg-saldo.png');
-  background-size: 300px;
+  background-size: 250px;
   background-position: center;
   background-repeat: no-repeat;
   height: 300px;
@@ -16,17 +22,24 @@
   align-items: center;
 }
 
+.section_cards {
+  margin-top: 3rem;
+}
+
 .saldo_textos {
   margin-top: 2rem;
 }
 
+
 .section_saldo h1 {
-  font-size: 48px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 40px;
   font-weight: 700;
 }
 
 .section_saldo p {
   font-size: 14px;
+  margin: 0;
 }
 
   .section_transacoes {
@@ -38,14 +51,20 @@
 
   .transacoes_content {
     width: 100%;
-    max-width: 770px;
-    background-image: url('../../../assets/bg-card.png');
+    max-width:650px;
+    background-image: url('../../../assets/bg-transacoes.png');
+    background-position: top;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2rem 3rem;
+    padding: 1.5rem 3rem;
     border-radius: 60px;
+  }
+
+  .gastoseganhos {
+    width: 100%;
+    max-width: 650px;
   }
 
   .card-title {
@@ -59,12 +78,21 @@
     max-width: 650px;
   }
 
-  @media (max-width: 768px) {
+  .botao-exibir-saldo {
+    cursor: pointer;
+  }
 
-    .gap-4 {
-      gap: 0.6rem !important;
+  @media (max-width: 992px) {
+    .main_container {
+      padding: 2rem;
     }
+  }
 
+  @media (max-width: 767px) {
+
+    .section_cards {
+      margin: 0;
+    }
     .section_saldo {
       background-image: none;
       height: 150px;
@@ -88,6 +116,14 @@
 
     .form-select, .input-group {
       width: 160px;
+    }
+
+    .botaoum, .botaodois{
+      width: 15px;
+      height: 15px;
+      border: 1px solid var(--cor-cinza);
+      border-radius: 2rem;
+      cursor: pointer;
     }
 
     ::ng-deep .footer {
@@ -120,3 +156,14 @@
 
     }
 
+
+    @media (max-width: 436px) {
+      .gastos-card {
+        margin-top: 1rem;
+      }
+
+      .gastoseganhos {
+        width: 100%;
+        max-width: 300px;
+      }
+    }

@@ -1,5 +1,6 @@
 using DTOs.Requests;
 using DTOs.Responses;
+using Runpay.API.Domains.Context;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TransacaoesController.Controllers
@@ -8,6 +9,12 @@ namespace TransacaoesController.Controllers
     [Route("api/transacoes")] 
     public class TransacoesController : ControllerBase
     {
+        // Injeçao de dependencia
+        private RunpayDbContext _runpayDbContext;
+        public TransacoesController(RunpayDbContext runpayDbContext)
+        {
+            _runpayDbContext = runpayDbContext;
+        }
 
         [HttpGet("Acessar-Historico")]
         public IActionResult GetAcessarHistorico(int accountId)

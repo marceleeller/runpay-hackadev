@@ -1,0 +1,27 @@
+@import '../cadastro.component.css';
+
+.button-cep {
+  width: 40px;
+  background-color: transparent;
+  border: 1px solid var(--cor-cinza);
+  border-radius: 0.375rem;
+  transition: ease 0.1s;
+}
+
+.button-cep .bi {
+  color: var(--cor-verde);
+}
+
+.button-cep:hover {
+  background-color: var(--cor-verde);
+
+  .bi {
+    color: var(--cor-azul-escuro);
+  }
+}
+
+.button-cep:active {
+  background-color: var(--cor-verde-escuro);
+}
+
+
