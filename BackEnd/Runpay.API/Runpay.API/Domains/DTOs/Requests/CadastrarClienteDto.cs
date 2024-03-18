@@ -17,6 +17,5 @@ public class CadastrarClienteDto {
     public int Ddd { get; set; }
     public string Celular { get; set; } = null!;
     public string Email { get; set; } = null!;
-    public int? EnderecoId { get; set; }
-    public virtual Endereco Endereco { get; set; } = null!;
+    public EnderecoRequestDto? Endereco {get; set;}
 }
