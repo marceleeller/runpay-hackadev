@@ -38,6 +38,8 @@ public class ClienteController : ControllerBase
 
         Cliente clienteParaCadastro = _mapper.Map<Cliente>(novoCliente);
 
+        clienteParaCadastro.Conta.NumeroConta = NumeroContaService.GerarNumeroConta(_dbcontext);
+
         _dbcontext.Clientes.Add(clienteParaCadastro);
         _dbcontext.SaveChanges();
 

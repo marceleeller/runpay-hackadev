@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Runpay.API.Migrations
 {
     /// <inheritdoc />
-    public partial class MigrationInicial : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,13 +38,13 @@ namespace Runpay.API.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Rua = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    Numero = table.Column<int>(type: "INTEGER", nullable: false),
-                    Bairro = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    Cidade = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    Estado = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    Logradouro = table.Column<string>(type: "TEXT", nullable: false),
+                    Numero = table.Column<string>(type: "TEXT", nullable: false),
+                    Bairro = table.Column<string>(type: "TEXT", nullable: false),
+                    Cidade = table.Column<string>(type: "TEXT", nullable: false),
+                    Estado = table.Column<string>(type: "TEXT", nullable: false),
                     Cep = table.Column<string>(type: "TEXT", nullable: false),
-                    Complemento = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
+                    Complemento = table.Column<string>(type: "TEXT", nullable: true),
                     CriadoEm = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
                     AtualizadoEm = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
                     ExcluidoEm = table.Column<DateTimeOffset>(type: "TEXT", nullable: true)
@@ -60,19 +60,19 @@ namespace Runpay.API.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", maxLength: 250, nullable: false),
-                    NomeSocial = table.Column<string>(type: "TEXT", maxLength: 250, nullable: true),
+                    Nome = table.Column<string>(type: "TEXT", nullable: false),
+                    NomeSocial = table.Column<string>(type: "TEXT", nullable: true),
                     DataNascimento = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Cpf = table.Column<string>(type: "TEXT", nullable: false),
                     Rg = table.Column<string>(type: "TEXT", nullable: false),
-                    RgExpedidor = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    RgUF = table.Column<string>(type: "TEXT", maxLength: 2, nullable: false),
-                    Nacionalidade = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    RgExpedidor = table.Column<string>(type: "TEXT", nullable: false),
+                    RgUF = table.Column<string>(type: "TEXT", nullable: false),
+                    Nacionalidade = table.Column<string>(type: "TEXT", nullable: false),
                     EstadoCivil = table.Column<int>(type: "INTEGER", nullable: false),
                     Genero = table.Column<int>(type: "INTEGER", nullable: false),
-                    Ddd = table.Column<int>(type: "INTEGER", nullable: false),
+                    Ddd = table.Column<string>(type: "TEXT", nullable: false),
                     Celular = table.Column<string>(type: "TEXT", nullable: false),
-                    Email = table.Column<string>(type: "TEXT", maxLength: 80, nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false),
                     EnderecoId = table.Column<int>(type: "INTEGER", nullable: true),
                     CriadoEm = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
                     AtualizadoEm = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
@@ -121,9 +121,8 @@ namespace Runpay.API.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ContaDestinatario = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    NomeDestinatario = table.Column<string>(type: "TEXT", maxLength: 250, nullable: false),
-                    Descricao = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
+                    Descricao = table.Column<string>(type: "TEXT", nullable: false),
+                    Mensagem = table.Column<string>(type: "TEXT", nullable: true),
                     Valor = table.Column<decimal>(type: "TEXT", nullable: false),
                     TipoTransacao = table.Column<int>(type: "INTEGER", nullable: false),
                     ContaId = table.Column<int>(type: "INTEGER", nullable: false),

@@ -2,10 +2,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Runpay.API.Domains.DTOs.Requests;
 
-public class EnderecoRequestDto {
-    [Required(ErrorMessage = "O campo Rua é obrigatório.")]
-    [MaxLength(100, ErrorMessage = "O campo Rua deve ter no máximo 100 caracteres.")]
-    public string Rua { get; set; } = null!;
+public class EnderecoRequestDto
+{
+    [Required(ErrorMessage = "O campo Logradouro é obrigatório.")]
+    [MaxLength(100, ErrorMessage = "O campo Logradouro deve ter no máximo 100 caracteres.")]
+    public string Logradouro { get; set; } = null!;
 
     [Required(ErrorMessage = "O campo Número é obrigatório.")]
     public string Numero { get; set; } = null!;
