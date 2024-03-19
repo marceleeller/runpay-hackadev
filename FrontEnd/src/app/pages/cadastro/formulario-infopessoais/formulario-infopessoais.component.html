@@ -1,7 +1,7 @@
 <div [formGroup]="cadastroForm" class="formularioinvalido">
 
   <div class="row">
-    <div class="col">
+    <div class="col-12 col-md-6">
       <label class="form-label">Nome Completo</label>
       <input type="text" class="form-control" formControlName="nome" (keypress)="this.formService.apenasCaracteres($event)"/>
       <span
@@ -20,9 +20,6 @@
       <input type="text" class="form-control" formControlName="nomeSocial" (keypress)="this.formService.apenasCaracteres($event)"/>
     </div>
   </div>
-
-
-
 
     <div class="row">
       <div class="col-sm-12 col-md-6">
@@ -47,33 +44,7 @@
         <label class="form-label">UF Expedidor</label>
         <select class="form-select" aria-label="Default select example" formControlName="rgUf">
           <option value selected>Selecione</option>
-          <option value="AC">AC</option>
-          <option value="AL">AL</option>
-          <option value="AP">AP</option>
-          <option value="AM">AM</option>
-          <option value="BA">BA</option>
-          <option value="CE">CE</option>
-          <option value="DF">DF</option>
-          <option value="ES">ES</option>
-          <option value="GO">GO</option>
-          <option value="MA">MA</option>
-          <option value="MT">MT</option>
-          <option value="MS">MS</option>
-          <option value="MG">MG</option>
-          <option value="PA">PA</option>
-          <option value="PB">PB</option>
-          <option value="PR">PR</option>
-          <option value="PE">PE</option>
-          <option value="PI">PI</option>
-          <option value="RJ">RJ</option>
-          <option value="RN">RN</option>
-          <option value="RS">RS</option>
-          <option value="RO">RO</option>
-          <option value="RR">RR</option>
-          <option value="SC">SC</option>
-          <option value="SP">SP</option>
-          <option value="SE">SE</option>
-          <option value="TO">TO</option>
+          <option *ngFor="let estado of estados" [value]="estado">{{estado}}</option>
         </select>
         <span
           *ngIf="(getCampo('rgUf')?.dirty || getCampo('rgUf')?.touched) && getCampo('rgUf')?.hasError('required') "
@@ -149,7 +120,7 @@
           >DDD inválido.
         </span>
       </div>
-      <div class="col-10">
+      <div class="col-8 col-sm-10">
         <label class="form-label">Celular</label>
         <input type="text" class="form-control" formControlName="celular" [mask]="'00000-0000'"/>
         <span

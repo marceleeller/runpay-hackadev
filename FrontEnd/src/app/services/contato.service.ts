@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Form, FormGroup } from '@angular/forms';
 import { Observable, first } from 'rxjs';
 import { Contato } from '../../models/contato.model';
 
