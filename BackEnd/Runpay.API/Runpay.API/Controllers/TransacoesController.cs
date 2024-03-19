@@ -7,6 +7,7 @@ using Runpay.API.Domain.Model;
 using Runpay.API.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Runpay.API.Domains.DTOs.Responses;
 
 namespace TransacaoesController.Controllers
 {
@@ -22,10 +23,12 @@ namespace TransacaoesController.Controllers
             _mapper = mapper;
         }
 
-        // Acessar histórico
 
+
+        // Acessar histórico
         [Authorize]
-        [HttpGet("{id}")]
+        [HttpGet("historico{id}")]
+        [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status200OK)]
         public IActionResult Historico(int id)
         {
             var conta = _dbcontext.Contas.First(c => c.Id == id);
@@ -41,6 +44,8 @@ namespace TransacaoesController.Controllers
         // Realizar depósito
         [Authorize]
         [HttpPost("deposito{id}")]
+        [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
         public IActionResult Deposito([FromBody] DepositoRequestDto request, int id)
         {
 
@@ -56,16 +61,24 @@ namespace TransacaoesController.Controllers
             _dbcontext.Transacoes.Add(adicionaSaldo);
             _dbcontext.SaveChanges();
 
-            return Ok(new
-            {
-                message = "Depósito realizado com sucesso.",
-                adicionaSaldo.CriadoEm
-            });
+            var transacaoARetornar = _mapper.Map<TransacaoResponseDto>(adicionaSaldo);
+
+            return CreatedAtAction(
+                nameof(Historico),
+                new { id = contaDeposito.Id },
+                new
+                {
+                    message = new MessageResponse("Depósito realizado com sucesso."),
+                    transacao = transacaoARetornar
+                }
+            );
         }
 
         // Realizar saque
         [Authorize]
         [HttpPost("saque{id}")]
+        [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
         public IActionResult Saque([FromBody] SaqueRequestDto request, int id)
         {
             var saque = _mapper.Map<Transacao>(request);
@@ -84,16 +97,24 @@ namespace TransacaoesController.Controllers
             _dbcontext.Transacoes.Add(saque);
             _dbcontext.SaveChanges();
 
-            return Ok(new
-            {
-                message = "Saque realizado com sucesso.",
-                saque.CriadoEm
-            });
+            var transacaoARetornar = _mapper.Map<TransacaoResponseDto>(saque);
+
+            return CreatedAtAction(
+                nameof(Historico),
+                new { id = contaSaque.Id },
+                new
+                {
+                    message = new MessageResponse("Saque realizado com sucesso."),
+                    transacao = transacaoARetornar
+                }
+            );
         }
 
         // Realizar transferencia
         [Authorize]
         [HttpPost("transferencia{id}")]
+        [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
         public IActionResult Transferencia([FromBody] TransferenciaRequestDto request, int id)
         {
             var contaRemetente = _dbcontext.Contas.Include(c => c.Cliente).First(c => c.Id == id);
@@ -140,11 +161,17 @@ namespace TransacaoesController.Controllers
 
             _dbcontext.SaveChanges();
 
-            return Ok(new
-            {
-                message = "Transferência realizada com sucesso.",
-                transferenciaDestinatario.CriadoEm
-            });
+            var transacaoARetornar = _mapper.Map<TransacaoResponseDto>(transferenciaRemetente);
+
+            return CreatedAtAction(
+                nameof(Historico),
+                new { id = contaRemetente.Id },
+                new
+                {
+                    message = new MessageResponse("Depósito realizado com sucesso."),
+                    transacao = transacaoARetornar
+                }
+            );
         }
     }
 }
