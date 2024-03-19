@@ -40,12 +40,12 @@ namespace Runpay.API.Migrations
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Ddd")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Ddd")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(80)
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("EnderecoId")
@@ -62,16 +62,13 @@ namespace Runpay.API.Migrations
 
                     b.Property<string>("Nacionalidade")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(250)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NomeSocial")
-                        .HasMaxLength(250)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Rg")
@@ -80,12 +77,10 @@ namespace Runpay.API.Migrations
 
                     b.Property<string>("RgExpedidor")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("RgUF")
                         .IsRequired()
-                        .HasMaxLength(2)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -149,7 +144,6 @@ namespace Runpay.API.Migrations
 
                     b.Property<string>("Bairro")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Cep")
@@ -158,11 +152,9 @@ namespace Runpay.API.Migrations
 
                     b.Property<string>("Cidade")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Complemento")
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<DateTimeOffset>("CriadoEm")
@@ -170,18 +162,17 @@ namespace Runpay.API.Migrations
 
                     b.Property<string>("Estado")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<DateTimeOffset?>("ExcluidoEm")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Numero")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Rua")
+                    b.Property<string>("Logradouro")
                         .IsRequired()
-                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Numero")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -198,11 +189,6 @@ namespace Runpay.API.Migrations
                     b.Property<DateTimeOffset?>("AtualizadoEm")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ContaDestinatario")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
                     b.Property<int?>("ContaId")
                         .IsRequired()
                         .HasColumnType("INTEGER");
@@ -211,15 +197,13 @@ namespace Runpay.API.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Descricao")
-                        .HasMaxLength(100)
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTimeOffset?>("ExcluidoEm")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("NomeDestinatario")
-                        .IsRequired()
-                        .HasMaxLength(250)
+                    b.Property<string>("Mensagem")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("TipoTransacao")

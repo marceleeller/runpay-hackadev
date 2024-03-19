@@ -9,10 +9,11 @@ public class TransacaoProfile : Profile
 {
     public TransacaoProfile()
     {
-        CreateMap<TransacaoProfile, TransferenciaResponseDto>()
+        CreateMap<Transacao, TransacaoResponseDto>()
             .ForMember(
             transacaoDto => transacaoDto.DataOperacao,
             opt => opt.MapFrom(transacao => transacao.CriadoEm));
         CreateMap<DepositoRequestDto, Transacao>();
+        CreateMap<SaqueRequestDto, Transacao>();
     }
 }

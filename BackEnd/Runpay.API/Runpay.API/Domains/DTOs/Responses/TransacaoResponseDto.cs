@@ -2,7 +2,7 @@ using Runpay.API.Domain.Enums;
 
 namespace DTOs.Responses
 {
-    public class TransferenciaResponseDto
+    public class TransacaoResponseDto
     {
         public long Id { get; set; }
         public string Descricao { get; set; } = null!;
@@ -10,7 +10,6 @@ namespace DTOs.Responses
         public decimal Valor { get; set; }
         public ETipoTransacao TipoTransacao { get; set; }
         public DateTimeOffset DataOperacao { get; set; }
-
 
     }
 }

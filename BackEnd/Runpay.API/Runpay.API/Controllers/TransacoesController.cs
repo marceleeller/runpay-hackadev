@@ -4,6 +4,7 @@ using Runpay.API.Domains.Context;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using Runpay.API.Domain.Model;
+using Runpay.API.Domain.Enums;
 
 namespace TransacaoesController.Controllers
 {
@@ -19,22 +20,22 @@ namespace TransacaoesController.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public IActionResult GetAcessarHistorico(int accountId)
+        // Acessar histórico
+        [HttpGet("{id}")]
+        public IActionResult Historico(int id)
         {
-            // Lógica para acessar o histórico de transações
-            return Ok();
+            var conta = _dbcontext.Contas.First(c => c.Id == id);
+
+            var listaTransacoes = _dbcontext.Transacoes.Where(t => t.ContaId == conta.Id).ToList();
+
+            var response = listaTransacoes.Select(t => _mapper.Map<TransacaoResponseDto>(t))
+                .OrderByDescending(t => t.DataOperacao);
+
+            return Ok(response);
         }
 
-        [HttpGet("saldo")]
-        public IActionResult GetConsultarSaldo(int accountId)
-        {
-            decimal saldo = 0; // precisamos colocar um saldo?
-
-            return Ok();
-        }
-
-        [HttpPost("deposito/{id}")]
+        // Realizar depósito
+        [HttpPost("deposito{id}")]
         public IActionResult Deposito([FromBody] DepositoRequestDto request, int id)
         {
 
@@ -44,7 +45,9 @@ namespace TransacaoesController.Controllers
 
             adicionaSaldo.ContaId = contaDeposito.Id;
             adicionaSaldo.Descricao = "Depósito em conta";
+            adicionaSaldo.TipoTransacao = ETipoTransacao.Deposito;
             contaDeposito.Saldo += request.Valor;
+
 
             _dbcontext.Transacoes.Add(adicionaSaldo);
             _dbcontext.SaveChanges();
@@ -56,18 +59,85 @@ namespace TransacaoesController.Controllers
             });
         }
 
-        [HttpPost("saque")]
-        public IActionResult PostRealizarSaque([FromBody] SaqueRequest request)
+        // Realizar saque
+        [HttpPost("saque{id}")]
+        public IActionResult Saque([FromBody] SaqueRequestDto request, int id)
         {
-            // Lógica para realizar um saque na conta
-            return Ok();
+            var saque = _mapper.Map<Transacao>(request);
+            var contaSaque = _dbcontext.Contas.First(c => c.Id == id);
+
+            if (contaSaque.Saldo < request.Valor)
+            {
+                return BadRequest("Saldo insuficiente.");
+            }
+
+            saque.ContaId = contaSaque.Id;
+            saque.Descricao = "Saque em conta";
+            saque.TipoTransacao = ETipoTransacao.Saque;
+            contaSaque.Saldo -= request.Valor;
+
+            _dbcontext.Transacoes.Add(saque);
+            _dbcontext.SaveChanges();
+
+            return Ok(new
+            {
+                message = "Saque realizado com sucesso.",
+                saque.CriadoEm
+            });
         }
 
-        [HttpPost("transferencia")]
-        public IActionResult PostRealizarTransferencia([FromBody] TransferenciaRequestDto request)
+        // Realizar transferencia
+        [HttpPost("transferencia{id}")]
+        public IActionResult Transferencia([FromBody] TransferenciaRequestDto request, int id)
         {
-            // Lógica para realizar uma transferência entre contas
-            return Ok("Tranferencia realizada com sucesso.");
+            var contaRemetente = _dbcontext.Contas.First(c => c.Id == id);
+            var contaDestinatário = _dbcontext.Contas.First(c => c.NumeroConta == request.ContaDestinatario);
+
+            // validacoes
+            if (contaDestinatário == null)
+                return BadRequest("Conta destinatária não encontrada.");
+
+            if (contaRemetente.Id == contaDestinatário.Id)
+                return BadRequest("Não é possível transferir para a mesma conta.");
+
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (contaRemetente.Saldo < request.Valor)
+                return BadRequest("Saldo insuficiente.");
+
+            // transferencia
+            var transferenciaRemetente = new Transacao
+            {
+                ContaId = contaRemetente.Id,
+                Descricao = "Para " + contaDestinatário.Cliente.Nome,
+                Mensagem = request.Mensagem,
+                TipoTransacao = ETipoTransacao.Transferencia,
+                Valor = request.Valor
+            };
+
+            var transferenciaDestinatario = new Transacao
+            {
+                ContaId = contaDestinatário.Id,
+                Descricao = "De " + contaRemetente.Cliente.Nome,
+                Mensagem = request.Mensagem,
+                TipoTransacao = ETipoTransacao.Transferencia,
+                Valor = request.Valor
+            };
+
+            contaRemetente.Saldo -= request.Valor;
+            contaDestinatário.Saldo += request.Valor;
+
+            _dbcontext.Transacoes.Add(transferenciaRemetente);
+            _dbcontext.Transacoes.Add(transferenciaDestinatario);
+
+            _dbcontext.SaveChanges();
+
+            return Ok(new
+            {
+                message = "Saque realizado com sucesso.",
+                transferenciaDestinatario.CriadoEm
+            });
         }
     }
 }
