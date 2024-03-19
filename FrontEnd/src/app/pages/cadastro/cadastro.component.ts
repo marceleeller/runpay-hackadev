@@ -12,13 +12,15 @@ import { idadeMinima } from './idade-minima-validator';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalCadastroComponent } from '../../components/modal-cadastro/modal-cadastro.component';
+import { ClienteService } from '../../services/cliente.service';
+import { Cadastro } from '../../../models/cadastro.model';
 
 @Component({
     selector: 'app-cadastro',
     standalone: true,
     templateUrl: './cadastro.component.html',
     styleUrl: './cadastro.component.css',
-    providers: [provideNgxMask()],
+    providers: [provideNgxMask(), ClienteService],
     imports: [RouterOutlet, HeaderVoltarComponent, FooterComponent, ReactiveFormsModule, FormularioEnderecoComponent, FormularioInfopessoaisComponent, CommonModule, FormularioSenhaComponent, NgxMaskDirective, HttpClientModule ]
 })
 export class CadastroComponent implements OnInit {
@@ -27,14 +29,15 @@ export class CadastroComponent implements OnInit {
   formularioExibido = 'inicial';
   mostrarMensagemSucesso: boolean = false;
   invalidUser: boolean = false;
+  processando = false;
   cpfUtilizado: boolean = true;
 
-  constructor(private fb: FormBuilder, private router: Router) {   }
+  constructor(private fb: FormBuilder, private router: Router, private clienteService: ClienteService) {   }
 
   ngOnInit(): void {
     this.criarFormulario();
 
-    this.cadastroForm.get('confirmarSenha')!.setValidators([this.validarConfirmacaoSenha.bind(this), Validators.required]);
+    this.cadastroForm.get('conta.confirmarSenha')!.setValidators([this.validarConfirmacaoSenha.bind(this), Validators.required]);
     this.cadastroForm.get('confirmarEmail')!.setValidators([this.validarConfirmacaoEmail.bind(this), Validators.required]);
   }
 
@@ -54,8 +57,6 @@ export class CadastroComponent implements OnInit {
       celular: this.fb.control('', [Validators.required, Validators.minLength(9)]),
       email: this.fb.control('', [Validators.required, Validators.email]),
       confirmarEmail: this.fb.control(''),
-      senha: this.fb.control('', [Validators.required, this.validarForcaSenha]),
-      confirmarSenha: this.fb.control(''),
       endereco: this.fb.group({
         cep: this.fb.control('', [Validators.required, Validators.minLength(8)]),
         logradouro: this.fb.control('', Validators.required),
@@ -64,12 +65,12 @@ export class CadastroComponent implements OnInit {
         bairro: this.fb.control('', Validators.required),
         cidade: this.fb.control('', Validators.required),
         estado: this.fb.control('', Validators.required)
+      }),
+      conta: this.fb.group({
+        senha: this.fb.control('', [Validators.required, Validators.minLength(6), this.validarForcaSenha]),
+        confirmarSenha: this.fb.control(''),
       })
   });
-  }
-
-  cadastrar() {
-    console.log(this.cadastroForm.value);
   }
 
   // get
@@ -93,7 +94,7 @@ export class CadastroComponent implements OnInit {
   }
 
   validarConfirmacaoSenha(control: AbstractControl): ValidationErrors | null {
-    const senha: any = this.getCampo('senha')!.value;
+    const senha: any = this.getCampo('conta.senha')!.value;
     const confirmacaoSenha: string = control.value;
 
     if (senha !== confirmacaoSenha) {
@@ -156,5 +157,32 @@ export class CadastroComponent implements OnInit {
     const modalRef = this.modalService.open(ModalCadastroComponent);
     modalRef.componentInstance.titulo = 'Política de Privacidade';
     modalRef.componentInstance.conteudo = 'A Política de Privacidade do Banco RunPay é um compromisso com a segurança e confidencialidade das informações dos nossos usuários. Nossa política abrange a coleta, o uso e a proteção dos dados pessoais, seguindo os mais altos padrões de segurança e conformidade com a legislação aplicável. Ao utilizar nossos serviços, os usuários consentem com a coleta e o processamento de seus dados de acordo com esta política. Garantimos que as informações fornecidas serão utilizadas apenas para os fins especificados, como fornecer serviços financeiros, melhorar a experiência do usuário e cumprir obrigações legais. Comprometemo-nos a não compartilhar, vender ou alugar dados pessoais a terceiros sem consentimento expresso dos usuários, exceto quando exigido por lei ou para proteger nossos interesses legítimos. Além disso, implementamos medidas técnicas e organizacionais para proteger os dados contra acesso não autorizado, uso indevido ou divulgação. Os usuários têm o direito de acessar, corrigir ou excluir suas informações pessoais, e estamos comprometidos em fornecer os meios necessários para exercer esses direitos. Quaisquer dúvidas ou preocupações sobre nossa Política de Privacidade podem ser direcionadas ao nosso departamento de atendimento ao cliente.';
+  }
+
+  onSubmit() {
+    this.processando = true;
+    const formValue = {...this.cadastroForm.value};
+    formValue.estadoCivil = Number(formValue.estadoCivil);
+    formValue.genero = Number(formValue.genero);
+
+
+    this.clienteService.postCadastro(formValue as Cadastro).subscribe({
+      error: (error) => this.onErro(error),
+      complete: () => this.onSucesso()
+    });
+  }
+
+  onErro(error: any) {
+    this.invalidUser = true;
+    this.processando = false;
+    console.log(error)
+  }
+
+  onSucesso() {
+    this.invalidUser = false;
+    this.mostrarMensagemSucesso = true;
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 2000);
   }
 }

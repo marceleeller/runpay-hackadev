@@ -18,6 +18,8 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 export class LoginComponent {
     constructor(private rotas: Router) { }
 
+    senhaExibida: boolean = false;
+    icone:string = 'bi-eye'
     mensagemErro:boolean = false;
     mensagemSucesso:boolean = false;
 
@@ -68,4 +70,13 @@ export class LoginComponent {
     //   }
 
     // }
+
+    toggleSenhaExibida() {
+      this.senhaExibida = !this.senhaExibida;
+      if (this.senhaExibida) {
+        this.icone = 'bi-eye-slash'
+      } else {
+        this.icone = 'bi-eye'
+      }
+    }
 }

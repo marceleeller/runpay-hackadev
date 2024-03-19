@@ -19,21 +19,23 @@ export default class FormularioInfopessoaisComponent {
   constructor(public formService: FormService) { }
 
   generos = [
-    { value: 'CisFeminino', exibicao: 'Cis Feminino' },
-    { value: 'CisMasculino', exibicao: 'Cis Masculino' },
-    { value: 'Feminino', exibicao: 'Feminino' },
-    { value: 'Masculino', exibicao: 'Masculino' },
-    { value: 'NaoBinario', exibicao: 'Não Binário' },
-    { value: 'Outro', exibicao: 'Outro' },
+    { value: 0, exibicao: 'Cis Feminino' },
+    { value: 1, exibicao: 'Cis Masculino' },
+    { value: 2, exibicao: 'Feminino' },
+    { value: 3, exibicao: 'Masculino' },
+    { value: 4, exibicao: 'Não Binário' },
+    { value: 5, exibicao: 'Outro' },
   ];
 
   estadosCivis = [
-    { value: 'Solteiro', exibicao: 'Solteiro(a)' },
-    { value: 'Casado', exibicao: 'Casado(a)' },
-    { value: 'Viuvo', exibicao: 'Viuvo(a)' },
-    { value: 'Divorciado', exibicao: 'Divorciado(a)' },
-    { value: 'UniaoEstavel', exibicao: 'União Estável' },
+    { value: 0, exibicao: 'Solteiro(a)' },
+    { value: 1, exibicao: 'Casado(a)' },
+    { value: 2, exibicao: 'Viuvo(a)' },
+    { value: 3, exibicao: 'Divorciado(a)' },
+    { value: 4, exibicao: 'União Estável' },
   ];
+
+  estados: string[] = ['AC', 'AL', 'AM', 'AP', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO', 'RR', 'RS', 'SC', 'SE', 'SP', 'TO']
 
   // get
   getCampo(nomeCampo: string) {

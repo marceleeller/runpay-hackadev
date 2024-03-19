@@ -6,6 +6,7 @@
   border: 1px solid var(--cor-cinza);
   border-radius: 0.375rem;
   transition: ease 0.1s;
+  max-height: 38px;
 }
 
 .button-cep .bi {
