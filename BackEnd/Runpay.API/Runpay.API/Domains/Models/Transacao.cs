@@ -6,9 +6,12 @@ namespace Runpay.API.Domain.Model;
 
 public class Transacao : Entity
 {
+    [Required]
     public string Descricao { get; set; } = null!;
-    public string? Mensagem { get; set; } = null!;
+    public string? Mensagem { get; set; }
+    [Required]
     public decimal Valor { get; set; }
+    [Required]
     public ETipoTransacao TipoTransacao { get; set; }
 
 

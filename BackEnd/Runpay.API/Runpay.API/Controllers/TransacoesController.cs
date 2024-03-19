@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using Runpay.API.Domain.Model;
 using Runpay.API.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace TransacaoesController.Controllers
 {
@@ -48,7 +49,6 @@ namespace TransacaoesController.Controllers
             adicionaSaldo.TipoTransacao = ETipoTransacao.Deposito;
             contaDeposito.Saldo += request.Valor;
 
-
             _dbcontext.Transacoes.Add(adicionaSaldo);
             _dbcontext.SaveChanges();
 
@@ -90,14 +90,15 @@ namespace TransacaoesController.Controllers
         [HttpPost("transferencia{id}")]
         public IActionResult Transferencia([FromBody] TransferenciaRequestDto request, int id)
         {
-            var contaRemetente = _dbcontext.Contas.First(c => c.Id == id);
-            var contaDestinatário = _dbcontext.Contas.First(c => c.NumeroConta == request.ContaDestinatario);
+            var contaRemetente = _dbcontext.Contas.Include(c => c.Cliente).First(c => c.Id == id);
+
+            var contaDestinatario = _dbcontext.Contas.Include(c => c.Cliente).FirstOrDefault(c => c.NumeroConta == request.ContaDestinatario);
 
             // validacoes
-            if (contaDestinatário == null)
+            if (contaDestinatario == null)
                 return BadRequest("Conta destinatária não encontrada.");
 
-            if (contaRemetente.Id == contaDestinatário.Id)
+            if (contaRemetente.Id == contaDestinatario.Id)
                 return BadRequest("Não é possível transferir para a mesma conta.");
 
             if(!ModelState.IsValid)
@@ -110,7 +111,7 @@ namespace TransacaoesController.Controllers
             var transferenciaRemetente = new Transacao
             {
                 ContaId = contaRemetente.Id,
-                Descricao = "Para " + contaDestinatário.Cliente.Nome,
+                Descricao = "Para " + contaDestinatario.Cliente.Nome,
                 Mensagem = request.Mensagem,
                 TipoTransacao = ETipoTransacao.Transferencia,
                 Valor = request.Valor
@@ -118,7 +119,7 @@ namespace TransacaoesController.Controllers
 
             var transferenciaDestinatario = new Transacao
             {
-                ContaId = contaDestinatário.Id,
+                ContaId = contaDestinatario!.Id,
                 Descricao = "De " + contaRemetente.Cliente.Nome,
                 Mensagem = request.Mensagem,
                 TipoTransacao = ETipoTransacao.Transferencia,
@@ -126,7 +127,7 @@ namespace TransacaoesController.Controllers
             };
 
             contaRemetente.Saldo -= request.Valor;
-            contaDestinatário.Saldo += request.Valor;
+            contaDestinatario.Saldo += request.Valor;
 
             _dbcontext.Transacoes.Add(transferenciaRemetente);
             _dbcontext.Transacoes.Add(transferenciaDestinatario);
@@ -135,7 +136,7 @@ namespace TransacaoesController.Controllers
 
             return Ok(new
             {
-                message = "Saque realizado com sucesso.",
+                message = "Transferência realizada com sucesso.",
                 transferenciaDestinatario.CriadoEm
             });
         }

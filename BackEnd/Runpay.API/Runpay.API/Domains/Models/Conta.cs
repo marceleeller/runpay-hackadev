@@ -21,6 +21,6 @@ public class Conta : Entity
     public int ClienteId { get; set; }
     public virtual Cliente Cliente { get; set; } = null!;
 
-    public List<Transacao> Transacoes { get; set; } = new();
+    public List<Transacao>? Transacoes { get; set; } = new();
 
 }
