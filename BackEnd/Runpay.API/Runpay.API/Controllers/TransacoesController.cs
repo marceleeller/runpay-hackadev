@@ -2,66 +2,72 @@ using DTOs.Requests;
 using DTOs.Responses;
 using Runpay.API.Domains.Context;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
+using Runpay.API.Domain.Model;
 
 namespace TransacaoesController.Controllers
 {
     [ApiController]
-    [Route("api/transacoes")] 
+    [Route("api/transacoes")]
     public class TransacoesController : ControllerBase
     {
-        // Injeçao de dependencia
-        private RunpayDbContext _runpayDbContext;
-        public TransacoesController(RunpayDbContext runpayDbContext)
+        private readonly RunpayDbContext _dbcontext;
+        private readonly IMapper _mapper;
+        public TransacoesController(RunpayDbContext dbcontext, IMapper mapper)
         {
-            _runpayDbContext = runpayDbContext;
+            _dbcontext = dbcontext;
+            _mapper = mapper;
         }
 
-        [HttpGet("Acessar-Historico")]
+        [HttpGet]
         public IActionResult GetAcessarHistorico(int accountId)
         {
             // Lógica para acessar o histórico de transações
             return Ok();
         }
 
-        [HttpGet("Consultar-Saldo")]
+        [HttpGet("saldo")]
         public IActionResult GetConsultarSaldo(int accountId)
         {
-             decimal saldo = 0; // precisamos colocar um saldo?
+            decimal saldo = 0; // precisamos colocar um saldo?
 
-            // Lógica para consultar o saldo da conta
-            var response = new ConsultaSaldoResponse
-            {
-                ConsultarSaldo = saldo,
-                Mensagem = "Consulta de saldo realizada com sucesso."
-            };
-            return Ok(response);
+            return Ok();
         }
 
-        [HttpPost("Realizar-Deposito")]
-        public IActionResult PostRealizarDeposito([FromBody] DepositoRequest request)
+        [HttpPost("deposito/{id}")]
+        public IActionResult Deposito([FromBody] DepositoRequestDto request, int id)
         {
-            // Lógica para realizar um depósito na conta
-            var response = new DepositoResponse
+
+            var adicionaSaldo = _mapper.Map<Transacao>(request);
+
+            var contaDeposito = _dbcontext.Contas.First(c => c.Id == id);
+
+            adicionaSaldo.ContaId = contaDeposito.Id;
+            adicionaSaldo.Descricao = "Depósito em conta";
+            contaDeposito.Saldo += request.Valor;
+
+            _dbcontext.Transacoes.Add(adicionaSaldo);
+            _dbcontext.SaveChanges();
+
+            return Ok(new
             {
-                ValorDeposito = request.ValorDeposito,
-                Mensagem = "Depósito realizado com sucesso."
-            };
-             return Ok(response);
+                message = "Depósito realizado com sucesso.",
+                adicionaSaldo.CriadoEm
+            });
         }
 
-        [HttpPost("Realizar-Saque")]
+        [HttpPost("saque")]
         public IActionResult PostRealizarSaque([FromBody] SaqueRequest request)
         {
             // Lógica para realizar um saque na conta
             return Ok();
         }
 
-        [HttpPost("Realizar-Transferencia")]
-        public IActionResult PostRealizarTransferencia([FromBody] TransferenciaRequest request)
+        [HttpPost("transferencia")]
+        public IActionResult PostRealizarTransferencia([FromBody] TransferenciaRequestDto request)
         {
             // Lógica para realizar uma transferência entre contas
             return Ok("Tranferencia realizada com sucesso.");
         }
     }
 }
-

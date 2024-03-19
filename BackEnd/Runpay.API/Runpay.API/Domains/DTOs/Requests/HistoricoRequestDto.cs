@@ -1,6 +1,6 @@
 namespace DTOs.Requests
 {
-    public class HistoricoRequest
+    public class HistoricoRequestDto
     {
         public int ContaId { get; set; }
     }
