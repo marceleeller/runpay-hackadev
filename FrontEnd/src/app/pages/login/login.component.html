@@ -39,12 +39,16 @@
 
         <div>
           <label class="form-label" for="senha">Insira sua senha</label>
+          <div class="input-group">
             <input
-              type="password"
+              type="{{ senhaExibida ? 'text' : 'password' }}"
               class="form-control"
               id="senha"
               formControlName="senha"
             />
+            <i class="input-group-text bi {{icone}}" (click)="toggleSenhaExibida()"></i>
+          </div>
+
             <span
             *ngIf="(senha?.touched || senha?.dirty) && senha?.hasError('required')" class="texto-invalido"
             >Digite sua senha</span

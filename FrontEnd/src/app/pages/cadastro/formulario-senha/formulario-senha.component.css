@@ -1,1 +1,10 @@
 @import '../cadastro.component.css';
+
+.bi {
+  color: var(--cor-cinza);
+  -webkit-text-stroke: .1px;
+}
+
+.bi:hover {
+  cursor: pointer;
+}

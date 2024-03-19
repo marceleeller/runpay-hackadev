@@ -13,9 +13,12 @@ public abstract class Entity : IEntity
     public int Id { get; set; }
 
     [Required]
+    [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
     public DateTimeOffset CriadoEm { get; set; }
 
+    [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
     public DateTimeOffset? AtualizadoEm { get; set; }
 
+    [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
     public DateTimeOffset? ExcluidoEm { get; set; }
 }

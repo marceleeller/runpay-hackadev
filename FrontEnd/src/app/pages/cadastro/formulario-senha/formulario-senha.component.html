@@ -18,20 +18,36 @@
     >Os campos e-mail e confirmação de e-mail devem ser iguais.
   </span >
 
-  <label class="form-label">Senha</label>
-  <input type="password" class="form-control" formControlName="senha" />
-  <span
-    *ngIf="(getCampo('senha')?.dirty || getCampo('senha')?.touched) && getCampo('senha')?.hasError('required') "
-    class="texto-invalido"
-    >Senha é obrigatória.
-  </span >
+  <div formGroupName="conta" class="formularioinvalido">
+    <label class="form-label">Senha</label>
+    <div class="input-group">
+      <div class="input-group">
+        <input type="{{ senhaExibida ? 'text' : 'password' }}" class="form-control" formControlName="senha" />
+        <i class="input-group-text bi {{icone}}" (click)="toggleSenhaExibida()"></i>
+      </div>
+    </div>
+    <span
+      *ngIf="(getCampo('conta.senha')?.dirty || getCampo('conta.senha')?.touched) && getCampo('conta.senha')?.hasError('required') "
+      class="texto-invalido"
+      >Senha é obrigatória.
+    </span >
+    <span
+      *ngIf="getCampo('conta.senha')?.hasError('validarForcaSenha') && getCampo('conta.senha')?.hasError('minlength')"
+      class="texto-invalido"
+      >Mínimo 6 caracteres, incluindo letras minúsculas, maiúsculas e números.
+    </span >
 
-  <label class="form-label">Confirme sua senha</label>
-  <input type="password" class="form-control" formControlName="confirmarSenha" />
-  <span
-    *ngIf="((getCampo('confirmarSenha')?.touched) && getCampo('confirmarSenha')?.hasError('required')) || getCampo('confirmarSenha')?.hasError('senhasDiferentes') "
-    class="texto-invalido"
-    >Os campos senha e confirmação devem ser
-    iguais.
-  </span>
+    <label class="form-label">Confirme sua senha</label>
+    <div class="input-group">
+      <input type="{{ confirmacaoSenhaExibida ? 'text' : 'password' }}" class="form-control" formControlName="confirmarSenha" />
+      <i class="input-group-text bi {{iconeConfirmacao}}" (click)="toggleConfirmacaoSenhaExibida()"></i>
+    </div>
+
+    <span
+      *ngIf="((getCampo('conta.confirmarSenha')?.touched) && getCampo('conta.confirmarSenha')?.hasError('required')) || getCampo('conta.confirmarSenha')?.hasError('senhasDiferentes') "
+      class="texto-invalido"
+      >Os campos senha e confirmação devem ser
+      iguais.
+    </span>
+  </div>
 </div>

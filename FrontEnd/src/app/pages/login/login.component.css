@@ -45,6 +45,21 @@ div input {
   background-repeat: no-repeat;
 }
 
+.bi {
+  color: var(--cor-cinza);
+  -webkit-text-stroke: .1px;
+}
+
+.bi:hover {
+  cursor: pointer;
+}
+
+.input-group-text {
+  background: transparent;
+  border: 1px solid var(--cor-cinza);
+}
+
+
 #link_entrar {
   color: #c3f587;
   cursor: pointer;
