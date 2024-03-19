@@ -6,6 +6,7 @@ using AutoMapper;
 using Runpay.API.Domain.Model;
 using Runpay.API.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using Runpay.API.Domains.DTOs.Responses;
 
 namespace TransacaoesController.Controllers
@@ -25,6 +26,7 @@ namespace TransacaoesController.Controllers
 
 
         // Acessar histórico
+        [Authorize]
         [HttpGet("historico{id}")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status200OK)]
         public IActionResult Historico(int id)
@@ -40,6 +42,7 @@ namespace TransacaoesController.Controllers
         }
 
         // Realizar depósito
+        [Authorize]
         [HttpPost("deposito{id}")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
@@ -72,6 +75,7 @@ namespace TransacaoesController.Controllers
         }
 
         // Realizar saque
+        [Authorize]
         [HttpPost("saque{id}")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
@@ -107,6 +111,7 @@ namespace TransacaoesController.Controllers
         }
 
         // Realizar transferencia
+        [Authorize]
         [HttpPost("transferencia{id}")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
