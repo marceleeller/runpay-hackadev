@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Runpay.API.Domain.Model;
 using Runpay.API.Domains.Context;
 using Runpay.API.Domains.DTOs.Requests;
 using Runpay.API.Domains.DTOs.Responses;
@@ -37,7 +38,9 @@ public class LoginController : Controller
 
         var clienteParaRetornar = _mapper.Map<ClienteResponseDto>(contaParaLogar.Cliente);
 
-        return Ok(new { message = "Usuário logado!" });
+        var token = TokenService.GenerateToken(contaParaLogar);
+
+        return Ok(token);
     }
 
 

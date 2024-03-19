@@ -6,6 +6,7 @@ using AutoMapper;
 using Runpay.API.Domain.Model;
 using Runpay.API.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TransacaoesController.Controllers
 {
@@ -22,6 +23,8 @@ namespace TransacaoesController.Controllers
         }
 
         // Acessar histórico
+
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult Historico(int id)
         {
@@ -36,6 +39,7 @@ namespace TransacaoesController.Controllers
         }
 
         // Realizar depósito
+        [Authorize]
         [HttpPost("deposito{id}")]
         public IActionResult Deposito([FromBody] DepositoRequestDto request, int id)
         {
@@ -60,6 +64,7 @@ namespace TransacaoesController.Controllers
         }
 
         // Realizar saque
+        [Authorize]
         [HttpPost("saque{id}")]
         public IActionResult Saque([FromBody] SaqueRequestDto request, int id)
         {
@@ -87,6 +92,7 @@ namespace TransacaoesController.Controllers
         }
 
         // Realizar transferencia
+        [Authorize]
         [HttpPost("transferencia{id}")]
         public IActionResult Transferencia([FromBody] TransferenciaRequestDto request, int id)
         {
