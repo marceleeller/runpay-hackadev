@@ -1,67 +1,76 @@
-using DTOs.Requests;
-using DTOs.Responses;
+using AutoMapper;
+using Runpay.API.Domains.DTOs.Requests;
+using Runpay.API.Domains.DTOs.Responses;
 using Runpay.API.Domains.Context;
 using Microsoft.AspNetCore.Mvc;
+using Runpay.API.Domains.Models;
 
-namespace TransacaoesController.Controllers
+namespace Runpay.API.Controllers;
+[ApiController]
+[Route("api/transacoes")]
+public class TransacoesController : ControllerBase
 {
-    [ApiController]
-    [Route("api/transacoes")] 
-    public class TransacoesController : ControllerBase
+    // Injeçao de dependencia
+    private readonly RunpayDbContext _dbContext;
+    private readonly IMapper _mapper;
+    public TransacoesController(RunpayDbContext dbContext, IMapper mapper)
     {
-        // Injeçao de dependencia
-        private RunpayDbContext _runpayDbContext;
-        public TransacoesController(RunpayDbContext runpayDbContext)
-        {
-            _runpayDbContext = runpayDbContext;
-        }
+        _dbContext = dbContext;
+        _mapper = mapper;
+    }
 
-        [HttpGet("Acessar-Historico")]
-        public IActionResult GetAcessarHistorico(int accountId)
-        {
-            // Lógica para acessar o histórico de transações
-            return Ok();
-        }
+    [HttpGet("Acessar-Historico")]
+    public IActionResult GetAcessarHistorico(int ContaId)
+    {
+        var transacoes = _dbContext.Transacoes.ToList();
 
-        [HttpGet("Consultar-Saldo")]
-        public IActionResult GetConsultarSaldo(int accountId)
-        {
-             decimal saldo = 0; // precisamos colocar um saldo?
+        return Ok(transacoes);
+    }
 
-            // Lógica para consultar o saldo da conta
-            var response = new ConsultaSaldoResponse
-            {
-                ConsultarSaldo = saldo,
-                Mensagem = "Consulta de saldo realizada com sucesso."
-            };
-            return Ok(response);
-        }
-
-        [HttpPost("Realizar-Deposito")]
-        public IActionResult PostRealizarDeposito([FromBody] DepositoRequest request)
+    [HttpGet("Consultar-Saldo")]
+    public IActionResult GetConsultarSaldo(int accountId)
+    {
+        var conta = _dbContext.Contas.FirstOrDefault(c => c.Id == accountId);
+        if (conta == null)
         {
-            // Lógica para realizar um depósito na conta
-            var response = new DepositoResponse
-            {
-                ValorDeposito = request.ValorDeposito,
-                Mensagem = "Depósito realizado com sucesso."
-            };
-             return Ok(response);
+            return NotFound("Conta não encontrada");
         }
-
-        [HttpPost("Realizar-Saque")]
-        public IActionResult PostRealizarSaque([FromBody] SaqueRequest request)
+        var saldoResponse = new ConsultaSaldoResponse
         {
-            // Lógica para realizar um saque na conta
-            return Ok();
-        }
+            ContaId = conta.Id,
+            ConsultarSaldo = conta.Saldo,
+            Mensagem = "Consulta de saldo realizada com sucesso."
+        };
+        return Ok(saldoResponse);
+    }
 
-        [HttpPost("Realizar-Transferencia")]
-        public IActionResult PostRealizarTransferencia([FromBody] TransferenciaRequest request)
+
+    [HttpPost("Realizar-Deposito")]
+    public IActionResult PostRealizarDeposito([FromBody] DepositoRequest request)
+    {
+        var response = new DepositoResponse
         {
-            // Lógica para realizar uma transferência entre contas
-            return Ok("Tranferencia realizada com sucesso.");
+            ValorDeposito = request.ValorDeposito,
+            Mensagem = "Depósito realizado com sucesso."
+        };
+        return Ok(response);
+    }
+
+    [HttpPost("Realizar-Saque")]
+    public IActionResult PostRealizarSaque([FromBody] SaqueRequest request)
+    {
+        if (PostRealizarSaque == null) {
+            return NotFound("Saldo Insuficiente.");
         }
+        return Ok ("Saque realizado com sucesso.");
+    }
+
+    [HttpPost("Realizar-Transferencia")]
+    public IActionResult PostRealizarTransferencia([FromBody] TransferenciaRequest request)
+    {
+        // Lógica para realizar uma transferência entre contas
+        return Ok("Tranferencia realizada com sucesso.");
     }
 }
+
 

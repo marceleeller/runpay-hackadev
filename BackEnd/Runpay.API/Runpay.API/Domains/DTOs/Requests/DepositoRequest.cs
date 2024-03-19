@@ -1,4 +1,4 @@
-namespace DTOs.Requests
+namespace Runpay.API.Domains.DTOs.Requests
 {
     public class DepositoRequest
     {

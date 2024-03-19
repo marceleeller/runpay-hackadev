@@ -1,13 +1,13 @@
-namespace DTOs.Responses
+namespace Runpay.API.Domains.DTOs.Responses
 {
     public class SaqueResponse
     {
-        public decimal SaldoAposSaque { get; set; } /*saldo apos o saque*/
+        public decimal ValorSaque { get; set; } /*saldo apos o saque*/
         public string Mensagem { get; set; } = string.Empty;
 
         public void SetSaldoAtualizado(decimal novoSaldo)
         {
-            SaldoAposSaque = novoSaldo;
+            ValorSaque = novoSaldo;
         }
 
         public void SetMensagem() /*criar uma mensagem de envio com sucesso ou de erro*/

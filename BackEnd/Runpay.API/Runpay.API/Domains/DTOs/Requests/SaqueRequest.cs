@@ -1,9 +1,9 @@
-namespace DTOs.Requests
+namespace Runpay.API.Domains.DTOs.Requests
 {
     public class SaqueRequest
     {
-        public int AccountId { get; set; }
-        public decimal Amount { get; set; }
+        public int ContaId { get; set; }
+        public decimal ValorSaque { get; set; }
         
     }
 }
