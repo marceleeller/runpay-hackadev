@@ -7,7 +7,7 @@ namespace Runpay.API.Domain.Model;
 
 public class Conta : Entity
 {
-    public string NumeroConta { get; set; } = null!;
+    public string NumeroConta { get; set; } = "10000000";
 
     public int Agencia { get; set; } = 10008;
 
@@ -22,10 +22,5 @@ public class Conta : Entity
     public virtual Cliente Cliente { get; set; } = null!;
 
     public List<Transacao> Transacoes { get; set; } = new();
-
-    public Conta(NumeroContaService numeroContaService)
-    {
-        NumeroConta = numeroContaService.GerarNumeroConta();
-    }
 
 }

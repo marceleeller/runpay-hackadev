@@ -14,6 +14,7 @@ public class ContaProfile : Profile
             .ForMember(
                 conta => conta.SenhaHash,
                 opt => opt.MapFrom(contaRequestDto => CriptografiaService.GerarHash(contaRequestDto.Senha)));
+            
         CreateMap<Conta, ContaResponseDto>();
     }
 }

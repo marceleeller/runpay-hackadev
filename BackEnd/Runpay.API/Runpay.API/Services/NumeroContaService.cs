@@ -5,12 +5,7 @@ namespace Runpay.API.Services;
 
 public class NumeroContaService
 {
-    private readonly RunpayDbContext _dbcontext;
-    public NumeroContaService(RunpayDbContext dbContext)
-    {
-        _dbcontext = dbContext;
-    }
-    public string GerarNumeroConta()
+    public static string GerarNumeroConta(RunpayDbContext _dbcontext)
     {
         var ultimoNumeroConta = _dbcontext.Contas.Max(c => c.NumeroConta);
 
