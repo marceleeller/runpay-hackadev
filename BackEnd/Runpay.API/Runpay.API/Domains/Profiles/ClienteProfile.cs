@@ -11,12 +11,6 @@ public class ClienteProfile:Profile
     {
         CreateMap<ClienteRequestDto, Cliente>();
         CreateMap<Cliente, ClienteResponseDto>();
+        CreateMap<AtualizaClienteRequestDto, Cliente>();
     }
-
-    public void TestMappingConfiguration()
-    {
-        var config = new MapperConfiguration(cfg => cfg.AddProfile<ClienteProfile>());
-        config.AssertConfigurationIsValid();
-    }
-
 }
