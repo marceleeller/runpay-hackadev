@@ -1,9 +1,8 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentBotaoComponent } from "../../components/component-botao/component-botao.component";
 import { HeaderHomeComponent } from "../../components/header-home/header-home.component";
 import { FooterComponent } from "../../components/footer/footer.component";
 import { HeaderInicialComponent } from "../../components/header-inicial/header-inicial.component";
-import { TransacaoService } from '../../services/transacao.service';
 import { Transacao } from '../../../models/transacao.model';
 import { CardtransacaoComponent } from "../../components/cardtransacao/cardtransacao.component";
 import { CommonModule } from '@angular/common';
@@ -24,19 +23,17 @@ import { FormatBRLPipe } from '../../pipes/currencyFormat.pipe';
 export class InicialComponent {
   saldo: number = 1000.00;
   cliente:any;
-  listaTransacoes: any;
   transacoes: Transacao[] = [];
   transacoesExibidas: Transacao[] = [];
-  totalTransacoesExibidas: number = 6;
   mes: string = this.mesAtual();
-  valorGastos:string =  'R$ 1.000,00';
-  valorGanhos: string = 'R$ 2.000,00';
+  valorGastos:number =  0.00;
+  valorGanhos:number = 0.00;
   mostrarPrimeirosBotoes: boolean = true;
   mostrarSegundosBotoes: boolean = true;
   mostrarSaldo: boolean = true;
   icon:string = 'bi-eye-slash';
 
-  constructor(private transacaoService: TransacaoService, private breakpointObserver: BreakpointObserver, private http: HttpClient, private clienteService:ClienteService) {
+  constructor(private breakpointObserver: BreakpointObserver, private http: HttpClient, private clienteService:ClienteService) {
     this.breakpointObserver.observe([
       "(max-width: 767px)"
     ]).subscribe((result: BreakpointState) => {
@@ -55,23 +52,40 @@ export class InicialComponent {
   }
 
   ngOnInit(): void {
-    this.carregarTransacoes();
-  }
-
-  carregarTransacoes() {
-    this.transacoes = this.transacaoService.carregarTransacoes();
-    this.transacoesExibidas = this.transacoes.slice(0, 4);
+    //carrega transacoes
+    this.clienteService.getTransacoes().subscribe(res => { this.transacoes = res;
+      this.transacoesExibidas = this.transacoes.slice(0, 4);
+      this.totalGanhos();
+      this.totalGastos();
+     });
   }
 
   mesAtual() {
     const nomesMeses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
-];
+  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
     const data = new Date();
     const nomeMes = nomesMeses[data.getMonth()];
 
     return nomeMes;
+  }
+
+  totalGanhos() {
+    this.transacoes.forEach(transacao => {
+      let primeiraPalavra = transacao.descricao.split(' ')[0];
+      if (primeiraPalavra == 'De' || primeiraPalavra == 'Depósito') {
+        this.valorGanhos += Number(transacao.valor);
+      }
+    });
+  }
+
+  totalGastos() {
+    this.transacoes.forEach(transacao => {
+      let primeiraPalavra = transacao.descricao.split(' ')[0];
+      if (primeiraPalavra == 'Para') {
+        this.valorGastos += Number(transacao.valor);
+      }
+    });
   }
 
   mostrarSegundos() {

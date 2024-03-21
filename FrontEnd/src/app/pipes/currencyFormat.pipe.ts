@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FormatBRLPipe implements PipeTransform {
 
-  transform(value: any): any {
+  transform(value: any, includeCurrencySymbol: boolean = true): any {
     // Verifica se o valor é um número
     if (isNaN(value)) {
       return value;
@@ -20,7 +20,9 @@ export class FormatBRLPipe implements PipeTransform {
     formattedValue = formattedValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
     // Adiciona o símbolo de moeda no início
-    formattedValue = 'R$ ' + formattedValue;
+    if (includeCurrencySymbol) {
+      formattedValue = 'R$ ' + formattedValue;
+    }
 
     // Retorna o valor formatado
     return formattedValue;

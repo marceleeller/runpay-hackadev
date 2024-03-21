@@ -2,25 +2,31 @@
   <div class="card-container">
     <div class="row">
       <div class="col col-2 d-flex justify-content-center align-items-center">
-        <div class="icon-pg icon" *ngIf="transacao?.tipo === 'Pagamento'">
-          <i class="bi bi-arrow-up"></i>
+        <div class="icon-trans icon" *ngIf="transacao?.tipoTransacao === 0">
+          <i class="bi bi-arrow-down-left"></i>
         </div>
-        <div class="icon-trans icon" *ngIf="transacao?.tipo === 'Transferência'">
+        <div class="icon-trans icon" *ngIf="transacao?.tipoTransacao === 1">
+          <i class="bi bi-arrow-left-right"></i>
+        </div>
+        <div class="icon-pg icon" *ngIf="transacao?.tipoTransacao === 2">
           <i class="bi bi-arrow-left-right"></i>
         </div>
       </div>
-      <div class="col col-8 d-flex flex-column justify-content-center">
-        <h5 class="card-titulo">{{ transacao?.nome }}</h5>
-        <p class="card-subtitulo">{{ transacao?.tipo }}</p>
+      <div class="icon-trans icon" *ngIf="transacao?.tipoTransacao === 3">
+        <i class="bi bi-arrow-up"></i>
+      </div>
+      <div class="col col-7 d-flex flex-column justify-content-center">
+        <h5 class="card-titulo">{{ getDescricaoPalavras(transacao?.descricao) }}</h5>
+        <p class="card-subtitulo">{{ transacao?.tipoTransacao | tipoTransacao }}</p>
         <p class="card-subtitulo">{{ transacao?.dataFormatada }}</p>
       </div>
-      <div class="col col-2 d-flex align-items-center justify-content-end">
+      <div class="col col-3 d-flex align-items-center justify-content-end">
         <p
           class="valor"
           [ngClass]="{
-            'text-pg': transacao?.tipo === 'Pagamento' && transacao?.nome?.startsWith('Para'),
-            'text-trans': transacao?.tipo === 'Transferência' && !transacao?.nome?.startsWith('Para')}">
-          {{ transacao?.valor !== undefined ? formatarValor(transacao?.valor) : "" }}
+            'text-pg': transacao?.descricao?.startsWith('P'),
+            'text-trans': transacao?.descricao?.startsWith('D')}"><span *ngIf="transacao?.descricao?.startsWith('P')">-</span>
+            {{ transacao?.valor | formatBRL:false }}
         </p>
       </div>
     </div>

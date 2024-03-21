@@ -51,7 +51,6 @@ export class LoginComponent {
         console.log(this.formularioLogin.value);
         this.authService.postLogin(this.formularioLogin.value).subscribe({
           next: (response:any) => {
-            console.log(response);
             this.mensagemSucesso = true;
             this.mensagemErro = false;
             this.authService.guardarToken(response.token);
@@ -64,32 +63,6 @@ export class LoginComponent {
           }
         })
       }
-
-      // const userList = JSON.parse(localStorage.getItem('userList') as string);
-      // const email = this.formularioLogin.value.email;
-      // const senha = this.formularioLogin.value.senha;
-      // let userValido:any;
-
-      // userList.forEach((item:any) => {
-      //   if (item.email == email && item.senha == senha) {
-      //       userValido = {
-      //           nome: item.nome,
-      //           email: item.email,
-      //           senha: item.senha
-      //       }
-      //   }
-      // });
-
-      // if (userValido == undefined) {
-      //   this.senhaIncorreta = true
-      //   this.rotas.navigateByUrl('/login');
-      // } else {
-      //   let token = Math.random().toString(16).substring(2) + Math.random().toString(16).substring(2)
-      //   localStorage.setItem('token', token);
-      //   localStorage.setItem('usuarioLogado', JSON.stringify(userValido))
-      //   this.rotas.navigateByUrl('/inicial');
-      // }
-
     }
 
     toggleSenhaExibida() {

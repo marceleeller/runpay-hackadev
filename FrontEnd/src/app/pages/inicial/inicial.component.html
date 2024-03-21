@@ -37,10 +37,10 @@
         <section class="gastoseganhos">
           <div class="row order-last order-md-first">
             <div class="col">
-              <app-card-gastoseganhos titulo="Ganhos" mes="{{mes}}" valor="{{valorGanhos}}" icon="bi-cash"></app-card-gastoseganhos>
+              <app-card-gastoseganhos titulo="Ganhos" mes="{{mes}}" valor="{{valorGanhos | formatBRL}}" icon="bi-cash"></app-card-gastoseganhos>
             </div>
             <div class="col gastos-card">
-              <app-card-gastoseganhos titulo="Gastos" mes="{{mes}}" valor="{{valorGastos}}"></app-card-gastoseganhos>
+              <app-card-gastoseganhos titulo="Gastos" mes="{{mes}}" valor="{{valorGastos | formatBRL}}"></app-card-gastoseganhos>
             </div>
           </div>
         </section>
