@@ -16,7 +16,7 @@
         <p class="numero">{{ numeroConta }}</p>
       </div>
     </div>
-    <div class="row">
+    <div class="row mb-3">
 
         <div class="col-5">
           <p class="titulo-pequeno">Total a pagar</p>
@@ -34,7 +34,12 @@
           </div>
         </div>
     </div>
-
+    <div class="row">
+      <div class="col-12">
+        <p *ngIf="mensagemSucesso" class="texto-valido">Transferência enviada!</p>
+        <p *ngIf="mensagemErro" class="texto-invalido-mensagem">Senha incorreta.</p>
+      </div>
+    </div>
 
   </div>
   <div class="modal-footer d-flex justify-content-between">

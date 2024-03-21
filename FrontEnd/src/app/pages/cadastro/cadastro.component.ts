@@ -12,7 +12,7 @@ import { idadeMinima } from './idade-minima-validator';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalCadastroComponent } from '../../components/modal-cadastro/modal-cadastro.component';
-import { ClienteService } from '../../services/cliente.service';
+import { AuthService } from '../../services/auth.service';
 import { Cadastro } from '../../../models/cadastro.model';
 
 @Component({
@@ -20,7 +20,7 @@ import { Cadastro } from '../../../models/cadastro.model';
     standalone: true,
     templateUrl: './cadastro.component.html',
     styleUrl: './cadastro.component.css',
-    providers: [provideNgxMask(), ClienteService],
+    providers: [provideNgxMask(), AuthService],
     imports: [RouterOutlet, HeaderVoltarComponent, FooterComponent, ReactiveFormsModule, FormularioEnderecoComponent, FormularioInfopessoaisComponent, CommonModule, FormularioSenhaComponent, NgxMaskDirective, HttpClientModule ]
 })
 export class CadastroComponent implements OnInit {
@@ -32,7 +32,7 @@ export class CadastroComponent implements OnInit {
   processando = false;
   cpfUtilizado: boolean = true;
 
-  constructor(private fb: FormBuilder, private router: Router, private clienteService: ClienteService) {   }
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {   }
 
   ngOnInit(): void {
     this.criarFormulario();
@@ -165,8 +165,7 @@ export class CadastroComponent implements OnInit {
     formValue.estadoCivil = Number(formValue.estadoCivil);
     formValue.genero = Number(formValue.genero);
 
-
-    this.clienteService.postCadastro(formValue as Cadastro).subscribe({
+    this.authService.postCadastro(formValue as Cadastro).subscribe({
       error: (error) => this.onErro(error),
       complete: () => this.onSucesso()
     });
@@ -183,6 +182,6 @@ export class CadastroComponent implements OnInit {
     this.mostrarMensagemSucesso = true;
     setTimeout(() => {
       this.router.navigate(['/login']);
-    }, 2000);
+    }, 1000);
   }
 }

@@ -8,6 +8,8 @@ using Runpay.API.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Runpay.API.Domains.DTOs.Responses;
+using Microsoft.AspNetCore.Identity.Data;
+using Runpay.API.Services;
 
 namespace TransacaoesController.Controllers
 {
@@ -27,23 +29,26 @@ namespace TransacaoesController.Controllers
 
         // Acessar histórico
         [Authorize]
-        [HttpGet("historico{id}")]
+        [HttpGet("historico/{id}")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status200OK)]
-        public IActionResult Historico(int id)
+        public IActionResult Historico(int id, [FromQuery] int limit = 4)
         {
             var conta = _dbcontext.Contas.First(c => c.Id == id);
 
-            var listaTransacoes = _dbcontext.Transacoes.Where(t => t.ContaId == conta.Id).ToList();
+            var listaTransacoes = _dbcontext.Transacoes
+                .Where(t => t.ContaId == conta.Id)
+                .OrderByDescending(t => t.CriadoEm)
+                .Take(limit)
+                .ToList();
 
-            var response = listaTransacoes.Select(t => _mapper.Map<TransacaoResponseDto>(t))
-                .OrderByDescending(t => t.DataOperacao);
+            var response = listaTransacoes.Select(t => _mapper.Map<TransacaoResponseDto>(t));
 
             return Ok(response);
         }
 
         // Realizar depósito
         [Authorize]
-        [HttpPost("deposito{id}")]
+        [HttpPost("deposito/{id}")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
         public IActionResult Deposito([FromBody] DepositoRequestDto request, int id)
@@ -76,7 +81,7 @@ namespace TransacaoesController.Controllers
 
         // Realizar saque
         [Authorize]
-        [HttpPost("saque{id}")]
+        [HttpPost("saque/{id}")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
         public IActionResult Saque([FromBody] SaqueRequestDto request, int id)
@@ -112,14 +117,20 @@ namespace TransacaoesController.Controllers
 
         // Realizar transferencia
         [Authorize]
-        [HttpPost("transferencia{id}")]
+        [HttpPost("transferencia/{id}")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
         public IActionResult Transferencia([FromBody] TransferenciaRequestDto request, int id)
         {
             var contaRemetente = _dbcontext.Contas.Include(c => c.Cliente).First(c => c.Id == id);
-
             var contaDestinatario = _dbcontext.Contas.Include(c => c.Cliente).FirstOrDefault(c => c.NumeroConta == request.ContaDestinatario);
+
+            var verificarSenha = CriptografiaService.VerificarSenha(request.Senha, contaRemetente?.SenhaHash ?? "");
+            if (contaRemetente == null || !verificarSenha)
+                return BadRequest(new { message = "Senha inválida" });
+
+            if(request.Valor > contaRemetente.Saldo) 
+                return BadRequest(new { message = "Saldo insuficiente" });
 
             // validacoes
             if (contaDestinatario == null)

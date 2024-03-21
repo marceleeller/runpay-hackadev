@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { FormatBRLPipe } from '../../pipes/currencyFormat.pipe';
 import { ClipboardModule } from '@angular/cdk/clipboard'
+import { ClienteService } from '../../services/cliente.service';
 
 @Component({
     selector: 'app-deposito',
@@ -21,7 +22,7 @@ export class DepositoComponent {
   codigoBoleto:string = '091254384920385943023423540912305940285940284059'
   textoBotao:string = 'Copiar código';
 
-  constructor(private fb: FormBuilder){
+  constructor(private fb: FormBuilder, private clienteService:ClienteService) {
     this.formatarVencimento();
   }
 
@@ -40,6 +41,11 @@ export class DepositoComponent {
     this.formularioDeposito = this.fb.group({
       valor: this.fb.control('', [Validators.required, Validators.min(20)]),
     })
+  }
+
+  onSubmit() {
+    this.clienteService.postDepositos(this.formularioDeposito.value).subscribe(res => {console.log('sucesso!')});
+    this.paginaExibida = false;
   }
 
   formatarVencimento() {

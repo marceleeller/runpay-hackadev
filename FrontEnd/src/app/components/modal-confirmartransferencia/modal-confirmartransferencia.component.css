@@ -12,6 +12,14 @@
   background-color: none;
 }
 
+.texto-invalido-mensagem, .texto-valido {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  font-size: 12px;
+  margin-bottom: 1rem;
+}
+
 .btn {
   width: 100px;
 }

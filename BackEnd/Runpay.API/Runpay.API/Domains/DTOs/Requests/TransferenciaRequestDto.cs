@@ -15,6 +15,9 @@ namespace DTOs.Requests
         [MaxLength(60, ErrorMessage = "O campo Mensagem deve ter no máximo 60 caracteres.")]
         public string? Mensagem { get; set; }
 
+        [Required]
+        public string Senha { get; set; } = null!;
 
-   }
+
+    }
 }

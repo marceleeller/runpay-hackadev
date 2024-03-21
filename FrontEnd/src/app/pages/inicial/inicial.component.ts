@@ -10,17 +10,21 @@ import { CommonModule } from '@angular/common';
 import { ModalSairComponent } from "../../components/modal-sair/modal-sair.component";
 import { CardGastoseganhosComponent } from "../../components/card-gastoseganhos/card-gastoseganhos.component";
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { HttpClient } from '@angular/common/http';
+import { ClienteService } from '../../services/cliente.service';
+import { FormatBRLPipe } from '../../pipes/currencyFormat.pipe';
 
 @Component({
     selector: 'app-inicial',
     standalone: true,
     templateUrl: './inicial.component.html',
     styleUrl: './inicial.component.css',
-    imports: [ComponentBotaoComponent, HeaderHomeComponent, FooterComponent, HeaderInicialComponent, CardtransacaoComponent, CommonModule, ModalSairComponent, CardGastoseganhosComponent]
+    imports: [ComponentBotaoComponent, HeaderHomeComponent, FooterComponent, HeaderInicialComponent, CardtransacaoComponent, CommonModule, ModalSairComponent, CardGastoseganhosComponent, FormatBRLPipe]
 })
 export class InicialComponent {
-  saldo: number = 32000;
-
+  saldo: number = 1000.00;
+  cliente:any;
+  listaTransacoes: any;
   transacoes: Transacao[] = [];
   transacoesExibidas: Transacao[] = [];
   totalTransacoesExibidas: number = 6;
@@ -32,7 +36,7 @@ export class InicialComponent {
   mostrarSaldo: boolean = true;
   icon:string = 'bi-eye-slash';
 
-  constructor(private transacaoService: TransacaoService, private breakpointObserver: BreakpointObserver) {
+  constructor(private transacaoService: TransacaoService, private breakpointObserver: BreakpointObserver, private http: HttpClient, private clienteService:ClienteService) {
     this.breakpointObserver.observe([
       "(max-width: 767px)"
     ]).subscribe((result: BreakpointState) => {
@@ -43,9 +47,12 @@ export class InicialComponent {
         this.mostrarPrimeirosBotoes = true;
       }
     });
+
+    this.clienteService.getCliente().subscribe(res => {
+      this.cliente = res.clienteParaRetornar;
+      this.saldo = this.cliente.conta.saldo;
+    });
   }
-
-
 
   ngOnInit(): void {
     this.carregarTransacoes();

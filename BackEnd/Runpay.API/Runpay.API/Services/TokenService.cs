@@ -18,7 +18,7 @@ public class TokenService
                 new Claim("ContaId", conta.Id.ToString()),
                 new Claim("NumeroConta", conta.NumeroConta.ToString()),
             }),
-            Expires = DateTime.UtcNow.AddMinutes(30),
+            Expires = DateTime.UtcNow.AddMinutes(15),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
 
@@ -26,10 +26,7 @@ public class TokenService
         var token = tokenHandler.CreateToken(tokenConfig);
         var tokenString = tokenHandler.WriteToken(token);
 
-        return new
-        {
-            token = tokenString
-        };
+        return tokenString;
 
     }
 }

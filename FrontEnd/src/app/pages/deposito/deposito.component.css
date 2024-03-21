@@ -81,3 +81,21 @@ p {
   border: none !important;
   box-shadow: none !important;
 }
+
+@media (max-width: 768px) {
+  .form-valor {
+    max-width: 500px;
+  }
+
+  .card-principal {
+    margin: 0 1.5rem;
+    padding: 2.5em 3em 2.5em;
+  }
+}
+
+@media (max-width: 576px) {
+  .form-valor {
+    max-width: 200px;
+    font-size: 38px;
+  }
+}

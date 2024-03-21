@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Runpay.API.Domain.Model;
@@ -23,11 +24,12 @@ public class ClienteController : ControllerBase
         _mapper = mapper;
     }
 
-    // retornar cliente por id
-    [HttpGet("{id}")]
+    // retornar cliente pelo Id
+    [HttpGet("cliente/{id}")]
+    [Authorize]
     [ProducesResponseType(typeof(ClienteResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult PegarPorId(int id)
+    public IActionResult GetCliente(int id)
     {
         var cliente = _dbcontext.Clientes.Include(c => c.Conta).FirstOrDefault(n => n.Id == id);
 
@@ -39,9 +41,28 @@ public class ClienteController : ControllerBase
         return Ok(new { clienteParaRetornar });
     }
 
-    //retorna se cpf ja foi cadastrado
+    //retorna se numeroConta existe
+    [HttpGet("conta/{numeroConta}")]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
+    public IActionResult GetConta(string numeroConta)
+    {
+        var conta = _dbcontext.Contas.Include(c => c.Cliente).FirstOrDefault(n => n.NumeroConta == numeroConta);
 
-    [HttpGet("cpf{cpf}")]
+        if (conta == null)
+            return NotFound(new { message = "Conta não encontrada" });
+
+        var contaParaRetornar = new
+        {
+            numeroConta = conta.NumeroConta,
+            nomeCliente = conta.Cliente.Nome
+        };
+
+        return Ok(new { contaParaRetornar });
+    }
+
+    //retorna se cpf ja foi cadastrado
+    [HttpGet("{cpf}")]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
     public IActionResult PegarPorCpf(string cpf)
@@ -81,7 +102,7 @@ public class ClienteController : ControllerBase
         var clienteParaRetornar = _mapper.Map<ClienteResponseDto>(clienteParaCadastro);
 
         return CreatedAtAction(
-        nameof(PegarPorId),
+        nameof(GetCliente),
         new { id = clienteParaCadastro.Id },
         new
         {
@@ -92,17 +113,18 @@ public class ClienteController : ControllerBase
     }
 
     // atualiza um cliente - não sei como fazer
-    [HttpPut("atualiza{id}")]
-    public IActionResult Atualizar(int id, ClienteRequestDto request)
+    [HttpPut("atualizar")]
+    [Authorize]
+    public IActionResult Atualizar(ClienteRequestDto request, int id)
     {
         var cliente = _dbcontext.Clientes.FirstOrDefault(n => n.Id == id);
-
 
         return Ok(new MessageResponse("Cliente atualizado com sucesso"));
     }
 
     // desativa um cliente
-    [HttpDelete("desativa{id}")]
+    [HttpDelete("desativar")]
+    [Authorize]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
     public IActionResult Desativar(int id)

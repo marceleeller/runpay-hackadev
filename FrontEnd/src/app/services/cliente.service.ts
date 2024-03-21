@@ -1,19 +1,39 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, first } from 'rxjs';
-import { Cadastro } from '../../models/cadastro.model';
+import { IdClienteService } from './id-cliente.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
 
-  constructor(private http: HttpClient) { }
+  private readonly url:string = 'https://localhost:7008/api/';
+  contaId:any;
 
-  private readonly url:string = 'https://localhost:7008/api/clientes/';
+  constructor(private idService:IdClienteService, private http: HttpClient) {
 
-  postCadastro(dados: Cadastro): Observable<any> {
-    return this.http.post<Cadastro>(`${this.url}cadastro`, dados).pipe(first());
+    this.idService.getContaId().subscribe(contaId => {
+      this.contaId = contaId;
+    });
   }
 
+  getCliente(){
+    return this.http.get<any>(`${this.url}clientes/cliente/${this.contaId}`);
+  }
+
+  getContaDestinatario(numeroConta:any){
+    return this.http.get<any>(`${this.url}clientes/conta/${numeroConta}`);
+  }
+
+  getTransacoes(){
+    return this.http.get<any>(`${this.url}/transacoes/historico/${this.contaId}`);
+  }
+
+  postDepositos(valor:any){
+    return this.http.post<any>(`${this.url}transacoes/deposito/${this.contaId}`, valor);
+  }
+
+  postTransferencias(valor:any){
+    return this.http.post<any>(`${this.url}transacoes/transferencia/${this.contaId}`, valor);
+  }
 }

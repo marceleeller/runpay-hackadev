@@ -17,11 +17,9 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent},
     { path: 'sobre', component: SobreComponent },
     { path: 'contato', component: ContatoComponent },
-    // { path: 'inicial',component: InicialComponent, canActivate:[autenticarGuard]},
-    { path: 'inicial',component: InicialComponent},
-    // { path: 'transacoes', component: HistoricoComponent, canActivate:[autenticarGuard] },
-    { path: 'transacoes', component: HistoricoComponent},
-    { path: 'transferencia', component: TransferenciaComponent},
-    { path: 'deposito', component: DepositoComponent},
+    { path: 'inicial',component: InicialComponent, canActivate:[autenticarGuard]},
+    { path: 'transacoes', component: HistoricoComponent, canActivate:[autenticarGuard] },
+    { path: 'transferencia', component: TransferenciaComponent, canActivate:[autenticarGuard] },
+    { path: 'deposito', component: DepositoComponent, canActivate:[autenticarGuard] },
     { path: '**', title:'Home Page', component: HomeComponent}
 ];

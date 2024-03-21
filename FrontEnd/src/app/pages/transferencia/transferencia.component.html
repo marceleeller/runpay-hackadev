@@ -20,7 +20,7 @@
         <div class="card-saldo">
           <p class="titulo-pequeno">Saldo disponível</p>
           <div class="saldo">
-            <p class="titulo">R$ {{ saldo }}</p>
+            <p class="titulo">{{ saldo | formatBRL }}</p>
           </div>
         </div>
       </div>
@@ -41,38 +41,41 @@
           <p>Para quem você deseja transferir?</p>
           <div>
             <div>
-              <label class="form-label" for="conta">Digite o número da conta</label>
+              <label class="form-label" for="contaDestinatario">Digite o número da conta</label>
               <input
                 type="text"
                 class="form-control mb-3"
-                formControlName="conta"
-                [mask]="'0000000-0'"
+                formControlName="contaDestinatario"
+                [mask]="'000000-0'"
               />
               <span
-                *ngIf="(getCampo('conta')?.dirty || getCampo('conta')?.touched) && getCampo('conta')?.hasError('required')"
+                *ngIf="(getCampo('contaDestinatario')?.dirty || getCampo('contaDestinatario')?.touched) && getCampo('contaDestinatario')?.hasError('required')"
                 class="texto-invalido"
                 >Conta destino é obrigatório.</span
               >
               <span
-                *ngIf="getCampo('conta')?.hasError('minlength')"
+                *ngIf="getCampo('contaDestinatario')?.hasError('minlength')"
                 class="texto-invalido"
-                >Conta deve conter 8 caracteres.</span
+                >Conta deve conter 7 caracteres.</span
               >
             </div>
 
 
-            <label class="form-label" for="descricao">Você pode adicionar uma descrição</label>
+            <label class="form-label" for="mensagem">Você pode adicionar uma descrição</label>
             <div class="input-group">
               <input
               type="text"
               class="form-control inputgroup"
-              formControlName="descricao"
+              formControlName="mensagem"
               maxlength="60"
             />
               <span class="input-group-text"><span>{{ getDescricaoLength() }}</span>/ 60</span>
             </div>
           </div>
-            <button class="btn btn-primary mt-3" (click)="abrirModalConfirmacao()" [disabled]="!validarContaEValor()">Confirmar</button>
+          </div>
+          <div class="d-flex flex-column justify-content-center mt-2">
+            <button class="btn btn-primary mt-3 flex-fill" (click)="abrirModalConfirmacao()" [disabled]="!validarContaEValor()">Confirmar</button>
+            <p *ngIf="mensagemErro" class="texto-invalido-mensagem text-center">Conta não encontrada</p>
           </div>
       </div>
     </form>
