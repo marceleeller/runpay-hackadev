@@ -1,16 +1,19 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../../services/auth.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-modal-sair',
   standalone: true,
-  imports: [],
+  imports: [ HttpClientModule],
   templateUrl: './modal-sair.component.html',
-  styleUrl: './modal-sair.component.css'
+  styleUrl: './modal-sair.component.css',
+  providers: [AuthService]
 })
 export class ModalSairComponent {
 
-  constructor(private routes: Router) { }
+  constructor(private routes: Router, private http: HttpClient, private authService: AuthService) { }
 
   activeModal = inject(NgbActiveModal);
 
@@ -19,9 +22,9 @@ export class ModalSairComponent {
   @Input() botaoSair:string = 'Sair';
   @Input() rota:string = 'home';
 
-  redirecionarPara() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('usuarioLogado');
+  logout() {
+    this.authService.logout();
+    this.activeModal.close('closed');
     this.routes.navigate([this.rota]);
   }
 }

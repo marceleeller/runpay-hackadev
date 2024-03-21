@@ -5,18 +5,20 @@ import { FooterComponent } from "../../components/footer/footer.component";
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { AuthService } from '../../services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
     selector: 'app-login',
     standalone: true,
     templateUrl: './login.component.html',
     styleUrl: './login.component.css',
-    providers: [provideNgxMask()],
-    imports: [HeaderVoltarComponent, FooterComponent, CommonModule, ReactiveFormsModule, NgxMaskDirective]
+    providers: [provideNgxMask(), AuthService],
+    imports: [HeaderVoltarComponent, FooterComponent, CommonModule, ReactiveFormsModule, NgxMaskDirective, HttpClientModule]
 })
 
 export class LoginComponent {
-    constructor(private rotas: Router) { }
+    constructor(private rotas: Router, private authService: AuthService) { }
 
     senhaExibida: boolean = false;
     icone:string = 'bi-eye'
@@ -43,33 +45,52 @@ export class LoginComponent {
     }
 
     senhaIncorreta : boolean = false;
-    // autenticar(): void {
-    //   const userList = JSON.parse(localStorage.getItem('userList') as string);
-    //   const email = this.formularioLogin.value.email;
-    //   const senha = this.formularioLogin.value.senha;
-    //   let userValido:any;
+    onLogin(): void {
+      if(this.formularioLogin.valid) {
 
-    //   userList.forEach((item:any) => {
-    //     if (item.email == email && item.senha == senha) {
-    //         userValido = {
-    //             nome: item.nome,
-    //             email: item.email,
-    //             senha: item.senha
-    //         }
-    //     }
-    //   });
+        console.log(this.formularioLogin.value);
+        this.authService.postLogin(this.formularioLogin.value).subscribe({
+          next: (response:any) => {
+            console.log(response);
+            this.mensagemSucesso = true;
+            this.mensagemErro = false;
+            this.authService.guardarToken(response.token);
+            setTimeout(() => { this.rotas.navigateByUrl('/inicial'); }, 1000);
+          },
+          error: (error:any) => {
+            console.log(error);
+            this.mensagemErro = true;
+            this.mensagemSucesso = false;
+          }
+        })
+      }
 
-    //   if (userValido == undefined) {
-    //     this.senhaIncorreta = true
-    //     this.rotas.navigateByUrl('/login');
-    //   } else {
-    //     let token = Math.random().toString(16).substring(2) + Math.random().toString(16).substring(2)
-    //     localStorage.setItem('token', token);
-    //     localStorage.setItem('usuarioLogado', JSON.stringify(userValido))
-    //     this.rotas.navigateByUrl('/inicial');
-    //   }
+      // const userList = JSON.parse(localStorage.getItem('userList') as string);
+      // const email = this.formularioLogin.value.email;
+      // const senha = this.formularioLogin.value.senha;
+      // let userValido:any;
 
-    // }
+      // userList.forEach((item:any) => {
+      //   if (item.email == email && item.senha == senha) {
+      //       userValido = {
+      //           nome: item.nome,
+      //           email: item.email,
+      //           senha: item.senha
+      //       }
+      //   }
+      // });
+
+      // if (userValido == undefined) {
+      //   this.senhaIncorreta = true
+      //   this.rotas.navigateByUrl('/login');
+      // } else {
+      //   let token = Math.random().toString(16).substring(2) + Math.random().toString(16).substring(2)
+      //   localStorage.setItem('token', token);
+      //   localStorage.setItem('usuarioLogado', JSON.stringify(userValido))
+      //   this.rotas.navigateByUrl('/inicial');
+      // }
+
+    }
 
     toggleSenhaExibida() {
       this.senhaExibida = !this.senhaExibida;

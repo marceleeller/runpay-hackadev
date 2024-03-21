@@ -21,10 +21,11 @@
           </div>
         </div>
       </form>
-
       <div class="d-flex">
-        <button class="btn btn-primary flex-fill mt-3" [disabled]="formularioDeposito.invalid" (click)="paginaExibida = !paginaExibida">Criar código</button>
+        <button type="submit" class="btn btn-primary flex-fill mt-3" (click)="onSubmit()" [disabled]="formularioDeposito.invalid">Criar código</button>
       </div>
+
+
     </div>
 
     <div *ngIf="!paginaExibida" class="card-principal d-flex flex-column justify-content-between">

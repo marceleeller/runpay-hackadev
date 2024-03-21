@@ -1,14 +1,14 @@
 import { CanActivateFn, Router } from '@angular/router';
+import { inject } from '@angular/core';
 
 export const autenticarGuard: CanActivateFn = (route, state) => {
+  const router = inject(Router);
 
-  const rota = new Router();
-
-  if(localStorage.getItem('token') == undefined) {
-    window.alert('Você precisa estar logado para acessar esta página.');
-    rota.navigateByUrl('/login');
+  if(!!localStorage.getItem('token')) {
+    return true;
+  } else {
+    alert('Você não tem permissão para acessar essa página');
+    router.navigate(['/login']);
     return false;
   }
-
-  return true
 };

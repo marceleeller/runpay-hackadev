@@ -3,7 +3,7 @@
 <main class="main_container d-flex flex-column align-items-center px-4 mt-3 mb-4">
 
   <div class="formulario">
-    <form class="d-flex flex-column justify-content-center" [formGroup]="formularioLogin">
+    <form class="d-flex flex-column justify-content-center" [formGroup]="formularioLogin" (ngSubmit)="onLogin()">
       <h2 class="text-center">Olá de novo!</h2>
       <p class="text-center">
         Ainda não tem uma conta na RunPay?
@@ -15,7 +15,7 @@
         >
       </p>
       <div>
-        <p *ngIf="mensagemSucesso" class="texto-valido text-center">Conta criada com sucesso!</p>
+        <p *ngIf="mensagemSucesso" class="texto-valido text-center">Sucesso! Seja bem vindo.</p>
         <p *ngIf="mensagemErro" class="texto-invalido-mensagem text-center">CPF ou senha incorretos.</p>
         <div>
           <label class="form-label" for="cpf">Insira seu CPF</label>

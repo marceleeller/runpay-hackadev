@@ -24,6 +24,8 @@ public class LoginController : Controller
 
     // Logar um usuário
     [HttpPost]
+    [ProducesResponseType(typeof(LoginResponseDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
     public IActionResult Logar(LoginRequestDto loginrequest)
     {
         var contaParaLogar = _dbcontext.Contas.Include(c => c.Cliente)
@@ -37,10 +39,16 @@ public class LoginController : Controller
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
         var clienteParaRetornar = _mapper.Map<ClienteResponseDto>(contaParaLogar.Cliente);
+        var tokenARetornar = TokenService.GenerateToken(contaParaLogar).ToString();
 
-        var token = TokenService.GenerateToken(contaParaLogar);
+        var response = new LoginResponseDto
+        {
+            Mensagem = new MessageResponse("Logado com sucesso"),
+            Cliente = clienteParaRetornar,
+            Token = tokenARetornar
+        };
 
-        return Ok(token);
+        return Ok(response);
     }
 
 

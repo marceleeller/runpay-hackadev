@@ -60,6 +60,14 @@ p {
   margin-top: -1rem;
 }
 
+.texto-invalido-mensagem {
+  font-weight: 300;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  margin-top:4.8rem;
+}
+
 .card-conta .titulo-pequeno, .card-saldo .titulo-pequeno {
   padding-bottom: .6rem;
 }
