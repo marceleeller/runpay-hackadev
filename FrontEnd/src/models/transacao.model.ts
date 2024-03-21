@@ -1,8 +1,14 @@
+export enum TipoTransacao {
+  Deposito,
+  Saque,
+  Transferencia,
+  Pagamento
+}
 export interface Transacao {
     id: number;
-    nome: string;
-    data: Date;
-    tipo: 'Pagamento' | 'Transferência';
+    descricao:string;
+    dataOperacao: string;
+    tipoTransacao: TipoTransacao;
     valor: number;
-    dataFormatada?: string;
+    dataFormatada:string;
   }

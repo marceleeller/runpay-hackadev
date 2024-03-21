@@ -6,13 +6,14 @@
 <main class="main_container">
   <section class="section_filtro d-flex justify-content-center gap-3">
     <div class="select-pesquisa">
-      <select class="form-select select-arrow" [(ngModel)]="valorSelecionado" (change)="onFiltroAlterado()">
-        <option *ngFor="let opcao of opcoes" [value]="opcao.value">{{ opcao.display }}</option>
+
+      <select class="form-select select-arrow" [(ngModel)]="valorSelecionado" (change)="onFiltroAlterado()" >
+        <option *ngFor="let opcao of opcoes" [value]="opcao.value" >{{ opcao.display }}</option>
       </select>
     </div>
 
     <div class="input-group mb-3">
-      <input type="search" (input)="onMudancaPesquisa()" #tipoTransacaoInput class="input-pesquisa form-control" placeholder="Pesquisar" [(ngModel)]="searchText" />
+      <input type="search" #tipoTransacaoInput class="input-pesquisa form-control" placeholder="Pesquisar" [(ngModel)]="searchText"  (input)="onMudancaPesquisa()"/>
       <span class="input-group-text bi bi-search" id="basic-addon2">
       </span>
     </div>
@@ -30,6 +31,7 @@
       <div *ngIf="todasTransacoesExibidas" class="transacoes-exibidas">
         <p>Todas as transações foram exibidas.</p>
       </div>
+
       <button
         class="btn btn-primary btn-block"
         *ngIf="!todasTransacoesExibidas"

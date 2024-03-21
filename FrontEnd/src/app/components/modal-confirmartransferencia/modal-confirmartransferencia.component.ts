@@ -24,7 +24,7 @@ export class ModalConfirmartransferenciaComponent {
   @Input() numeroConta:string = '';
   @Input() valorTransferencia:string = '';
 
-  constructor(private clienteService:ClienteService, private rotas:Router){
+  constructor(private clienteService:ClienteService, private router:Router){
   }
   // get
   getCampo(nomeCampo: string) {
@@ -36,7 +36,12 @@ export class ModalConfirmartransferenciaComponent {
       next: () => {
         this.mensagemErro = false;
         this.mensagemSucesso = true;
-        setTimeout(() => { this.formularioTransferencia.reset(); this.activeModal.close();  }, 1000);
+        setTimeout(() => {
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['transferencia']);
+          });
+          this.activeModal.close();
+        }, 1000);
       },
       error: () => {
         this.mensagemSucesso = false;

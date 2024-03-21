@@ -2,11 +2,11 @@ import { Component, HostBinding, OnInit } from '@angular/core';
 import { Transacao } from '../../../models/transacao.model';
 import { CommonModule } from '@angular/common';
 import { CardtransacaoComponent } from '../../components/cardtransacao/cardtransacao.component';
-import { TransacaoService } from '../../services/transacao.service';
 import { HeaderVoltarComponent } from '../../components/header-voltar/header-voltar.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from '../../pipes/filter.pipe';
+import { ClienteService } from '../../services/cliente.service';
 
 @Component({
   selector: 'app-historico',
@@ -23,7 +23,7 @@ import { FilterPipe } from '../../pipes/filter.pipe';
   ],
 })
 
-export class HistoricoComponent implements OnInit {
+export class HistoricoComponent {
 
   @HostBinding('class')
   scrollClass = 'disable-scroll';
@@ -41,45 +41,22 @@ export class HistoricoComponent implements OnInit {
 
   opcoes: Array<any> = [];
 
-  constructor(private transacaoService: TransacaoService) {  }
+  constructor(private clienteService:ClienteService) { }
 
   ngOnInit(): void {
-    this.transacoes = this.transacaoService.carregarTransacoes();
-    this.transacoesFiltradas = this.transacoes.filter(transacao =>
-    this.isDataRecente(transacao.data, 30));
+    this.clienteService.getTransacoes().subscribe(res => {
+      this.transacoes = res.map((transacao: { dataOperacao: string | number | Date; }) => ({
+        ...transacao,
+        dataOperacao: new Date(transacao.dataOperacao)
+      }));
 
-    this.carregarTransacoes();
-    this.criarOpcoesSeletor()
-  }
+      this.transacoesFiltradas = this.transacoes.filter(transacao =>
+        this.isDataRecente(new Date(transacao.dataOperacao), 30));
 
-  criarOpcoesSeletor() {
-      const hoje = new Date();
-      const mesAtual = hoje.getMonth();
-      const mesesAnoAnterior = Math.abs(mesAtual-11);
-      let cont = mesAtual;
-      this.opcoes.push({
-        value: 'Últimos 30 dias',
-        display: 'Últimos 30 dias'
-      });
-      const nomeMeses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-        for (let i = cont-1; i >= 0; i--) {
-          this.opcoes.push({
-            value: nomeMeses[i],
-            display: nomeMeses[i]
-          });
-          cont--;
-        }
-        for(let i = 11; i > 11 - mesesAnoAnterior; i--) {
-          this.opcoes.push({
-            value: nomeMeses[i],
-            display: nomeMeses[i]
-          });
-        }
-        this.opcoes.push({
-          value: 'Todas transações',
-          display: 'Todas transações'
-        });
-        return this.opcoes;
+      this.carregarTransacoes();
+    });
+
+    this.criarOpcoesSeletor();
   }
 
   carregarTransacoes() {
@@ -110,7 +87,6 @@ export class HistoricoComponent implements OnInit {
     this.imprimeValorSelecionado = this.valorSelecionado;
 
     this.alterarFiltro();
-
     this.carregarTransacoes();
   }
 
@@ -133,7 +109,7 @@ export class HistoricoComponent implements OnInit {
     switch (this.valorSelecionado) {
       case 'Últimos 30 dias':
         this.transacoesFiltradas = this.transacoes.filter(transacao =>
-          this.isDataRecente(transacao.data, 30));
+          this.isDataRecente(new Date(transacao.dataOperacao), 30));
         break;
       case 'Todas transações':
         this.transacoesFiltradas = this.transacoes;
@@ -141,7 +117,7 @@ export class HistoricoComponent implements OnInit {
       default:
         if (mapeamentoMeses[this.valorSelecionado] !== undefined) {
           this.transacoesFiltradas = this.transacoes.filter(transacao =>
-            transacao.data.getMonth() === mapeamentoMeses[this.valorSelecionado]);
+            new Date(transacao.dataOperacao).getMonth() === mapeamentoMeses[this.valorSelecionado]);
         }
         break;
     }
@@ -167,5 +143,35 @@ export class HistoricoComponent implements OnInit {
         this.imprimeValorSelecionado = this.valorSelecionado;
       }
   }
+
+  criarOpcoesSeletor() {
+    const hoje = new Date();
+    const mesAtual = hoje.getMonth();
+    const mesesAnoAnterior = Math.abs(mesAtual-11);
+    let cont = mesAtual;
+    this.opcoes.push({
+      value: 'Últimos 30 dias',
+      display: 'Últimos 30 dias'
+    });
+    const nomeMeses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+      for (let i = cont-1; i >= 0; i--) {
+        this.opcoes.push({
+          value: nomeMeses[i],
+          display: nomeMeses[i]
+        });
+        cont--;
+      }
+      for(let i = 11; i > 11 - mesesAnoAnterior; i--) {
+        this.opcoes.push({
+          value: nomeMeses[i],
+          display: nomeMeses[i]
+        });
+      }
+      this.opcoes.push({
+        value: 'Todas transações',
+        display: 'Todas transações'
+      });
+      return this.opcoes;
+}
 
 }

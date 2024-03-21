@@ -1,28 +1,24 @@
 import { Component, Input } from '@angular/core';
 import { Transacao } from './../../../models/transacao.model';
 import { CommonModule, formatDate } from '@angular/common';
+import { TipoTransacaoPipe } from '../../pipes/tipotransacao.pipe';
+import { FormatBRLPipe } from '../../pipes/currencyFormat.pipe';
 
 @Component({
   selector: 'app-cardtransacao',
   standalone: true,
   templateUrl: './cardtransacao.component.html',
   styleUrls: ['./cardtransacao.component.css'],
-  imports: [CommonModule],
+  imports: [CommonModule, TipoTransacaoPipe, FormatBRLPipe],
 })
 export class CardtransacaoComponent {
   @Input() transacao: Transacao | undefined;
 
   ngOnInit(): void {
     if (this.transacao) {
-      this.transacao.dataFormatada = this.formatarData(this.transacao.data);
+      let data = new Date(this.transacao.dataOperacao);
+      this.transacao.dataFormatada = this.formatarData(data);
     }
-  }
-
-  formatarValor(valor: number | undefined): string {
-    if (valor === undefined) {
-      return '';
-    }
-    return valor.toFixed(2).replace('.', ',');
   }
 
   formatarData(data: Date): string {
@@ -50,4 +46,25 @@ export class CardtransacaoComponent {
       data1.getFullYear() === data2.getFullYear()
     );
   }
+
+  // cardtransacao.component.ts
+  getDescricaoPalavras(descricao: any): string {
+    const palavras = this.getDescricaoFormatada(descricao).split(' ');
+    if (palavras.length <= 3) {
+      return palavras.join(' ');
+    }
+    return `${palavras[0]} ${palavras[1]} ... ${palavras[palavras.length - 1]}`;
+  }
+
+  getDescricaoFormatada(descricao: any): string {
+    const palavras = descricao.toLowerCase().split(' ');
+    const palavrasCapitalizadas = palavras.map((palavra: string) => {
+      if (palavra === 'em') {
+        return palavra;
+      }
+      return palavra.charAt(0).toUpperCase() + palavra.slice(1);
+    });
+    return palavrasCapitalizadas.join(' ');
+  }
+
 }

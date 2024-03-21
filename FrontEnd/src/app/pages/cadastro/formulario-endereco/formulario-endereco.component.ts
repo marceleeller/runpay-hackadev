@@ -43,7 +43,6 @@ export class FormularioEnderecoComponent {
             this.valorErro = this.getCampo('cep')?.value;
             this.mensagemErro = 'CEP não encontrado.';
           } else {
-            console.log(data.logradouro);
             this.cadastroForm.patchValue({
               endereco: {
                 logradouro: data.logradouro,

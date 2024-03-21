@@ -8,3 +8,7 @@
 .bi:hover {
   cursor: pointer;
 }
+
+.input-group-text {
+  max-height: 37.6px;
+}

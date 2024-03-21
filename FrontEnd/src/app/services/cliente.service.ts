@@ -26,7 +26,7 @@ export class ClienteService {
   }
 
   getTransacoes(){
-    return this.http.get<any>(`${this.url}/transacoes/historico/${this.contaId}`);
+    return this.http.get<any>(`${this.url}transacoes/historico/${this.contaId}`);
   }
 
   postDepositos(valor:any){
