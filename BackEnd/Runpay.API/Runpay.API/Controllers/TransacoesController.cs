@@ -31,15 +31,11 @@ namespace TransacaoesController.Controllers
         [Authorize]
         [HttpGet("historico/{id}")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status200OK)]
-        public IActionResult Historico(int id, [FromQuery] int limit = 4)
+        public IActionResult Historico(int id)
         {
             var conta = _dbcontext.Contas.First(c => c.Id == id);
 
-            var listaTransacoes = _dbcontext.Transacoes
-                .Where(t => t.ContaId == conta.Id)
-                .OrderByDescending(t => t.CriadoEm)
-                .Take(limit)
-                .ToList();
+            var listaTransacoes = _dbcontext.Transacoes.Where(t => t.ContaId == conta.Id).ToList();
 
             var response = listaTransacoes.Select(t => _mapper.Map<TransacaoResponseDto>(t));
 

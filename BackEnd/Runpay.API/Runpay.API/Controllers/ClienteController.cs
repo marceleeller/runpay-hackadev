@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Runpay.API.Domain.Model;
 using Runpay.API.Domains.Context;
@@ -112,14 +113,33 @@ public class ClienteController : ControllerBase
     );
     }
 
-    // atualiza um cliente - não sei como fazer
+    // atualiza um cliente
     [HttpPut("atualizar")]
-    [Authorize]
-    public IActionResult Atualizar(ClienteRequestDto request, int id)
+    [ProducesResponseType(typeof(ClienteResponseDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
+    public IActionResult Atualizar(AtualizaClienteRequestDto request, int id)
     {
-        var cliente = _dbcontext.Clientes.FirstOrDefault(n => n.Id == id);
+        var cliente = _dbcontext.Clientes.Include(c => c.Endereco).AsNoTracking().FirstOrDefault(n => n.Id == id);
 
-        return Ok(new MessageResponse("Cliente atualizado com sucesso"));
+        if (cliente == null)
+            return NotFound(new { message = "Cliente não encontrado" });
+
+        _mapper.Map(request.Endereco, cliente.Endereco);
+        _mapper.Map(request, cliente);
+
+        cliente.AtualizadoEm = DateTime.Now;
+        cliente.Endereco.AtualizadoEm = DateTime.Now;
+
+        _dbcontext.Clientes.Update(cliente);
+        _dbcontext.SaveChanges();
+
+        var clienteParaRetornar = _mapper.Map<ClienteResponseDto>(cliente);
+
+        return Ok(new
+        {
+            message = new MessageResponse("Cliente atualizado com sucesso"),
+            cliente = clienteParaRetornar
+        });
     }
 
     // desativa um cliente
