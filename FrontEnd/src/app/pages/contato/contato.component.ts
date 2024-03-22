@@ -7,6 +7,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { ContatoService } from '../../services/contato.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Contato } from '../../../models/contato.model';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -20,10 +21,8 @@ import { Contato } from '../../../models/contato.model';
 export class ContatoComponent {
 
   processando = false;
-  mostrarMensagemSucesso = false;
-  mostrarMensagemErro = false;
 
-  constructor(private servico: ContatoService) { }
+  constructor(private servico: ContatoService, private toastr: ToastrService) { }
 
   formularioMensagem = new FormGroup({
     nome: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -50,26 +49,18 @@ export class ContatoComponent {
   }
 
   onFormSubmit() {
-    this.mostrarMensagemSucesso = false;
-    this.mostrarMensagemErro = false;
     this.processando = true;
 
     this.servico.criarFormularioContato(this.formularioMensagem.value as Contato).subscribe({
-      error: () => this.onErro(),
-      complete: () => this.onSucesso()});
+      error: () => {
+        this.toastr.error('Erro ao enviar mensagem!', '');
+        this.processando = false;
+      },
+      complete: () => {
+        this.formularioMensagem.reset();
+        this.toastr.success('Mensagem enviada com sucesso!', '');
+        this.processando = false;
+      }});
     }
-
-  onSucesso() {
-    setTimeout(() => {
-      this.formularioMensagem.reset();
-      this.processando = false;
-      this.mostrarMensagemSucesso = true;
-    }, 2000);
-  }
-
-  onErro() {
-    this.mostrarMensagemErro = true;
-    this.processando = false;
-  }
 
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Runpay.API.Domains.Context;
 using Runpay.API.Domains.DTOs.Requests;
+using Runpay.API.Domains.DTOs.Responses;
 using Runpay.API.Domains.Models;
 
 namespace Runpay.API.Controllers;
@@ -20,13 +21,14 @@ public class ContatoController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
     public IActionResult Registrar(ContatoRequestDto contatoRequest)
     {
         Contato contato = _mapper.Map<Contato>(contatoRequest);
 
         _dbcontext.Contatos.Add(contato);
         _dbcontext.SaveChanges();
-        return Ok(new { message = "Formulário de contato enviado!" });
+        return Ok(new MessageResponse("Formulário de contato enviado com sucesso"));
 
     }
 }

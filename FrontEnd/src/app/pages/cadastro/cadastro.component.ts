@@ -15,6 +15,7 @@ import { ModalCadastroComponent } from '../../components/modal-cadastro/modal-ca
 import { AuthService } from '../../services/auth.service';
 import { Cadastro } from '../../../models/cadastro.model';
 import { ClienteService } from '../../services/cliente.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-cadastro',
@@ -27,13 +28,13 @@ import { ClienteService } from '../../services/cliente.service';
 export class CadastroComponent implements OnInit {
 
   cadastroForm!: FormGroup;
-  formularioExibido = 'inicial';
+  formularioExibido = 'senha';
   mostrarMensagemSucesso: boolean = false;
   invalidUser: boolean = false;
   processando = false;
   cpfUtilizado: boolean = true;
 
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private clienteService:ClienteService) {   }
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private clienteService:ClienteService, private toastr: ToastrService) {   }
 
   ngOnInit(): void {
     this.criarFormulario();
@@ -126,9 +127,9 @@ export class CadastroComponent implements OnInit {
 
   validarCpf() {
     this.clienteService.getCpf(this.cadastroForm.get('cpf')?.value).subscribe({
-      error: () => this.invalidUser = true,
+      error: (error:any) => {
+        this.toastr.error('CPF já cadastrado', '')},
       complete:  () => {
-        this.invalidUser = false;
         this.mudarParaFormularioInfopessoais();
       }
     });
@@ -177,22 +178,18 @@ export class CadastroComponent implements OnInit {
     formValue.genero = Number(formValue.genero);
 
     this.authService.postCadastro(formValue as Cadastro).subscribe({
-      error: (error) => this.onErro(error),
-      complete: () => this.onSucesso()
+      error: (error) => {
+        this.processando = false;
+        this.toastr.error('Erro ao cadastrar', '')
+      },
+      complete: () => {
+        this.toastr.success('Cadastro realizado com sucesso', '')
+        this.processando = false,
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 1000);
+      }
     });
   }
 
-  onErro(error: any) {
-    this.invalidUser = true;
-    this.processando = false;
-    console.log(error)
-  }
-
-  onSucesso() {
-    this.invalidUser = false;
-    this.mostrarMensagemSucesso = true;
-    setTimeout(() => {
-      this.router.navigate(['/login']);
-    }, 1000);
-  }
 }

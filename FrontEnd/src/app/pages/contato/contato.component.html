@@ -93,8 +93,6 @@
           <button type="submit"
           class="btn btn-primary"
           [disabled]="formularioMensagem.invalid">{{ processando ? "Enviando..." : "Enviar" }}</button>
-          <p *ngIf="mostrarMensagemSucesso" class="texto-valido">Mensagem enviada!</p>
-          <p *ngIf="mostrarMensagemErro" class="texto-invalido-mensagem">Erro no envio da mensagem.</p>
         </div>
       </form>
 

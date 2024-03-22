@@ -5,6 +5,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormatBRLPipe } from '../../pipes/currencyFormat.pipe';
 import { ClienteService } from '../../services/cliente.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-modal-confirmartransferencia',
@@ -17,14 +18,12 @@ export class ModalConfirmartransferenciaComponent {
   @Input({ required: true}) formularioTransferencia!: FormGroup;
 
   activeModal = inject(NgbActiveModal);
-  mensagemErro:boolean = false;
-  mensagemSucesso:boolean = false;
 
   @Input() nomeConta:string = '';
   @Input() numeroConta:string = '';
   @Input() valorTransferencia:string = '';
 
-  constructor(private clienteService:ClienteService, private router:Router){
+  constructor(private clienteService:ClienteService, private router:Router, private toastr:ToastrService){
   }
   // get
   getCampo(nomeCampo: string) {
@@ -34,8 +33,7 @@ export class ModalConfirmartransferenciaComponent {
   transferir() {
     this.clienteService.postTransferencias(this.formularioTransferencia.value).subscribe({
       next: () => {
-        this.mensagemErro = false;
-        this.mensagemSucesso = true;
+        this.toastr.success('Transferência realizada!', '');
         setTimeout(() => {
           this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
             this.router.navigate(['transferencia']);
@@ -44,8 +42,7 @@ export class ModalConfirmartransferenciaComponent {
         }, 1000);
       },
       error: () => {
-        this.mensagemSucesso = false;
-        this.mensagemErro = true;
+        this.toastr.error('Senha incorreta', '');
       }
     });
 

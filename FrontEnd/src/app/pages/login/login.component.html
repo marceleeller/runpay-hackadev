@@ -15,8 +15,6 @@
         >
       </p>
       <div>
-        <p *ngIf="mensagemSucesso" class="texto-valido text-center">Sucesso! Seja bem vindo.</p>
-        <p *ngIf="mensagemErro" class="texto-invalido-mensagem text-center">CPF ou senha incorretos.</p>
         <div>
           <label class="form-label" for="cpf">Insira seu CPF</label>
           <input
@@ -57,7 +55,7 @@
 
         <button type="submit"
         class="btn btn-primary mt-5"
-        [disabled]="formularioLogin.invalid">
+        [disabled]="formularioLogin.invalid || processando">
         Entrar
         </button>
       </div>

@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { ClienteService } from '../../services/cliente.service';
 import { FormatBRLPipe } from '../../pipes/currencyFormat.pipe';
 import { on } from 'events';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-transferencia',
@@ -25,9 +26,8 @@ cliente:any;
 numeroConta:any;
 saldo:string = '';
 formularioTransferencia!: FormGroup;
-mensagemErro: boolean = false;
 
-constructor(private fb: FormBuilder, private clienteService:ClienteService){
+constructor(private fb: FormBuilder, private clienteService:ClienteService, private toastr: ToastrService){
   this.clienteService.getCliente().subscribe(res => {
     this.cliente = res.clienteParaRetornar;
     this.saldo = this.cliente.conta.saldo;
@@ -71,20 +71,14 @@ abrirModalConfirmacao() {
   this.clienteService.getContaDestinatario(this.formularioTransferencia.get('contaDestinatario')?.value).subscribe({
     next: (res) => {
       var nomeConta = res.contaParaRetornar.nomeCliente.replace(/\b\w/g, (l: string) => l.toUpperCase());
-      this.mensagemErro = false;
       const modalRef = this.modalService.open(ModalConfirmartransferenciaComponent);
       modalRef.componentInstance.nomeConta = nomeConta;
       modalRef.componentInstance.formularioTransferencia = this.formularioTransferencia;
       modalRef.componentInstance.numeroConta = this.formularioTransferencia.get('contaDestinatario')?.value;
       modalRef.componentInstance.valorTransferencia = this.formularioTransferencia.get('valor')?.value;
     },
-    error: (error) => this.onErro(error)
+    error: () => { this.toastr.error('Conta não encontrada', '');}
   });
-}
-
-onErro(error: any) {
-  this.mensagemErro = true;
-  console.log(error)
 }
 
 validarContaEValor() {

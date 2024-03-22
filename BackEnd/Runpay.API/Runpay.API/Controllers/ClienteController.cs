@@ -35,13 +35,13 @@ public class ClienteController : ControllerBase
     [HttpGet("cliente/{id}")]
     [Authorize]
     [ProducesResponseType(typeof(ClienteResponseDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
     public IActionResult GetCliente(int id)
     {
         var cliente = _dbcontext.Clientes.Include(c => c.Conta).FirstOrDefault(n => n.Id == id);
 
         if (cliente == null)
-            return NotFound(new { message = "Cliente não encontrado" });
+            return NotFound(new MessageResponse("Cliente não encontrado")); ;
 
         var clienteParaRetornar = _mapper.Map<ClienteResponseDto>(cliente);
 
@@ -57,10 +57,10 @@ public class ClienteController : ControllerBase
         var clienteExiste = _dbcontext.Clientes.Any(c => c.Cpf == novoCliente.Cpf);
 
         if(clienteExiste)
-            return BadRequest(new {message = "Cliente já cadastrado"});
+            return BadRequest(new MessageResponse("Cliente já cadastrado"));
 
         if (novoCliente.Conta.Senha != novoCliente.Conta.ConfirmarSenha)
-            return BadRequest(new { message = "As senhas não conferem" });
+            return BadRequest(new MessageResponse("As senhas não conferem"));
 
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -87,13 +87,13 @@ public class ClienteController : ControllerBase
     // atualiza um cliente
     [HttpPut("atualizar")]
     [ProducesResponseType(typeof(ClienteResponseDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
     public IActionResult Atualizar(AtualizaClienteRequestDto request, int id)
     {
         var cliente = _dbcontext.Clientes.Include(c => c.Endereco).AsNoTracking().FirstOrDefault(n => n.Id == id);
 
         if (cliente == null)
-            return NotFound(new { message = "Cliente não encontrado" });
+            return NotFound(new MessageResponse("Cliente não encontrado"));
 
         _mapper.Map(request.Endereco, cliente.Endereco);
         _mapper.Map(request, cliente);
@@ -118,12 +118,16 @@ public class ClienteController : ControllerBase
     [Authorize]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
     public IActionResult Desativar(int id)
     {
         var cliente = _dbcontext.Clientes.Include(c => c.Conta).FirstOrDefault(n => n.Id == id);
 
         if (cliente == null)
-            return NotFound(new { message = "Cliente não encontrado" });
+            return NotFound(new MessageResponse("Cliente não encontrado"));
+
+        if (cliente.Conta.Saldo > 0)
+            return BadRequest(new MessageResponse("Cliente possui saldo em conta, não é possível desativar"));
 
         cliente.Conta.StatusContaAtiva = false;
         cliente.Conta.AtualizadoEm = DateTime.Now;
