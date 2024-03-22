@@ -31,21 +31,27 @@ public class LoginController : Controller
         var contaParaLogar = _dbcontext.Contas.Include(c => c.Cliente)
             .FirstOrDefault(c => c.Cliente.Cpf == loginrequest.Cpf);
 
+        if (contaParaLogar == null)
+            return BadRequest(new MessageResponse("CPF ou senha inválidos"));
+
         var verificarSenha = CriptografiaService.VerificarSenha(loginrequest.Senha, contaParaLogar?.SenhaHash ?? "");
 
-        if (contaParaLogar == null || !verificarSenha)
-            return BadRequest(new { message = "CPF ou senha inválidos" });
+        if (!verificarSenha)
+            return BadRequest(new MessageResponse("CPF ou senha inválidos"));
+
+        if (contaParaLogar?.StatusContaAtiva == false)
+            return BadRequest(new MessageResponse("Conta desativada"));
 
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
-        var clienteParaRetornar = _mapper.Map<ClienteResponseDto>(contaParaLogar.Cliente);
-        var tokenARetornar = TokenService.GenerateToken(contaParaLogar).ToString();
+        var clienteParaRetornar = _mapper.Map<ClienteResponseDto>(contaParaLogar?.Cliente);
+        var tokenARetornar = TokenService.GenerateToken(contaParaLogar!).ToString();
 
         var response = new LoginResponseDto
         {
             Mensagem = new MessageResponse("Logado com sucesso"),
             Cliente = clienteParaRetornar,
-            Token = tokenARetornar
+            Token = tokenARetornar!
         };
 
         return Ok(response);

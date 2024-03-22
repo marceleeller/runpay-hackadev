@@ -7,6 +7,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { AuthService } from '../../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-login',
@@ -18,12 +19,12 @@ import { HttpClientModule } from '@angular/common/http';
 })
 
 export class LoginComponent {
-    constructor(private rotas: Router, private authService: AuthService) { }
+
+    constructor(private rotas: Router, private authService: AuthService, private toastr: ToastrService) { }
 
     senhaExibida: boolean = false;
     icone:string = 'bi-eye'
-    mensagemErro:boolean = false;
-    mensagemSucesso:boolean = false;
+    processando: boolean = false;
 
     // navegação
     redirecionarParaCadastro() {
@@ -46,20 +47,17 @@ export class LoginComponent {
 
     senhaIncorreta : boolean = false;
     onLogin(): void {
+      this.processando = true;
       if(this.formularioLogin.valid) {
-
-        console.log(this.formularioLogin.value);
         this.authService.postLogin(this.formularioLogin.value).subscribe({
           next: (response:any) => {
-            this.mensagemSucesso = true;
-            this.mensagemErro = false;
+            this.toastr.success(response.mensagem.message, '');
             this.authService.guardarToken(response.token);
             setTimeout(() => { this.rotas.navigateByUrl('/inicial'); }, 1000);
           },
           error: (error:any) => {
-            console.log(error);
-            this.mensagemErro = true;
-            this.mensagemSucesso = false;
+            this.processando = false;
+            this.toastr.error(error.error.message, '');
           }
         })
       }

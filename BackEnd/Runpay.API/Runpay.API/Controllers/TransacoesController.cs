@@ -29,9 +29,13 @@ namespace TransacaoesController.Controllers
         [Authorize]
         [HttpGet("historico/{id}")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
         public IActionResult Historico(int id)
         {
             var conta = _dbcontext.Contas.First(c => c.Id == id);
+
+            if (conta == null)
+                return NotFound(new MessageResponse("Conta não encontrada"));
 
             var listaTransacoes = _dbcontext.Transacoes.Where(t => t.ContaId == conta.Id).ToList();
 
@@ -46,13 +50,16 @@ namespace TransacaoesController.Controllers
         [Authorize]
         [HttpPost("deposito/{id}")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
-        [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
         public IActionResult Deposito([FromBody] DepositoRequestDto request, int id)
         {
 
             var adicionaSaldo = _mapper.Map<Transacao>(request);
 
             var contaDeposito = _dbcontext.Contas.First(c => c.Id == id);
+
+            if (contaDeposito == null)
+                return NotFound(new MessageResponse("Conta não encontrada"));
 
             adicionaSaldo.ContaId = contaDeposito.Id;
             adicionaSaldo.Descricao = "Depósito em conta";
@@ -80,10 +87,14 @@ namespace TransacaoesController.Controllers
         [HttpPost("saque/{id}")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
         public IActionResult Saque([FromBody] SaqueRequestDto request, int id)
         {
             var saque = _mapper.Map<Transacao>(request);
             var contaSaque = _dbcontext.Contas.First(c => c.Id == id);
+
+            if (contaSaque == null)
+                return NotFound(new MessageResponse("Conta não encontrada"));
 
             if (contaSaque.Saldo < request.Valor)
             {
@@ -116,6 +127,7 @@ namespace TransacaoesController.Controllers
         [HttpPost("transferencia/{id}")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
         public IActionResult Transferencia([FromBody] TransferenciaRequestDto request, int id)
         {
             var contaRemetente = _dbcontext.Contas.Include(c => c.Cliente).First(c => c.Id == id);
@@ -130,7 +142,7 @@ namespace TransacaoesController.Controllers
 
             // validacoes
             if (contaDestinatario == null)
-                return BadRequest("Conta destinatária não encontrada.");
+                return NotFound("Conta destinatária não encontrada.");
 
             if (contaRemetente.Id == contaDestinatario.Id)
                 return BadRequest("Não é possível transferir para a mesma conta.");

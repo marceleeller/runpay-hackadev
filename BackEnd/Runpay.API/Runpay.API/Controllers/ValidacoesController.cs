@@ -22,7 +22,7 @@ public class ValidacoesController : ControllerBase
     //retorna se numeroConta existe
     [HttpGet("conta/{numeroConta}")]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
     public IActionResult GetConta(string numeroConta)
     {
         var conta = _dbcontext.Contas.Include(c => c.Cliente).FirstOrDefault(n => n.NumeroConta == numeroConta);
