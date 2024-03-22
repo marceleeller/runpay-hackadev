@@ -14,6 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalCadastroComponent } from '../../components/modal-cadastro/modal-cadastro.component';
 import { AuthService } from '../../services/auth.service';
 import { Cadastro } from '../../../models/cadastro.model';
+import { ClienteService } from '../../services/cliente.service';
 
 @Component({
     selector: 'app-cadastro',
@@ -32,7 +33,7 @@ export class CadastroComponent implements OnInit {
   processando = false;
   cpfUtilizado: boolean = true;
 
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {   }
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private clienteService:ClienteService) {   }
 
   ngOnInit(): void {
     this.criarFormulario();
@@ -123,13 +124,23 @@ export class CadastroComponent implements OnInit {
     }
   }
 
-  // navegação
-  mudarParaFormularioEndereco(){
-    this.formularioExibido = 'endereco';
+  validarCpf() {
+    this.clienteService.getCpf(this.cadastroForm.get('cpf')?.value).subscribe({
+      error: () => this.invalidUser = true,
+      complete:  () => {
+        this.invalidUser = false;
+        this.mudarParaFormularioInfopessoais();
+      }
+    });
   }
 
+  // navegação
   mudarParaFormularioInfopessoais(){
     this.formularioExibido = 'infopessoais';
+  }
+
+  mudarParaFormularioEndereco(){
+    this.formularioExibido = 'endereco';
   }
 
   mudarParaFormularioSenha(){

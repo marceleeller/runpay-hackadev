@@ -18,6 +18,7 @@
 
       <!-- Formulario cpf -->
       <div *ngIf="formularioExibido == 'inicial'" class="d-flex flex-column justify-content-center gap-5">
+        <p *ngIf="invalidUser" class="texto-invalido-mensagem text-center">CPF já utilizado.</p>
         <div>
           <label class="form-label" >Primeiro, insira seu CPF</label>
           <input type="text" class="form-control" formControlName="cpf" [mask]="'000.000.000-00'"/>
@@ -35,7 +36,7 @@
 
         <!-- termos e condicoes -->
         <div class="inicial d-flex flex-column justify-content-center align-items-center gap-3">
-          <button type="button" class="btn btn-primary" (click)="mudarParaFormularioInfopessoais()" [disabled]="getCampo('cpf')?.invalid">Continuar</button>
+          <button type="button" class="btn btn-primary" (click)="validarCpf()" [disabled]="getCampo('cpf')?.invalid">Continuar</button>
           <p class="texto-termosdeuso text-center">Ao se cadastrar, você aceita os nossos
             <a id="link_entrar" (click)="abrirModalTermos() " style="text-decoration: underline; font-weight: 700">Termos de Uso</a>
             e a nossa

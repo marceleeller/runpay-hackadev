@@ -25,8 +25,6 @@ namespace TransacaoesController.Controllers
             _mapper = mapper;
         }
 
-
-
         // Acessar histórico
         [Authorize]
         [HttpGet("historico/{id}")]
@@ -37,7 +35,9 @@ namespace TransacaoesController.Controllers
 
             var listaTransacoes = _dbcontext.Transacoes.Where(t => t.ContaId == conta.Id).ToList();
 
-            var response = listaTransacoes.Select(t => _mapper.Map<TransacaoResponseDto>(t));
+            var response = listaTransacoes
+                .Select(t => _mapper.Map<TransacaoResponseDto>(t))
+                .OrderByDescending(t => t.DataOperacao);
 
             return Ok(response);
         }
