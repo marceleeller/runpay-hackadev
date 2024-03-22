@@ -22,7 +22,11 @@ export class ClienteService {
   }
 
   getContaDestinatario(numeroConta:any){
-    return this.http.get<any>(`${this.url}clientes/conta/${numeroConta}`);
+    return this.http.get<any>(`${this.url}validacoes/conta/${numeroConta}`);
+  }
+
+  getCpf(cpf:any){
+    return this.http.get<any>(`${this.url}validacoes/${cpf}`);
   }
 
   getTransacoes(){

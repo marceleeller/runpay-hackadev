@@ -11,8 +11,9 @@ import { JwtHelperService } from '@auth0/angular-jwt'
 export class AuthService {
   private readonly url:string = 'https://localhost:7008/api/';
   private userPayload:any;
+  private isLocalStorageAvailable = typeof localStorage !== 'undefined';
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router){
     this.userPayload = this.decodedToken();
   }
 
@@ -38,9 +39,11 @@ export class AuthService {
   }
 
   decodedToken(){
-    const jwtHelper = new JwtHelperService();
-    const token = localStorage.getItem('token')!;
-    return jwtHelper.decodeToken(token);
+    if (this.isLocalStorageAvailable) {
+      const jwtHelper = new JwtHelperService();
+      const token = localStorage.getItem('token')!;
+      return jwtHelper.decodeToken(token);
+    }
   }
 
   getContaIdToken(){

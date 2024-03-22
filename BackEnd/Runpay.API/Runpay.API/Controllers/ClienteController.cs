@@ -25,7 +25,13 @@ public class ClienteController : ControllerBase
         _mapper = mapper;
     }
 
-    // retornar cliente pelo Id
+    /// <summary>
+    /// Retorna o cliente pelo id.
+    /// </summary>
+    /// <param name="id">Id do cliente</param>
+    /// <returns>O cliente pelo id</returns>
+    /// <response code="200">Retorna o cliente cadastrado com o id informado</response>
+    /// <response code="400">Cliente não encontrado</response>
     [HttpGet("cliente/{id}")]
     [Authorize]
     [ProducesResponseType(typeof(ClienteResponseDto), StatusCodes.Status200OK)]
@@ -41,41 +47,6 @@ public class ClienteController : ControllerBase
 
         return Ok(new { clienteParaRetornar });
     }
-
-    //retorna se numeroConta existe
-    [HttpGet("conta/{numeroConta}")]
-    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult GetConta(string numeroConta)
-    {
-        var conta = _dbcontext.Contas.Include(c => c.Cliente).FirstOrDefault(n => n.NumeroConta == numeroConta);
-
-        if (conta == null)
-            return NotFound(new { message = "Conta não encontrada" });
-
-        var contaParaRetornar = new
-        {
-            numeroConta = conta.NumeroConta,
-            nomeCliente = conta.Cliente.Nome
-        };
-
-        return Ok(new { contaParaRetornar });
-    }
-
-    //retorna se cpf ja foi cadastrado
-    [HttpGet("{cpf}")]
-    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult PegarPorCpf(string cpf)
-    {
-        var cliente = _dbcontext.Clientes.FirstOrDefault(n => n.Cpf == cpf);
-
-        if (cliente != null)
-            return BadRequest(new MessageResponse("Cliente já cadastrado"));
-
-        return Ok(new MessageResponse("CPF não utilizado"));
-    }
-
 
     // cadastra um novo cliente
     [HttpPost("cadastro")]
