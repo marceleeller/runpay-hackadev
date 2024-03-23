@@ -86,6 +86,9 @@ public class TransacoesService : ITransacoesService
         if (contaRemetente.Saldo < request.Valor)
             throw new Exception("Saldo insuficiente.");
 
+        if (!CriptografiaService.VerificarSenha(request.Senha, contaRemetente.SenhaHash))
+            throw new Exception("Senha inválida.");
+
         var transferenciaRemetente = new Transacao
         {
             ContaId = contaRemetente.Id,

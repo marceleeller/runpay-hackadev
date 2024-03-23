@@ -128,7 +128,7 @@ namespace TransacaoesController.Controllers
         {
             var contaIdClaim = User.FindFirst("ContaId");
             if (contaIdClaim == null)
-                return NotFound(new MessageResponse("Conta não encontrada"));
+                return NotFound("Conta não encontrada");
             var id = long.Parse(contaIdClaim.Value);
 
             try

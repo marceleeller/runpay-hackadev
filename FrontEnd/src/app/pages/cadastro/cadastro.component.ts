@@ -28,7 +28,7 @@ import { ToastrService } from 'ngx-toastr';
 export class CadastroComponent implements OnInit {
 
   cadastroForm!: FormGroup;
-  formularioExibido = 'senha';
+  formularioExibido = 'inicial';
   mostrarMensagemSucesso: boolean = false;
   invalidUser: boolean = false;
   processando = false;
@@ -128,6 +128,7 @@ export class CadastroComponent implements OnInit {
   validarCpf() {
     this.clienteService.getCpf(this.cadastroForm.get('cpf')?.value).subscribe({
       error: (error:any) => {
+        console.log(error);
         this.toastr.error('CPF já cadastrado', '')},
       complete:  () => {
         this.mudarParaFormularioInfopessoais();

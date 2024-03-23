@@ -10,34 +10,31 @@ export class ClienteService {
   private readonly url:string = 'https://localhost:7008/api/';
   contaId:any;
 
-  constructor(private idService:IdClienteService, private http: HttpClient) {
+  constructor(private http: HttpClient) {
 
-    this.idService.getContaId().subscribe(contaId => {
-      this.contaId = contaId;
-    });
   }
 
   getCliente(){
-    return this.http.get<any>(`${this.url}clientes/cliente/${this.contaId}`);
+    return this.http.get<any>(`${this.url}clientes`);
   }
 
   getContaDestinatario(numeroConta:any){
-    return this.http.get<any>(`${this.url}validacoes/conta/${numeroConta}`);
+    return this.http.get<any>(`${this.url}clientes/conta/${numeroConta}`);
   }
 
   getCpf(cpf:any){
-    return this.http.get<any>(`${this.url}validacoes/${cpf}`);
+    return this.http.get<any>(`${this.url}clientes/${cpf}`);
   }
 
   getTransacoes(){
-    return this.http.get<any>(`${this.url}transacoes/historico/${this.contaId}`);
+    return this.http.get<any>(`${this.url}transacoes/historico`);
   }
 
   postDepositos(valor:any){
-    return this.http.post<any>(`${this.url}transacoes/deposito/${this.contaId}`, valor);
+    return this.http.post<any>(`${this.url}transacoes/deposito`, valor);
   }
 
   postTransferencias(valor:any){
-    return this.http.post<any>(`${this.url}transacoes/transferencia/${this.contaId}`, valor);
+    return this.http.post<any>(`${this.url}transacoes/transferencia`, valor);
   }
 }

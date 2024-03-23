@@ -57,7 +57,7 @@ export class LoginComponent {
           },
           error: (error:any) => {
             this.processando = false;
-            this.toastr.error(error.error.message, '');
+            this.toastr.error(error.error, '');
           }
         })
       }
