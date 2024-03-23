@@ -19,7 +19,14 @@ public class ContatoController : ControllerBase
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Registrar novo formulário de contato.
+    /// </summary>
+    /// <param name="contatoRequest">Dados do formulário de contado</param>
+    /// <returns>Se o formulário for registrado com sucesso</returns>
+    /// <response code="200">Formulário de contato enviado!</response>
     [HttpPost]
+    [ProducesResponseType(200)]
     public IActionResult Registrar(ContatoRequestDto contatoRequest)
     {
         Contato contato = _mapper.Map<Contato>(contatoRequest);

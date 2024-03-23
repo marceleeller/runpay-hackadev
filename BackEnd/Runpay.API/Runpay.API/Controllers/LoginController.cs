@@ -22,7 +22,13 @@ public class LoginController : Controller
         _mapper = mapper;
     }
 
-    // Logar um usuário
+    /// <summary>
+    /// Logar um usuário.
+    /// </summary>
+    /// <param name="loginrequest">Os detalhes do login do usuário</param>
+    /// <returns></returns>
+    /// <response code="200">Logado com sucesso!</response>
+    /// <response code="400">CPF ou senha inválidos</response>
     [HttpPost]
     [ProducesResponseType(typeof(LoginResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
@@ -39,7 +45,7 @@ public class LoginController : Controller
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
         var clienteParaRetornar = _mapper.Map<ClienteResponseDto>(contaParaLogar.Cliente);
-        var tokenARetornar = TokenService.GenerateToken(contaParaLogar).ToString();
+        var tokenARetornar = TokenService.GenerateToken(contaParaLogar)?.ToString() ?? "Token inválido";
 
         var response = new LoginResponseDto
         {
@@ -50,6 +56,5 @@ public class LoginController : Controller
 
         return Ok(response);
     }
-
 
 }

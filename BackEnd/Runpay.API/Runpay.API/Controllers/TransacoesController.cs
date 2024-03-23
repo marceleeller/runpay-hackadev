@@ -25,13 +25,22 @@ namespace TransacaoesController.Controllers
             _mapper = mapper;
         }
 
-        // Acessar histórico
+        /// <summary>
+        /// Acessar histórico.
+        /// </summary>
+        /// <param name="id">Id da conta</param>
+        /// <returns>Retorna o histórico de transações da conta</returns>
+        /// <response code="200">Histórico de transações realizado com sucesso!</response>
+        /// <response code="404">Conta não encontrada.</response>
         [Authorize]
         [HttpGet("historico/{id}")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status404NotFound)]
         public IActionResult Historico(int id)
         {
             var conta = _dbcontext.Contas.First(c => c.Id == id);
+            if (conta == null)
+                return NotFound(new { message = "Conta não encontrada" });
 
             var listaTransacoes = _dbcontext.Transacoes.Where(t => t.ContaId == conta.Id).ToList();
 
@@ -42,7 +51,14 @@ namespace TransacaoesController.Controllers
             return Ok(response);
         }
 
-        // Realizar depósito
+        /// <summary>
+        /// Realizar depósito.
+        /// </summary>
+        /// <param name="request">Detalhes do depósito a ser realizado</param>
+        /// <param name="id">Id da conta na qual o depósito será feito</param>
+        /// <returns>Retorna detalhes da transação realizada</returns>
+        /// <response code="201">Depósito realizado com sucesso!</response>
+        /// <response code="400">Solicitação inválida. Os detalhes do depósito não estão corretos.</response>
         [Authorize]
         [HttpPost("deposito/{id}")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
@@ -75,7 +91,14 @@ namespace TransacaoesController.Controllers
             );
         }
 
-        // Realizar saque
+        /// <summary>
+        /// Realizar saque.
+        /// </summary>
+        /// <param name="request">Detalhes do saque a ser realizado</param>
+        /// <param name="id">Id da conta na qual o saque será realizado</param>
+        /// <returns>Retorna a transação de saque realizada</returns>
+        /// <response code="201">Saque realizado com sucesso!</response>
+        /// <response code="400">Saldo insuficiente.</response>
         [Authorize]
         [HttpPost("saque/{id}")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
@@ -111,7 +134,14 @@ namespace TransacaoesController.Controllers
             );
         }
 
-        // Realizar transferencia
+        /// <summary>
+        /// Realizar transferência.
+        /// </summary>
+        /// <param name="request">Detalhes da transferência a ser realizada</param>
+        /// <param name="id">Id da conta remetente</param>
+        /// <returns>Retorna a transação de transferência realizada</returns>
+        /// <response code="201">Transferência realizada com sucesso!</response>
+        /// <response code="400">Saldo insuficiente na conta remetente, senha inválida ou conta destinatária não encontrada.</response>
         [Authorize]
         [HttpPost("transferencia/{id}")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
@@ -125,7 +155,7 @@ namespace TransacaoesController.Controllers
             if (contaRemetente == null || !verificarSenha)
                 return BadRequest(new { message = "Senha inválida" });
 
-            if(request.Valor > contaRemetente.Saldo) 
+            if (request.Valor > contaRemetente.Saldo)
                 return BadRequest(new { message = "Saldo insuficiente" });
 
             // validacoes
@@ -135,7 +165,7 @@ namespace TransacaoesController.Controllers
             if (contaRemetente.Id == contaDestinatario.Id)
                 return BadRequest("Não é possível transferir para a mesma conta.");
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             if (contaRemetente.Saldo < request.Valor)
