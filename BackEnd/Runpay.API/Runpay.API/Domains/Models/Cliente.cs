@@ -1,4 +1,5 @@
-﻿using Runpay.API.Domain.Enums;
+﻿using Microsoft.AspNetCore.Identity;
+using Runpay.API.Domain.Enums;
 using Runpay.API.Domains.Models;
 using System.ComponentModel.DataAnnotations;
 
