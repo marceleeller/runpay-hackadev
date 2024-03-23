@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Runpay.API.Domains.DTOs.Responses;
 using Microsoft.AspNetCore.Identity.Data;
 using Runpay.API.Services;
+using Runpay.API.Services.Interfaces;
 
 namespace TransacaoesController.Controllers
 {
@@ -19,178 +20,136 @@ namespace TransacaoesController.Controllers
     {
         private readonly RunpayDbContext _dbcontext;
         private readonly IMapper _mapper;
-        public TransacoesController(RunpayDbContext dbcontext, IMapper mapper)
+        private readonly ITransacoesService _transacoesService;
+
+        public TransacoesController(RunpayDbContext dbcontext, IMapper mapper, ITransacoesService transacoesService)
         {
             _dbcontext = dbcontext;
             _mapper = mapper;
+            _transacoesService = transacoesService;
         }
 
         // Acessar histórico
         [Authorize]
-        [HttpGet("historico/{id}")]
+        [HttpGet("historico")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
-        public IActionResult Historico(int id)
+        public async Task<IActionResult> Historico()
         {
-            var conta = _dbcontext.Contas.First(c => c.Id == id);
+            var contaIdClaim = User.FindFirst("ContaId");
+            if (contaIdClaim == null) return NotFound("Conta não encontrada");
+            var id = long.Parse(contaIdClaim.Value);
 
-            if (conta == null)
-                return NotFound(new MessageResponse("Conta não encontrada"));
-
-            var listaTransacoes = _dbcontext.Transacoes.Where(t => t.ContaId == conta.Id).ToList();
-
-            var response = listaTransacoes
-                .Select(t => _mapper.Map<TransacaoResponseDto>(t))
-                .OrderByDescending(t => t.DataOperacao);
-
-            return Ok(response);
+            try
+            {
+                var response = await _transacoesService.GetHistorico(id);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // Realizar depósito
         [Authorize]
-        [HttpPost("deposito/{id}")]
+        [HttpPost("deposito")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
-        public IActionResult Deposito([FromBody] DepositoRequestDto request, int id)
+        public async Task<IActionResult> Deposito([FromBody] DepositoRequestDto request)
         {
-
-            var adicionaSaldo = _mapper.Map<Transacao>(request);
-
-            var contaDeposito = _dbcontext.Contas.First(c => c.Id == id);
-
-            if (contaDeposito == null)
+            var contaIdClaim = User.FindFirst("ContaId");
+            if (contaIdClaim == null)
                 return NotFound(new MessageResponse("Conta não encontrada"));
+            var id = long.Parse(contaIdClaim.Value);
 
-            adicionaSaldo.ContaId = contaDeposito.Id;
-            adicionaSaldo.Descricao = "Depósito em conta";
-            adicionaSaldo.TipoTransacao = ETipoTransacao.Deposito;
-            contaDeposito.Saldo += request.Valor;
+            try
+            {
+                var transacaoARetornar = await _transacoesService.Deposito(id, request);
 
-            _dbcontext.Transacoes.Add(adicionaSaldo);
-            _dbcontext.SaveChanges();
-
-            var transacaoARetornar = _mapper.Map<TransacaoResponseDto>(adicionaSaldo);
-
-            return CreatedAtAction(
-                nameof(Historico),
-                new { id = contaDeposito.Id },
-                new
-                {
-                    message = new MessageResponse("Depósito realizado com sucesso."),
-                    transacao = transacaoARetornar
-                }
-            );
+                return CreatedAtAction(
+                    nameof(Historico),
+                    new { id = id },
+                    new
+                    {
+                        message = new MessageResponse("Depósito realizado com sucesso."),
+                        transacao = transacaoARetornar
+                    }
+                );
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
 
         // Realizar saque
         [Authorize]
-        [HttpPost("saque/{id}")]
+        [HttpPost("saque")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
-        public IActionResult Saque([FromBody] SaqueRequestDto request, int id)
+        public async Task<IActionResult> Saque([FromBody] SaqueRequestDto request)
         {
-            var saque = _mapper.Map<Transacao>(request);
-            var contaSaque = _dbcontext.Contas.First(c => c.Id == id);
-
-            if (contaSaque == null)
+            var contaIdClaim = User.FindFirst("ContaId");
+            if (contaIdClaim == null)
                 return NotFound(new MessageResponse("Conta não encontrada"));
+            var id = long.Parse(contaIdClaim.Value);
 
-            if (contaSaque.Saldo < request.Valor)
+            try
             {
-                return BadRequest("Saldo insuficiente.");
+                var transacaoARetornar = await _transacoesService.Saque(id, request);
+
+                return CreatedAtAction(
+                    nameof(Historico),
+                    new { id = id },
+                    new
+                    {
+                        message = new MessageResponse("Saque realizado com sucesso."),
+                        transacao = transacaoARetornar
+                    }
+                );
             }
-
-            saque.ContaId = contaSaque.Id;
-            saque.Descricao = "Saque em conta";
-            saque.TipoTransacao = ETipoTransacao.Saque;
-            contaSaque.Saldo -= request.Valor;
-
-            _dbcontext.Transacoes.Add(saque);
-            _dbcontext.SaveChanges();
-
-            var transacaoARetornar = _mapper.Map<TransacaoResponseDto>(saque);
-
-            return CreatedAtAction(
-                nameof(Historico),
-                new { id = contaSaque.Id },
-                new
-                {
-                    message = new MessageResponse("Saque realizado com sucesso."),
-                    transacao = transacaoARetornar
-                }
-            );
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
 
         // Realizar transferencia
         [Authorize]
-        [HttpPost("transferencia/{id}")]
+        [HttpPost("transferencia")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
-        public IActionResult Transferencia([FromBody] TransferenciaRequestDto request, int id)
+        public async Task<IActionResult> Transferencia([FromBody] TransferenciaRequestDto request)
         {
-            var contaRemetente = _dbcontext.Contas.Include(c => c.Cliente).First(c => c.Id == id);
-            var contaDestinatario = _dbcontext.Contas.Include(c => c.Cliente).FirstOrDefault(c => c.NumeroConta == request.ContaDestinatario);
+            var contaIdClaim = User.FindFirst("ContaId");
+            if (contaIdClaim == null)
+                return NotFound(new MessageResponse("Conta não encontrada"));
+            var id = long.Parse(contaIdClaim.Value);
 
-            var verificarSenha = CriptografiaService.VerificarSenha(request.Senha, contaRemetente?.SenhaHash ?? "");
-            if (contaRemetente == null || !verificarSenha)
-                return BadRequest(new { message = "Senha inválida" });
-
-            if(request.Valor > contaRemetente.Saldo) 
-                return BadRequest(new { message = "Saldo insuficiente" });
-
-            // validacoes
-            if (contaDestinatario == null)
-                return NotFound("Conta destinatária não encontrada.");
-
-            if (contaRemetente.Id == contaDestinatario.Id)
-                return BadRequest("Não é possível transferir para a mesma conta.");
-
-            if(!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            if (contaRemetente.Saldo < request.Valor)
-                return BadRequest("Saldo insuficiente.");
-
-            // transferencia
-            var transferenciaRemetente = new Transacao
+            try
             {
-                ContaId = contaRemetente.Id,
-                Descricao = "Para " + contaDestinatario.Cliente.Nome,
-                Mensagem = request.Mensagem,
-                TipoTransacao = ETipoTransacao.Transferencia,
-                Valor = request.Valor
-            };
+                var transacaoARetornar = await _transacoesService.Transferencia(id, request);
 
-            var transferenciaDestinatario = new Transacao
+                return CreatedAtAction(
+                    nameof(Historico),
+                    new { id = id },
+                    new
+                    {
+                        message = new MessageResponse("Transferência realizada com sucesso."),
+                        transacao = transacaoARetornar
+                    }
+                );
+            }
+            catch (Exception ex)
             {
-                ContaId = contaDestinatario!.Id,
-                Descricao = "De " + contaRemetente.Cliente.Nome,
-                Mensagem = request.Mensagem,
-                TipoTransacao = ETipoTransacao.Transferencia,
-                Valor = request.Valor
-            };
-
-            contaRemetente.Saldo -= request.Valor;
-            contaDestinatario.Saldo += request.Valor;
-
-            _dbcontext.Transacoes.Add(transferenciaRemetente);
-            _dbcontext.Transacoes.Add(transferenciaDestinatario);
-
-            _dbcontext.SaveChanges();
-
-            var transacaoARetornar = _mapper.Map<TransacaoResponseDto>(transferenciaRemetente);
-
-            return CreatedAtAction(
-                nameof(Historico),
-                new { id = contaRemetente.Id },
-                new
-                {
-                    message = new MessageResponse("Depósito realizado com sucesso."),
-                    transacao = transacaoARetornar
-                }
-            );
+                return BadRequest(ex.Message);
+            }
         }
+
     }
 }

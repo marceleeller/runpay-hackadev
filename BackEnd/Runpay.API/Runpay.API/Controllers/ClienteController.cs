@@ -8,6 +8,8 @@ using Runpay.API.Domains.Context;
 using Runpay.API.Domains.DTOs.Requests;
 using Runpay.API.Domains.DTOs.Responses;
 using Runpay.API.Services;
+using Runpay.API.Services.Interfaces;
+using static Runpay.API.Services.ClienteService;
 
 
 namespace Runpay.API.Controllers;
@@ -18,11 +20,13 @@ public class ClienteController : ControllerBase
 {
     private readonly RunpayDbContext _dbcontext;
     private readonly IMapper _mapper;
+    private readonly IClienteService _clienteService;
 
-    public ClienteController(RunpayDbContext dbcontext, IMapper mapper)
+    public ClienteController(RunpayDbContext dbcontext, IMapper mapper, IClienteService clienteService)
     {
         _dbcontext = dbcontext;
         _mapper = mapper;
+        _clienteService = clienteService;
     }
 
     /// <summary>
@@ -32,85 +36,79 @@ public class ClienteController : ControllerBase
     /// <returns>O cliente pelo id</returns>
     /// <response code="200">Retorna o cliente cadastrado com o id informado</response>
     /// <response code="400">Cliente não encontrado</response>
-    [HttpGet("cliente/{id}")]
+    [HttpGet]
     [Authorize]
     [ProducesResponseType(typeof(ClienteResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
-    public IActionResult GetCliente(int id)
+    public async Task<IActionResult> GetCliente()
     {
-        var cliente = _dbcontext.Clientes.Include(c => c.Conta).FirstOrDefault(n => n.Id == id);
+        var contaIdClaim = User.FindFirst("ContaId");
+        if (contaIdClaim == null) return NotFound("Conta não encontrada");
+        var id = int.Parse(contaIdClaim.Value);
 
-        if (cliente == null)
-            return NotFound(new MessageResponse("Cliente não encontrado")); ;
-
-        var clienteParaRetornar = _mapper.Map<ClienteResponseDto>(cliente);
-
-        return Ok(new { clienteParaRetornar });
+        try
+        {
+            var clienteParaRetornar = await _clienteService.GetCliente(id);
+            return Ok(new { clienteParaRetornar });
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
     }
 
     // cadastra um novo cliente
     [HttpPost("cadastro")]
     [ProducesResponseType(typeof(ClienteResponseDto), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
-    public IActionResult Cadastrar(ClienteRequestDto novoCliente) {
+    public async Task<IActionResult> Cadastrar(ClienteRequestDto novoCliente)
+    {
 
-        var clienteExiste = _dbcontext.Clientes.Any(c => c.Cpf == novoCliente.Cpf);
-
-        if(clienteExiste)
-            return BadRequest(new MessageResponse("Cliente já cadastrado"));
-
-        if (novoCliente.Conta.Senha != novoCliente.Conta.ConfirmarSenha)
-            return BadRequest(new MessageResponse("As senhas não conferem"));
-
-        if (!ModelState.IsValid) return BadRequest(ModelState);
-
-        Cliente clienteParaCadastro = _mapper.Map<Cliente>(novoCliente);
-
-        clienteParaCadastro.Conta.NumeroConta = NumeroContaService.GerarNumeroConta(_dbcontext);
-
-        _dbcontext.Clientes.Add(clienteParaCadastro);
-        _dbcontext.SaveChanges();
-
-        var clienteParaRetornar = _mapper.Map<ClienteResponseDto>(clienteParaCadastro);
-
-        return CreatedAtAction(
-        nameof(GetCliente),
-        new { id = clienteParaCadastro.Id },
-        new
+        try
         {
-            message = new MessageResponse("Cliente cadastrado com sucesso"),
-            cliente = clienteParaRetornar
+            var clienteParaCadastro = await _clienteService.Cadastrar(novoCliente);
+            var clienteParaRetornar = _mapper.Map<ClienteResponseDto>(clienteParaCadastro);
+
+            return CreatedAtAction(
+                nameof(GetCliente),
+                new { id = clienteParaCadastro.Id },
+                new
+                {
+                    message = "Cliente cadastrado com sucesso",
+                    cliente = clienteParaRetornar
+                }
+            );
         }
-    );
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     // atualiza um cliente
     [HttpPut("atualizar")]
     [ProducesResponseType(typeof(ClienteResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
-    public IActionResult Atualizar(AtualizaClienteRequestDto request, int id)
+    public async Task<IActionResult> Atualizar(AtualizaClienteRequestDto request)
     {
-        var cliente = _dbcontext.Clientes.Include(c => c.Endereco).AsNoTracking().FirstOrDefault(n => n.Id == id);
 
-        if (cliente == null)
-            return NotFound(new MessageResponse("Cliente não encontrado"));
+        var contaIdClaim = User.FindFirst("ContaId");
+        if (contaIdClaim == null) return NotFound("Conta não encontrada");
+        var id = int.Parse(contaIdClaim.Value);
 
-        _mapper.Map(request.Endereco, cliente.Endereco);
-        _mapper.Map(request, cliente);
-
-        cliente.AtualizadoEm = DateTime.Now;
-        cliente.Endereco.AtualizadoEm = DateTime.Now;
-
-        _dbcontext.Clientes.Update(cliente);
-        _dbcontext.SaveChanges();
-
-        var clienteParaRetornar = _mapper.Map<ClienteResponseDto>(cliente);
-
-        return Ok(new
+        try
         {
-            message = new MessageResponse("Cliente atualizado com sucesso"),
-            cliente = clienteParaRetornar
-        });
+            var clienteParaRetornar = await _clienteService.Atualizar(request, id);
+            return Ok(new
+            {
+                message = ("Cliente atualizado com sucesso"),
+                cliente = clienteParaRetornar
+            });
+        }
+        catch (Exception ex)
+        {
+            return NotFound(ex.Message);
+        }
     }
 
     // desativa um cliente
@@ -119,23 +117,61 @@ public class ClienteController : ControllerBase
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
-    public IActionResult Desativar(int id)
+    public async Task<IActionResult> Desativar()
     {
-        var cliente = _dbcontext.Clientes.Include(c => c.Conta).FirstOrDefault(n => n.Id == id);
+        var contaIdClaim = User.FindFirst("ContaId");
+        if (contaIdClaim == null) return NotFound("Conta não encontrada");
+        var id = int.Parse(contaIdClaim.Value);
 
-        if (cliente == null)
-            return NotFound(new MessageResponse("Cliente não encontrado"));
+        try
+        {
+            var message = await _clienteService.Desativar(id);
+            return Ok(message);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (BadRequestException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 
-        if (cliente.Conta.Saldo > 0)
-            return BadRequest(new MessageResponse("Cliente possui saldo em conta, não é possível desativar"));
+    // validacoes
 
-        cliente.Conta.StatusContaAtiva = false;
-        cliente.Conta.AtualizadoEm = DateTime.Now;
+    //retorna se numeroConta existe
+    [HttpGet("conta/{numeroConta}")]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetConta(string numeroConta)
+    {
+        try
+        {
+            var contaParaRetornar = await _clienteService.GetConta(numeroConta);
+            return Ok(contaParaRetornar);
+        }
+        catch (NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
 
-        _dbcontext.Clientes.Update(cliente);
-        _dbcontext.SaveChanges();
-
-        return Ok(new MessageResponse("Cliente desativado com sucesso"));
+    //retorna se cpf ja foi cadastrado
+    [HttpGet("{cpf}")]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> PegarPorCpf(string cpf)
+    {
+        try
+        {
+            var message = await _clienteService.PegarPorCpf(cpf);
+            return Ok(message);
+        }
+        catch (BadRequestException ex)
+        {
+            return BadRequest(new MessageResponse(ex.Message));
+        }
     }
 
 }

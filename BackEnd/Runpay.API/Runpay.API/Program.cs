@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Runpay.API.Domain.Model;
 using Runpay.API.Domains.Context;
 using Runpay.API.Services;
+using Runpay.API.Services.Interfaces;
 using System.Reflection;
 using System.Text;
 
@@ -44,8 +47,8 @@ builder.Services.AddSwaggerGen( c =>
     });
 });
 
-
-var key = Encoding.ASCII.GetBytes(Key.Secret);
+var secret = builder.Configuration.GetSection("Secret").Value;
+var key = Encoding.ASCII.GetBytes(secret);
 
 builder.Services.AddAuthentication(x =>
 {
@@ -65,6 +68,11 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("EmployeeOnly", policy => policy.RequireClaim("EmployeeNumber"));
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(o => {
@@ -80,12 +88,17 @@ builder.Services.
 builder.Services.AddDbContext<RunpayDbContext>(options => {
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<ITransacoesService, TransacoesService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IClienteService, ClienteService>();
+
 
 var app = builder.Build();
 
 app.UseCors(policy =>
-    policy.WithOrigins("http://localhost:4200")
+    policy.AllowAnyOrigin()
           .AllowAnyHeader()
           .AllowAnyMethod());
 
@@ -99,6 +112,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
