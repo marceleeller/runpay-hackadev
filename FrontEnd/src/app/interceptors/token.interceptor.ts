@@ -21,7 +21,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
         localStorage.clear();
         router.navigate(['/login']);
       }
-      return throwError(() => new Error("Erro interno no servidor"));
+      return throwError(() => new Error(err.message));
     })
   );
 };

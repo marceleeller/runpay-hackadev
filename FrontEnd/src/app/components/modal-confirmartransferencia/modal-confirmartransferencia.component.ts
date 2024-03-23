@@ -34,12 +34,10 @@ export class ModalConfirmartransferenciaComponent {
     this.clienteService.postTransferencias(this.formularioTransferencia.value).subscribe({
       next: () => {
         this.toastr.success('Transferência realizada!', '');
-        setTimeout(() => {
           this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
             this.router.navigate(['transferencia']);
           });
           this.activeModal.close();
-        }, 1000);
       },
       error: () => {
         this.toastr.error('Senha incorreta', '');

@@ -70,14 +70,14 @@ getDescricaoLength() {
 abrirModalConfirmacao() {
   this.clienteService.getContaDestinatario(this.formularioTransferencia.get('contaDestinatario')?.value).subscribe({
     next: (res) => {
-      var nomeConta = res.contaParaRetornar.nomeCliente.replace(/\b\w/g, (l: string) => l.toUpperCase());
+      var nomeConta = res.nomeCliente.replace(/\b\w/g, (l: string) => l.toUpperCase());
       const modalRef = this.modalService.open(ModalConfirmartransferenciaComponent);
       modalRef.componentInstance.nomeConta = nomeConta;
       modalRef.componentInstance.formularioTransferencia = this.formularioTransferencia;
       modalRef.componentInstance.numeroConta = this.formularioTransferencia.get('contaDestinatario')?.value;
       modalRef.componentInstance.valorTransferencia = this.formularioTransferencia.get('valor')?.value;
     },
-    error: () => { this.toastr.error('Conta não encontrada', '');}
+    error: ( )=> { this.toastr.error('Conta não encontrada', ''); }
   });
 }
 
