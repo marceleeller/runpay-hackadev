@@ -8,6 +8,7 @@ using Runpay.API.Domains.DTOs.Requests;
 using Runpay.API.Domains.DTOs.Responses;
 using Runpay.API.Services;
 using Runpay.API.Services.Interfaces;
+using Runpay.API.Shared;
 
 namespace Runpay.API.Controllers;
 
@@ -47,11 +48,15 @@ public class LoginController : ControllerBase
         var response = await _authService.Logar(loginrequest);
         return Ok(response);
     }
-    catch (Exception ex)
-    {
-        return BadRequest(ex.Message);
+        catch (ExceptionsType.UnauthorizedException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
-}
 
 
 }

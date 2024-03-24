@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Runpay.API.Domains.Context;
 using Runpay.API.Domains.Models;
 using Runpay.API.Services.Interfaces;
+using Runpay.API.Shared;
 
 namespace Runpay.API.Services;
 
@@ -25,6 +26,10 @@ public class ContatoService : IContatoService
         await _dbcontext.SaveChangesAsync();
         return contato;
     }
+    public async Task<Contato> GetContato(int id)
+    {
+        return await _dbcontext.Contatos.FindAsync(id);
+    }
 
     public async Task<IEnumerable<Contato>> ListaContatos()
     {
@@ -35,24 +40,32 @@ public class ContatoService : IContatoService
 
     public async Task<IEnumerable<Contato>> ListaContatosNaoRespondidos()
     {
-
         var contatos = await _dbcontext.Contatos.ToListAsync();
         return contatos
             .Where(c => !c.EstaRespondido)
             .OrderByDescending(c => c.CriadoEm.UtcDateTime);
-
     }
 
     public async Task<Contato> ResponderContato(int id)
     {
         var contato = await _dbcontext.Contatos.FindAsync(id);
-        if (contato == null) throw new Exception("Contato não encontrado");
+        if (contato == null) throw new ExceptionsType.NotFoundException("Contato não encontrado");
         if (contato.EstaRespondido) throw new Exception("Contato já respondido");
 
         contato.EstaRespondido = true;
         contato.AtualizadoEm = DateTimeOffset.Now;
         await _dbcontext.SaveChangesAsync();
         return contato;
+    }
+
+    public async Task DeletarContato(int id)
+    {
+        var contato = await _dbcontext.Contatos.FindAsync(id);
+        if (contato != null)
+        {
+            _dbcontext.Contatos.Remove(contato);
+            await _dbcontext.SaveChangesAsync();
+        }
     }
 
 

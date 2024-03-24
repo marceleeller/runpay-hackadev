@@ -6,6 +6,7 @@ using Runpay.API.Domain.Enums;
 using Runpay.API.Domain.Model;
 using Runpay.API.Domains.Context;
 using Runpay.API.Services.Interfaces;
+using Runpay.API.Shared;
 
 namespace Runpay.API.Services;
 
@@ -26,7 +27,7 @@ public class TransacoesService : ITransacoesService
         var conta = await _dbcontext.Contas.FirstOrDefaultAsync(c => c.Id == contaId);
 
         if (conta == null)
-            throw new Exception("Conta não encontrada");
+            throw new ExceptionsType.NotFoundException("Conta não encontrada");
 
         var listaTransacoes = await _dbcontext.Transacoes.Where(t => t.ContaId == conta.Id).ToListAsync();
 
@@ -58,7 +59,7 @@ public class TransacoesService : ITransacoesService
         var contaSaque = await _dbcontext.Contas.FirstOrDefaultAsync(c => c.Id == contaId);
 
         if (contaSaque == null)
-            throw new Exception("Conta não encontrada");
+            throw new ExceptionsType.NotFoundException("Conta não encontrada");
 
         if (contaSaque.Saldo < request.Valor)
             throw new Exception("Saldo insuficiente.");
@@ -81,7 +82,7 @@ public class TransacoesService : ITransacoesService
         var contaDestinatario = await _dbcontext.Contas.Include(c => c.Cliente).FirstOrDefaultAsync(c => c.NumeroConta == request.ContaDestinatario);
 
         if (contaRemetente == null || contaDestinatario == null)
-            throw new Exception("Conta não encontrada");
+            throw new ExceptionsType.NotFoundException("Conta não encontrada");
 
         if (contaRemetente.Saldo < request.Valor)
             throw new Exception("Saldo insuficiente.");

@@ -10,6 +10,7 @@ public interface IClienteService
     Task<Cliente> Cadastrar(ClienteRequestDto novoCliente);
     Task<ClienteResponseDto> Atualizar(AtualizaClienteRequestDto request, int id);
     Task<MessageResponse> Desativar(int id);
+    Task<MessageResponse> Reativar(int id);
     Task<object> GetConta(string numeroConta);
     Task<MessageResponse> PegarPorCpf(string cpf);
 

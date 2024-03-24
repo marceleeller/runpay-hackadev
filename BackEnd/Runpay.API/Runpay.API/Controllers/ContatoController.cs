@@ -5,6 +5,7 @@ using Runpay.API.Domains.DTOs.Requests;
 using Runpay.API.Domains.DTOs.Responses;
 using Runpay.API.Domains.Models;
 using Runpay.API.Services.Interfaces;
+using Runpay.API.Shared;
 
 namespace Runpay.API.Controllers;
 
@@ -23,7 +24,7 @@ public class ContatoController : ControllerBase
         _contatoService = contatoService;
     }
     /// <summary>
-    /// Registra um novo contato.
+    /// Registra um novo formulário de contato.
     /// </summary>
     /// <param name="contatoRequest">Dados do contato a ser registrado</param>
     /// <returns>Resultado do registro</returns>
@@ -37,9 +38,11 @@ public class ContatoController : ControllerBase
         return Ok("Formulário de contato enviado com sucesso");
     }
 
-
-
-    // retorna lista de contatos
+    /// <summary>
+    /// Retorna lista de formulários de contato
+    /// </summary>
+    /// <returns>Lista de formulários de contato</returns>
+    /// <response code="200">Retorna o histórico de todos formulários de contato</response>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<Contato>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ListaContatos()
@@ -48,7 +51,43 @@ public class ContatoController : ControllerBase
         return Ok(contacts);
     }
 
-    // retorna lsita de contatos nao respondidos
+    /// <summary>
+    /// Retorna um formulário de contato pelo id.
+    /// </summary>
+    /// <param name="id">Id do formulário de contato a ser retornado</param>
+    /// <returns>Um formulário de contato pelo id</returns>
+    /// <response code="200">Retorna um formulário de contato pelo id</response>
+    /// <response code="404">Formulário de contato nao encontrado</response>
+    /// <response code="400">Ocorreu um erro ao processar a solicitação</response>
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(Contato), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetContato(int id)
+    {
+        try
+        {
+            var contato = await _contatoService.GetContato(id);
+            if (contato == null)
+                throw new ExceptionsType.NotFoundException("Formulário de contato não encontrado");
+
+            return Ok(contato);
+        }
+        catch (ExceptionsType.NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// Retorna lista de formulários de contato não respondidos
+    /// </summary>
+    /// <returns>Lista de formulários de contato não respondidos</returns>
+    /// <response code="200">Retorna o histórico de todos formulários de contato não respondidos</response>
     [HttpGet("nao-respondidos")]
     [ProducesResponseType(typeof(IEnumerable<Contato>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetNaoRespondidos()
@@ -57,16 +96,67 @@ public class ContatoController : ControllerBase
         return Ok(contatos);
     }
 
-    // responde um contato
-    [HttpPut("responder")]
+    /// <summary>
+    /// Atualiza o status de um formulário de contato para respondido.
+    /// </summary>
+    /// <param name="id">Id do formulário de contato a ser respondido</param>
+    /// <returns>Um formulário de contato pelo id</returns>
+    /// <response code="200">Marca um formulário como respondido</response>
+    /// <response code="404">Formulário de contato nao encontrado</response>
+    /// <response code="400">Formulário de contato já respondido</response>
+    [HttpPut("{id}")]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> MarcarComoRespondido(int id)
     {
-        var contato = await _contatoService.ResponderContato(id);
-        return Ok("Formulário respondido com sucesso!");
+        try
+        {
+            var contato = await _contatoService.ResponderContato(id);
+            return Ok("Formulário respondido com sucesso!");
+        }
+        catch (ExceptionsType.NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
 
+    /// <summary>
+    /// Deleta um formulário de contato.
+    /// </summary>
+    /// <param name="id">Id do formulário de contato a ser deletado</param>
+    /// <returns>Um formulário de contato pelo id</returns>
+    /// <response code="200">Formulário de contato deletado</response>
+    /// <response code="404">Formulário de contato nao encontrado</response>
+    /// <response code="400">Ocorreu um erro ao processar a solicitação</response>
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeletarContato(int id)
+    {
+        try
+        {
+            var contato = await _contatoService.GetContato(id);
+            if (contato == null)
+                throw new ExceptionsType.NotFoundException("Contato não encontrado");
+
+            await _contatoService.DeletarContato(id);
+            return Ok("Contato deletado com sucesso");
+        }
+        catch (ExceptionsType.NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 
 
 }

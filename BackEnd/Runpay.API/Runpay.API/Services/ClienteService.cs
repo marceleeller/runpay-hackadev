@@ -5,6 +5,7 @@ using Runpay.API.Domains.Context;
 using Runpay.API.Domains.DTOs.Requests;
 using Runpay.API.Domains.DTOs.Responses;
 using Runpay.API.Services.Interfaces;
+using Runpay.API.Shared;
 
 namespace Runpay.API.Services;
 
@@ -24,7 +25,7 @@ public class ClienteService : IClienteService
         var cliente = await _dbcontext.Clientes.Include(c => c.Conta).FirstOrDefaultAsync(n => n.Id == id);
 
         if (cliente == null)
-            throw new Exception("Cliente não encontrado");
+            throw new ExceptionsType.NotFoundException("Cliente não encontrado");
 
         return _mapper.Map<ClienteResponseDto>(cliente);
     }
@@ -54,7 +55,7 @@ public class ClienteService : IClienteService
         var cliente = await _dbcontext.Clientes.Include(c => c.Endereco).AsNoTracking().FirstOrDefaultAsync(n => n.Id == id);
 
         if (cliente == null)
-            throw new Exception("Cliente não encontrado");
+            throw new ExceptionsType.NotFoundException("Cliente não encontrado");
 
         _mapper.Map(request.Endereco, cliente.Endereco);
         _mapper.Map(request, cliente);
@@ -73,13 +74,17 @@ public class ClienteService : IClienteService
         var cliente = await _dbcontext.Clientes.Include(c => c.Conta).FirstOrDefaultAsync(n => n.Id == id);
 
         if (cliente == null)
-            throw new NotFoundException("Cliente não encontrado");
+            throw new ExceptionsType.NotFoundException("Cliente não encontrado");
+
+        if (cliente.Conta.StatusContaAtiva == false)
+            throw new Exception("Cliente já desativado");
 
         if (cliente.Conta.Saldo > 0)
-            throw new BadRequestException("Cliente possui saldo em conta, não é possível desativar");
+            throw new Exception("Cliente possui saldo em conta, não é possível desativar");
 
         cliente.Conta.StatusContaAtiva = false;
         cliente.Conta.AtualizadoEm = DateTime.Now;
+        cliente.Conta.ExcluidoEm = DateTime.Now;
 
         _dbcontext.Clientes.Update(cliente);
         await _dbcontext.SaveChangesAsync();
@@ -87,12 +92,31 @@ public class ClienteService : IClienteService
         return new MessageResponse("Cliente desativado com sucesso");
     }
 
+    public async Task<MessageResponse> Reativar(int id)
+    {
+        var cliente = await _dbcontext.Clientes.Include(c => c.Conta).FirstOrDefaultAsync(n => n.Id == id);
+
+        if (cliente == null)
+            throw new ExceptionsType.NotFoundException("Cliente não encontrado");
+
+        if (cliente.Conta.StatusContaAtiva == true)
+            throw new Exception("Cliente já está ativo");
+
+        cliente.Conta.StatusContaAtiva = true;
+        cliente.Conta.AtualizadoEm = DateTime.Now;
+
+        _dbcontext.Clientes.Update(cliente);
+        await _dbcontext.SaveChangesAsync();
+
+        return new MessageResponse("Cliente reativado com sucesso");
+    }
+
     public async Task<object> GetConta(string numeroConta)
     {
         var conta = await _dbcontext.Contas.Include(c => c.Cliente).FirstOrDefaultAsync(n => n.NumeroConta == numeroConta);
 
         if (conta == null)
-            throw new NotFoundException("Conta não encontrada");
+            throw new ExceptionsType.NotFoundException("Conta não encontrada");
 
         var contaParaRetornar = new
         {
@@ -108,24 +132,8 @@ public class ClienteService : IClienteService
         var cliente = await _dbcontext.Clientes.FirstOrDefaultAsync(n => n.Cpf == cpf);
 
         if (cliente != null)
-            throw new BadRequestException("Cliente já cadastrado");
+            throw new Exception("Cliente já cadastrado");
 
         return new MessageResponse("CPF não utilizado");
     }
-
-    public class NotFoundException : Exception
-    {
-        public NotFoundException(string message) : base(message)
-        {
-        }
-    }
-
-    public class BadRequestException : Exception
-    {
-        public BadRequestException(string message) : base(message)
-        {
-        }
-    }
-
-
 }
