@@ -22,7 +22,12 @@ public class ContatoController : ControllerBase
         _mapper = mapper;
         _contatoService = contatoService;
     }
-
+    /// <summary>
+    /// Registra um novo contato.
+    /// </summary>
+    /// <param name="contatoRequest">Dados do contato a ser registrado</param>
+    /// <returns>Resultado do registro</returns>
+    /// <response code="200">Formulário de contato enviado com sucesso</response>
     [HttpPost]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> Registrar(ContatoRequestDto contatoRequest)

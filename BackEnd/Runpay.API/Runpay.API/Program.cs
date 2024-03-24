@@ -90,7 +90,9 @@ builder.Services.AddDbContext<RunpayDbContext>(options => {
 });
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddMemoryCache();
 builder.Services.AddScoped<ITransacoesService, TransacoesService>();
+builder.Services.AddScoped<CongelamentoService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<IContatoService, ContatoService>();
