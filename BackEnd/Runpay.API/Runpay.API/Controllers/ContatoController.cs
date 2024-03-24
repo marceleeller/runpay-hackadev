@@ -19,7 +19,12 @@ public class ContatoController : ControllerBase
         _dbcontext = dbcontext;
         _mapper = mapper;
     }
-
+    /// <summary>
+    /// Registra um novo contato.
+    /// </summary>
+    /// <param name="contatoRequest">Dados do contato a ser registrado</param>
+    /// <returns>Resultado do registro</returns>
+    /// <response code="200">Formulário de contato enviado com sucesso</response>
     [HttpPost]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
     public IActionResult Registrar(ContatoRequestDto contatoRequest)
