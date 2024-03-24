@@ -9,6 +9,7 @@ using Runpay.API.Domains.DTOs.Requests;
 using Runpay.API.Domains.DTOs.Responses;
 using Runpay.API.Services;
 using Runpay.API.Services.Interfaces;
+using Runpay.API.Shared;
 using static Runpay.API.Services.ClienteService;
 
 
@@ -30,11 +31,11 @@ public class ClienteController : ControllerBase
     }
 
     /// <summary>
-    /// Retorna o cliente pelo id.
+    /// Retorna o cliente logado.
     /// </summary>
-    /// <returns>O cliente pelo id</returns>
-    /// <response code="200">Cliente cadastrado com sucesso</response>
-    /// <response code="404">Cliente n�o encontrado</response>
+    /// <returns>O cliente logado</returns>
+    /// <response code="200">Retorna os dados do cliente logado</response>
+    /// <response code="404">Cliente nao encontrado</response>
     [HttpGet]
     [Authorize]
     [ProducesResponseType(typeof(ClienteResponseDto), StatusCodes.Status200OK)]
@@ -42,7 +43,7 @@ public class ClienteController : ControllerBase
     public async Task<IActionResult> GetCliente()
     {
         var contaIdClaim = User.FindFirst("ContaId");
-        if (contaIdClaim == null) return NotFound("Conta n�o encontrada");
+        if (contaIdClaim == null) return NotFound("Conta nao encontrada");
         var id = int.Parse(contaIdClaim.Value);
 
         try
@@ -59,7 +60,7 @@ public class ClienteController : ControllerBase
     /// <summary>
     /// Cadastrar novo cliente.
     /// </summary>
-    /// <param name="novoCliente">Novo Cliente</param>
+    /// <param name="novoCliente">Formulário de cadastro</param>
     /// <returns>Cadastro do novo cliente</returns>
     /// <response code="201">Cliente cadastrado com sucesso</response>
     /// <response code="400">Cliente já cadastrado</response>
@@ -96,7 +97,7 @@ public class ClienteController : ControllerBase
     /// <param name="request">Os dados da atualização do cliente</param>
     /// <returns>Resultado da atualização</returns>
     /// <response code="200">Cliente atualizado com sucesso</response>
-    /// <response code="404">Conta não cadastrada</response>
+    /// <response code="404">Conta nao encontrada</response>
     [HttpPut("atualizar")]
     [ProducesResponseType(typeof(ClienteResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
@@ -104,7 +105,7 @@ public class ClienteController : ControllerBase
     {
 
         var contaIdClaim = User.FindFirst("ContaId");
-        if (contaIdClaim == null) return NotFound("Conta n�o encontrada");
+        if (contaIdClaim == null) return NotFound("Conta nao encontrada");
         var id = int.Parse(contaIdClaim.Value);
 
         try
@@ -125,9 +126,9 @@ public class ClienteController : ControllerBase
     /// <summary>
     /// Desativar um cliente.
     /// </summary>
-    /// <returns>Retorna o resultado da destivação</returns>
+    /// <returns>Retorna o resultado da desativação</returns>
     /// <response code="200">O cliente foi desativado com sucesso</response>
-    /// <response code="400">Conta inválida</response>
+    /// <response code="400">Cliente já desativado ou possui saldo em conta</response>
     /// <response code="404">Conta não encontrada</response>
     [HttpDelete("desativar")]
     [Authorize]
@@ -137,7 +138,7 @@ public class ClienteController : ControllerBase
     public async Task<IActionResult> Desativar()
     {
         var contaIdClaim = User.FindFirst("ContaId");
-        if (contaIdClaim == null) return NotFound("Conta n�o encontrada");
+        if (contaIdClaim == null) return NotFound("Conta nao encontrada");
         var id = int.Parse(contaIdClaim.Value);
 
         try
@@ -145,11 +146,39 @@ public class ClienteController : ControllerBase
             var message = await _clienteService.Desativar(id);
             return Ok(message);
         }
-        catch (NotFoundException ex)
+        catch (ExceptionsType.NotFoundException ex)
         {
             return NotFound(ex.Message);
         }
-        catch (BadRequestException ex)
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// Reativa um cliente.
+    /// </summary>
+    /// <returns>Retorna o resultado da reativação</returns>
+    /// <response code="200">O cliente foi ativado com sucesso</response>
+    /// <response code="400">Cliente já está ativo</response>
+    /// <response code="404">Conta não encontrada</response>
+    [HttpPut("reativar/{id}")]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Reativar(int id)
+    {
+        try
+        {
+            var message = await _clienteService.Reativar(id);
+            return Ok(message);
+        }
+        catch (ExceptionsType.NotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
@@ -174,7 +203,7 @@ public class ClienteController : ControllerBase
             var contaParaRetornar = await _clienteService.GetConta(numeroConta);
             return Ok(contaParaRetornar);
         }
-        catch (NotFoundException ex)
+        catch (ExceptionsType.NotFoundException ex)
         {
             return NotFound(ex.Message);
         }
@@ -197,9 +226,9 @@ public class ClienteController : ControllerBase
             var message = await _clienteService.PegarPorCpf(cpf);
             return Ok(message);
         }
-        catch (BadRequestException ex)
+        catch (Exception ex)
         {
-            return BadRequest(new MessageResponse(ex.Message));
+            return BadRequest(ex.Message);
         }
     }
 

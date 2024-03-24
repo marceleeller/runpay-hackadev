@@ -11,6 +11,7 @@ using Runpay.API.Domains.DTOs.Responses;
 using Microsoft.AspNetCore.Identity.Data;
 using Runpay.API.Services;
 using Runpay.API.Services.Interfaces;
+using Runpay.API.Shared;
 
 namespace TransacaoesController.Controllers
 {
@@ -34,7 +35,7 @@ namespace TransacaoesController.Controllers
         /// </summary>
         /// <returns>Histórico de transações da conta</returns>
         /// <response code="200">Retorna o histórico de transações da contaId</response>
-        /// <response code="404">Conta não encontrada</response>
+        /// <response code="404">Conta nao encontrada</response>
         [Authorize]
         [HttpGet("historico")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status200OK)]
@@ -42,13 +43,17 @@ namespace TransacaoesController.Controllers
         public async Task<IActionResult> Historico()
         {
             var contaIdClaim = User.FindFirst("ContaId");
-            if (contaIdClaim == null) return NotFound("Conta não encontrada");
+            if (contaIdClaim == null) return NotFound("Conta nao encontrada");
             var id = long.Parse(contaIdClaim.Value);
 
             try
             {
                 var response = await _transacoesService.GetHistorico(id);
                 return Ok(response);
+            }
+            catch (ExceptionsType.NotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -62,7 +67,7 @@ namespace TransacaoesController.Controllers
         /// <param name="request">Dados da requisição de depósito</param>
         /// <returns>Retorna o resultado do depósito</returns>
         /// <response code="201">Depósito realizado com sucesso</response>
-        /// <response code="404">Conta não encontrada</response>
+        /// <response code="404">Conta nao encontrada</response>
         [Authorize]
         [HttpPost("deposito")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
@@ -71,7 +76,7 @@ namespace TransacaoesController.Controllers
         {
             var contaIdClaim = User.FindFirst("ContaId");
             if (contaIdClaim == null)
-                return NotFound(new MessageResponse("Conta não encontrada"));
+                throw new ExceptionsType.NotFoundException("Conta nao encontrada");
             var id = long.Parse(contaIdClaim.Value);
 
             try
@@ -83,10 +88,14 @@ namespace TransacaoesController.Controllers
                     new { id = id },
                     new
                     {
-                        message = new MessageResponse("Depósito realizado com sucesso."),
+                        message = "Depósito realizado com sucesso.",
                         transacao = transacaoARetornar
                     }
                 );
+            }
+            catch (ExceptionsType.NotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -102,7 +111,7 @@ namespace TransacaoesController.Controllers
         /// <returns>Retorna o resultado do saque</returns>
         /// <response code="201">Saque realizado com sucesso</response>
         /// <response code="400">Saque inválido</response>
-        /// <response code="404">Conta não encontrada ou não existe</response>
+        /// <response code="404">Conta nao encontrada ou não existe</response>
         [Authorize]
         [HttpPost("saque")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
@@ -112,7 +121,7 @@ namespace TransacaoesController.Controllers
         {
             var contaIdClaim = User.FindFirst("ContaId");
             if (contaIdClaim == null)
-                return NotFound(new MessageResponse("Conta não encontrada"));
+                throw new ExceptionsType.NotFoundException("Conta nao encontrada");
             var id = long.Parse(contaIdClaim.Value);
 
             try
@@ -129,6 +138,10 @@ namespace TransacaoesController.Controllers
                     }
                 );
             }
+            catch (ExceptionsType.NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -143,7 +156,7 @@ namespace TransacaoesController.Controllers
         /// <returns>Retorna o resultado da transferência</returns>
         /// <response code="201">Transferência realizada com sucesso</response>
         /// <response code="400">Dados inválidos</response>
-        /// <response code="404">Conta não encontrada</response>
+        /// <response code="404">Conta nao encontrada</response>
         [Authorize]
         [HttpPost("transferencia")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
@@ -153,7 +166,7 @@ namespace TransacaoesController.Controllers
         {
             var contaIdClaim = User.FindFirst("ContaId");
             if (contaIdClaim == null)
-                return NotFound("Conta não encontrada");
+                throw new ExceptionsType.NotFoundException("Conta nao encontrada");
             var id = long.Parse(contaIdClaim.Value);
 
             try
@@ -169,6 +182,10 @@ namespace TransacaoesController.Controllers
                         transacao = transacaoARetornar
                     }
                 );
+            }
+            catch (ExceptionsType.NotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {

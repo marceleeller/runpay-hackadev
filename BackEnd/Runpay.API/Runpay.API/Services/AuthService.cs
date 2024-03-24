@@ -14,6 +14,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Runpay.API.Shared;
 
 
 namespace Runpay.API.Services;
@@ -39,21 +40,21 @@ public class AuthService : IAuthService
             .FirstOrDefaultAsync(c => c.Cliente.Cpf == loginrequest.Cpf);
 
         if (contaParaLogar == null)
-            throw new Exception("CPF ou senha inválidos");
+            throw new ExceptionsType.UnauthorizedException("CPF ou senha inválidos");
 
         if (_congelamentoService.UsuarioBloqueado(loginrequest.Cpf))
-            throw new Exception("Número de tentativas de login excedido. Aguarde 30 minutos e tente novamente.");
+            throw new ExceptionsType.UnauthorizedException("Número de tentativas de login excedido. Aguarde 30 minutos e tente novamente.");
 
         var verificarSenha = CriptografiaService.VerificarSenha(loginrequest.Senha, contaParaLogar?.SenhaHash ?? "");
 
         if (!verificarSenha)
         {
             _congelamentoService.RegistrarTentativaLoginFalhada(loginrequest.Cpf);
-            throw new Exception("CPF ou senha inválidos");
+            throw new ExceptionsType.UnauthorizedException("CPF ou senha inválidos");
         }
 
         if (contaParaLogar?.StatusContaAtiva == false)
-            throw new Exception("Conta desativada");
+            throw new ExceptionsType.UnauthorizedException("Conta desativada");
 
         var clienteParaRetornar = _mapper.Map<ClienteResponseDto>(contaParaLogar?.Cliente);
         string secret = _configuration.GetSection("Secret").Value;
