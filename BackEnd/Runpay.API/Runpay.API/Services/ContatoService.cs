@@ -28,13 +28,19 @@ public class ContatoService : IContatoService
     }
     public async Task<Contato> GetContato(int id)
     {
-        return await _dbcontext.Contatos.FindAsync(id);
+        var contato = await _dbcontext.Contatos.FindAsync(id);
+        if (contato == null) 
+            throw new ExceptionsType.NotFoundException("Formulário de contato não encontrado");
+        if (contato.StatusContatoAtivo == false) 
+            throw new Exception("Formulário de contato excluído");
+        return contato;
     }
 
     public async Task<IEnumerable<Contato>> ListaContatos()
     {
         var contatos = await _dbcontext.Contatos.ToListAsync();
         return contatos
+            .Where(c => c.StatusContatoAtivo)
             .OrderByDescending(c => c.CriadoEm.UtcDateTime);
     }
 
@@ -42,15 +48,16 @@ public class ContatoService : IContatoService
     {
         var contatos = await _dbcontext.Contatos.ToListAsync();
         return contatos
-            .Where(c => !c.EstaRespondido)
+            .Where(c => !c.EstaRespondido && c.StatusContatoAtivo)
             .OrderByDescending(c => c.CriadoEm.UtcDateTime);
     }
 
     public async Task<Contato> ResponderContato(int id)
     {
         var contato = await _dbcontext.Contatos.FindAsync(id);
-        if (contato == null) throw new ExceptionsType.NotFoundException("Contato não encontrado");
-        if (contato.EstaRespondido) throw new Exception("Contato já respondido");
+        if (contato == null) throw new ExceptionsType.NotFoundException("Formulário de contato não encontrado");
+        if (contato.StatusContatoAtivo == false) throw new Exception("Formulário de contato excluído");
+        if (contato.EstaRespondido) throw new Exception("Formulário de contato já respondido");
 
         contato.EstaRespondido = true;
         contato.AtualizadoEm = DateTimeOffset.Now;
@@ -58,14 +65,19 @@ public class ContatoService : IContatoService
         return contato;
     }
 
-    public async Task DeletarContato(int id)
+    public async Task<Contato> DeletarContato(int id)
     {
         var contato = await _dbcontext.Contatos.FindAsync(id);
-        if (contato != null)
-        {
-            _dbcontext.Contatos.Remove(contato);
-            await _dbcontext.SaveChangesAsync();
-        }
+
+        if (contato == null)
+            throw new ExceptionsType.NotFoundException("Formulário de contato não encontrado");
+
+        contato.StatusContatoAtivo = false;
+        contato.ExcluidoEm = DateTimeOffset.Now;
+        contato.AtualizadoEm = DateTimeOffset.Now;
+        await _dbcontext.SaveChangesAsync();
+
+        return contato;
     }
 
 

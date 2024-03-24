@@ -9,6 +9,6 @@ public interface IContatoService
     Task<IEnumerable<Contato>> ListaContatos();
     Task<IEnumerable<Contato>> ListaContatosNaoRespondidos();
     Task<Contato> ResponderContato(int id);
-    Task DeletarContato(int id);
+    Task<Contato> DeletarContato(int id);
 
 }

@@ -26,7 +26,7 @@ public class ContatoController : ControllerBase
     /// <summary>
     /// Registra um novo formulário de contato.
     /// </summary>
-    /// <param name="contatoRequest">Dados do contato a ser registrado</param>
+    /// <param name="contatoRequest">Formulário de contato a ser registrado</param>
     /// <returns>Resultado do registro</returns>
     /// <response code="200">Formulário de contato enviado com sucesso</response>
     [HttpPost]
@@ -58,7 +58,7 @@ public class ContatoController : ControllerBase
     /// <returns>Um formulário de contato pelo id</returns>
     /// <response code="200">Retorna um formulário de contato pelo id</response>
     /// <response code="404">Formulário de contato nao encontrado</response>
-    /// <response code="400">Ocorreu um erro ao processar a solicitação</response>
+    /// <response code="400">Formulário de contato excluído</response>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(Contato), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
@@ -68,9 +68,7 @@ public class ContatoController : ControllerBase
         try
         {
             var contato = await _contatoService.GetContato(id);
-            if (contato == null)
-                throw new ExceptionsType.NotFoundException("Formulário de contato não encontrado");
-
+            
             return Ok(contato);
         }
         catch (ExceptionsType.NotFoundException ex)
@@ -125,7 +123,6 @@ public class ContatoController : ControllerBase
         }
     }
 
-
     /// <summary>
     /// Deleta um formulário de contato.
     /// </summary>
@@ -142,11 +139,9 @@ public class ContatoController : ControllerBase
         try
         {
             var contato = await _contatoService.GetContato(id);
-            if (contato == null)
-                throw new ExceptionsType.NotFoundException("Contato não encontrado");
 
             await _contatoService.DeletarContato(id);
-            return Ok("Contato deletado com sucesso");
+            return Ok("Formulário de contato deletado");
         }
         catch (ExceptionsType.NotFoundException ex)
         {

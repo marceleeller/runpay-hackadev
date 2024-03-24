@@ -22,4 +22,5 @@ public class Contato : Entity
     public string Cpf { get; set; } = null!;
     public string Mensagem { get; set; } = null!;
     public bool EstaRespondido { get; set; } = false;
+    public bool StatusContatoAtivo { get; set; } = true;
 }
