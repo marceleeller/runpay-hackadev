@@ -30,7 +30,13 @@ public class LoginController : ControllerBase
 
     }
 
-    // Logar um usuário
+    /// <summary>
+    /// Realizar o login de um usuário.
+    /// </summary>
+    /// <param name="loginrequest">Dados da requisição para login</param>
+    /// <returns>Retorna o resultado do login</returns>
+    /// <response code="200">Login realizado com sucesso</response>
+    /// <response code="400">Login inválido</response>
     [HttpPost]
     [ProducesResponseType(typeof(LoginResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]

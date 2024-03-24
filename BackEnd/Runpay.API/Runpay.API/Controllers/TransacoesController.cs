@@ -29,7 +29,12 @@ namespace TransacaoesController.Controllers
             _transacoesService = transacoesService;
         }
 
-        // Acessar histórico
+        /// <summary>
+        /// Acessar histórico de transações.
+        /// </summary>
+        /// <returns>Histórico de transações da conta</returns>
+        /// <response code="200">Retorna o histórico de transações da contaId</response>
+        /// <response code="404">Conta não encontrada</response>
         [Authorize]
         [HttpGet("historico")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status200OK)]
@@ -51,7 +56,13 @@ namespace TransacaoesController.Controllers
             }
         }
 
-        // Realizar depósito
+        /// <summary>
+        /// Realizar depósito.
+        /// </summary>
+        /// <param name="request">Dados da requisição de depósito</param>
+        /// <returns>Retorna o resultado do depósito</returns>
+        /// <response code="201">Depósito realizado com sucesso</response>
+        /// <response code="404">Conta não encontrada</response>
         [Authorize]
         [HttpPost("deposito")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
@@ -84,7 +95,14 @@ namespace TransacaoesController.Controllers
         }
 
 
-        // Realizar saque
+        /// <summary>
+        /// Realizar saque.
+        /// </summary>
+        /// <param name="request">Dados da requisição de saque</param>
+        /// <returns>Retorna o resultado do saque</returns>
+        /// <response code="201">Saque realizado com sucesso</response>
+        /// <response code="400">Saque inválido</response>
+        /// <response code="404">Conta não encontrada ou não existe</response>
         [Authorize]
         [HttpPost("saque")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]
@@ -118,7 +136,14 @@ namespace TransacaoesController.Controllers
         }
 
 
-        // Realizar transferencia
+        /// <summary>
+        /// Realizar transferencia.
+        /// </summary>
+        /// <param name="request">Dados da requisição de transferência</param>
+        /// <returns>Retorna o resultado da transferência</returns>
+        /// <response code="201">Transferência realizada com sucesso</response>
+        /// <response code="400">Dados inválidos</response>
+        /// <response code="404">Conta não encontrada</response>
         [Authorize]
         [HttpPost("transferencia")]
         [ProducesResponseType(typeof(TransacaoResponseDto), StatusCodes.Status201Created)]

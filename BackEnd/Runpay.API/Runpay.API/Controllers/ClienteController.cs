@@ -32,10 +32,9 @@ public class ClienteController : ControllerBase
     /// <summary>
     /// Retorna o cliente pelo id.
     /// </summary>
-    /// <param name="id">Id do cliente</param>
     /// <returns>O cliente pelo id</returns>
-    /// <response code="200">Retorna o cliente cadastrado com o id informado</response>
-    /// <response code="400">Cliente n�o encontrado</response>
+    /// <response code="200">Cliente cadastrado com sucesso</response>
+    /// <response code="404">Cliente n�o encontrado</response>
     [HttpGet]
     [Authorize]
     [ProducesResponseType(typeof(ClienteResponseDto), StatusCodes.Status200OK)]
@@ -43,7 +42,7 @@ public class ClienteController : ControllerBase
     public async Task<IActionResult> GetCliente()
     {
         var contaIdClaim = User.FindFirst("ContaId");
-        if (contaIdClaim == null) return NotFound("Conta n�o encontrada");
+        if (contaIdClaim == null) return NotFound("Conta n�o encontrada");
         var id = int.Parse(contaIdClaim.Value);
 
         try
@@ -57,7 +56,13 @@ public class ClienteController : ControllerBase
         }
     }
 
-    // cadastra um novo cliente
+    /// <summary>
+    /// Cadastrar novo cliente.
+    /// </summary>
+    /// <param name="novoCliente">Novo Cliente</param>
+    /// <returns>Cadastro do novo cliente</returns>
+    /// <response code="201">Cliente cadastrado com sucesso</response>
+    /// <response code="400">Cliente já cadastrado</response>
     [HttpPost("cadastro")]
     [ProducesResponseType(typeof(ClienteResponseDto), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
@@ -85,7 +90,13 @@ public class ClienteController : ControllerBase
         }
     }
 
-    // atualiza um cliente
+    /// <summary>
+    /// Atualizar um cliente.
+    /// </summary>
+    /// <param name="request">Os dados da atualização do cliente</param>
+    /// <returns>Resultado da atualização</returns>
+    /// <response code="200">Cliente atualizado com sucesso</response>
+    /// <response code="404">Conta não cadastrada</response>
     [HttpPut("atualizar")]
     [ProducesResponseType(typeof(ClienteResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
@@ -93,7 +104,7 @@ public class ClienteController : ControllerBase
     {
 
         var contaIdClaim = User.FindFirst("ContaId");
-        if (contaIdClaim == null) return NotFound("Conta n�o encontrada");
+        if (contaIdClaim == null) return NotFound("Conta n�o encontrada");
         var id = int.Parse(contaIdClaim.Value);
 
         try
@@ -111,7 +122,13 @@ public class ClienteController : ControllerBase
         }
     }
 
-    // desativa um cliente
+    /// <summary>
+    /// Desativar um cliente.
+    /// </summary>
+    /// <returns>Retorna o resultado da destivação</returns>
+    /// <response code="200">O cliente foi desativado com sucesso</response>
+    /// <response code="400">Conta inválida</response>
+    /// <response code="404">Conta não encontrada</response>
     [HttpDelete("desativar")]
     [Authorize]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
@@ -120,7 +137,7 @@ public class ClienteController : ControllerBase
     public async Task<IActionResult> Desativar()
     {
         var contaIdClaim = User.FindFirst("ContaId");
-        if (contaIdClaim == null) return NotFound("Conta n�o encontrada");
+        if (contaIdClaim == null) return NotFound("Conta n�o encontrada");
         var id = int.Parse(contaIdClaim.Value);
 
         try
@@ -140,7 +157,13 @@ public class ClienteController : ControllerBase
 
     // validacoes
 
-    //retorna se numeroConta existe
+    /// <summary>
+    /// Retorna se o número da conta existe.
+    /// </summary>
+    /// <param name="numeroConta">O número da conta para buscar informações</param>
+    /// <returns>Informações da conta</returns>
+    /// <response code="200">Conta encontrada com sucesso</response>
+    /// <response code="404">Conta não encontrada</response>
     [HttpGet("conta/{numeroConta}")]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status404NotFound)]
@@ -157,7 +180,13 @@ public class ClienteController : ControllerBase
         }
     }
 
-    //retorna se cpf ja foi cadastrado
+    /// <summary>
+    /// Retorna se cpf já foi cadastrado.
+    /// </summary>
+    /// <param name="cpf">O CPF a ser verificado</param>
+    /// <returns>Retorna se o CPF já foi cadastrado ou não</returns>
+    /// <response code="200">O CPF já foi cadastrado</response>
+    /// <response code="400">CPF fornecido é inválido</response>
     [HttpGet("{cpf}")]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(MessageResponse), StatusCodes.Status400BadRequest)]
