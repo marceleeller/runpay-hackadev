@@ -63,7 +63,7 @@ getCampo(nomeCampo: string) {
 }
 
 getDescricaoLength() {
-  const descricao = this.getCampo('descricao')?.value || '';
+  const descricao = this.getCampo('mensagem')?.value || '';
   return descricao.length;
 }
 

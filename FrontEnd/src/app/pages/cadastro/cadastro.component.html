@@ -4,7 +4,7 @@
   class="main_container d-flex flex-column justify-content-center align-items-center px-4 mt-3 mb-4"
 >
   <div class="formulario">
-    <form class="justify-content-center formularioinvalido" [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
+    <form class="justify-content-center formularioinvalido" [formGroup]="cadastroForm">
       <h2 class="text-center">Crie a sua conta da RunPay</h2>
       <p class="text-center">
         Já possui uma conta?
@@ -75,7 +75,7 @@
           <button type="button" class="btn btn-primary btn-voltar" (click)="mudarParaFormularioEndereco()">
             <i class="bi bi-chevron-left"></i>
           </button>
-          <button type="submit" class="btn btn-primary flex-fill" [disabled]="cadastroForm.invalid || processando">{{ processando ? "Criando..." : "Criar" }}</button>
+          <button type="submit" (click)="onSubmit()" class="btn btn-primary flex-fill" [disabled]="cadastroForm.invalid || processando">{{ processando ? "Criando..." : "Criar" }}</button>
         </div>
       </div>
     </form>

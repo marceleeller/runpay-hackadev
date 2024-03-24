@@ -51,6 +51,9 @@
               <div *ngFor="let transacao of transacoesExibidas">
                 <app-cardtransacao [transacao]="transacao"></app-cardtransacao>
               </div>
+              <div *ngIf="transacoesExibidas.length === 0" class="transacoes-exibidas">
+                <p>Nenhuma transação a ser exibida.</p>
+              </div>
             </div>
           </div>
         </section>
