@@ -47,7 +47,6 @@ export class CardtransacaoComponent {
     );
   }
 
-  // cardtransacao.component.ts
   getDescricaoPalavras(descricao: any): string {
     const palavras = this.getDescricaoFormatada(descricao).split(' ');
     if (palavras.length <= 3) {
