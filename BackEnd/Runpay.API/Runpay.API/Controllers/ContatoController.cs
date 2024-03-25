@@ -35,7 +35,7 @@ public class ContatoController : ControllerBase
     {
         Contato contato = _mapper.Map<Contato>(contatoRequest);
         await _contatoService.Registrar(contato);
-        return Ok("Formulário de contato enviado com sucesso");
+        return Ok(new { message = "Formulário de contato enviado com sucesso" });
     }
 
     /// <summary>
@@ -111,7 +111,7 @@ public class ContatoController : ControllerBase
         try
         {
             var contato = await _contatoService.ResponderContato(id);
-            return Ok("Formulário respondido com sucesso!");
+            return Ok(new { message = "Formulário respondido com sucesso!" });
         }
         catch (ExceptionsType.NotFoundException ex)
         {
@@ -141,7 +141,7 @@ public class ContatoController : ControllerBase
             var contato = await _contatoService.GetContato(id);
 
             await _contatoService.DeletarContato(id);
-            return Ok("Formulário de contato deletado");
+            return Ok(new { message = "Formulário de contato deletado" });
         }
         catch (ExceptionsType.NotFoundException ex)
         {
