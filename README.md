@@ -85,7 +85,7 @@ Este projeto é divido em duas partes:
 2. Frontend (pasta FrontEnd)
 
 
-💡Login: 12345678900 Senha: Admin123
+💡Login: 12345678900 | Senha: Admin123 <br>
 💡O Frontend necessita que o Backend esteja sendo executado para funcionar.
 
 ### Pré-requisitos
