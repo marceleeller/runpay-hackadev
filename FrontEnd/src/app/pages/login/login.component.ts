@@ -57,7 +57,11 @@ export class LoginComponent {
           },
           error: (error:any) => {
             this.processando = false;
-            this.toastr.error(error.error, '');
+            if (error.status === 401) {
+              this.toastr.error(error.error, '');
+            } else {
+              this.toastr.error(error.error, '');
+            }
           }
         })
       }

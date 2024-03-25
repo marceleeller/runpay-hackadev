@@ -47,13 +47,12 @@ export class CardtransacaoComponent {
     );
   }
 
-  // cardtransacao.component.ts
   getDescricaoPalavras(descricao: any): string {
     const palavras = this.getDescricaoFormatada(descricao).split(' ');
     if (palavras.length <= 3) {
       return palavras.join(' ');
     }
-    return `${palavras[0]} ${palavras[1]} ... ${palavras[palavras.length - 1]}`;
+    return `${palavras[0]} ${palavras[1]} ${palavras[palavras.length - 1]}`;
   }
 
   getDescricaoFormatada(descricao: any): string {
